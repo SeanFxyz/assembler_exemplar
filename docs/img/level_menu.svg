@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="480"
+   height="270"
+   viewBox="0 0 127 71.437502"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c4e8f9ed74, 2021-05-24)"
+   sodipodi:docname="level_menu.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#cccccc"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="true"
+     units="px"
+     width="1920px"
+     inkscape:zoom="1.8318311"
+     inkscape:cx="158.58449"
+     inkscape:cy="99.354136"
+     inkscape:window-width="1916"
+     inkscape:window-height="1058"
+     inkscape:window-x="0"
+     inkscape:window-y="17"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid38" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <rect
+       x="820"
+       y="20"
+       width="240.00002"
+       height="80"
+       id="rect44383" />
+    <rect
+       x="40"
+       y="20"
+       width="194.40001"
+       height="60.724384"
+       id="rect5217" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#000001;fill-opacity:0;fill-rule:evenodd;stroke:#000000;stroke-width:0.249351;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect84"
+       width="40.929905"
+       height="71.188148"
+       x="0.12467571"
+       y="0.12467571" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1363"
+       width="40.929905"
+       height="6.5914969"
+       x="0.12467571"
+       y="0.12467571" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.06601596,0,0,0.06591496,10.702648,0.25139825)"
+       id="text5215"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect5217);fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="40"
+         y="66.666639"
+         id="tspan270"><tspan
+           style="font-weight:bold;font-size:53.3333px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Bold'"
+           id="tspan268">Levels</tspan></tspan></text>
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38599"
+       width="33.008003"
+       height="5.2732024"
+       x="2.7653143"
+       y="9.3527765" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38601"
+       width="33.008003"
+       height="5.2732024"
+       x="2.7653143"
+       y="15.94427" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38603"
+       width="33.008003"
+       height="5.2732015"
+       x="2.7653143"
+       y="22.535769" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38605"
+       width="33.008003"
+       height="5.2732053"
+       x="2.7653143"
+       y="29.127245" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38607"
+       width="33.008003"
+       height="5.2732024"
+       x="2.7653143"
+       y="35.718777" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38609"
+       width="33.008003"
+       height="5.2732034"
+       x="2.7653143"
+       y="42.310257" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38611"
+       width="33.008003"
+       height="5.2732015"
+       x="2.7653143"
+       y="48.901772" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38613"
+       width="33.008003"
+       height="5.2732024"
+       x="2.7653143"
+       y="55.493256" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38615"
+       width="33.008003"
+       height="5.2732034"
+       x="2.7653143"
+       y="62.084736" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38719"
+       width="2.640641"
+       height="58.005184"
+       x="37.093643"
+       y="9.3527765" />
+    <rect
+       style="fill:#000001;fill-opacity:1;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38721"
+       width="2.640641"
+       height="11.864694"
+       x="37.093643"
+       y="9.3527765" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect38811"
+       width="85.82077"
+       height="71.188148"
+       x="41.054554"
+       y="0.12467571" />
+    <rect
+       style="fill:#000001;fill-opacity:0;stroke:#000000;stroke-width:0.249349;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect39011"
+       width="85.82077"
+       height="6.5914969"
+       x="41.054554"
+       y="0.12467571" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.06601596,0,0,0.06591496,21.334232,0.10318258)"
+       id="text44381"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect44383);fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="820"
+         y="66.666639"
+         id="tspan274"><tspan
+           style="font-weight:bold;font-size:53.3333px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Bold'"
+           id="tspan272">Details</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.19886px;line-height:1.25;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Normal';stroke-width:0.0659639"
+       x="73.423279"
+       y="32.528099"
+       id="text191400"
+       transform="scale(1.0007658,0.99923478)"><tspan
+         sodipodi:role="line"
+         id="tspan191398"
+         style="fill:#ff0000;fill-opacity:1;stroke-width:0.0659639"
+         x="73.423279"
+         y="32.528099">LEVEL INFO PANEL</tspan></text>
+  </g>
+</svg>
