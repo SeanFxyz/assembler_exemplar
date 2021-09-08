@@ -30,4 +30,5 @@ This project will seek to entice users to pursue that understanding by presentin
 
 ## References
 [Nand2Tetris](https://www.nand2tetris.org/)
+
 [The Elements of Computing Systems](https://www.nand2tetris.org/book)
