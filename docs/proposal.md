@@ -6,6 +6,7 @@ The book *The Elements of Computing Systems* walks students through the construc
 ## Scope
 
 ## Functional Requirements
+hello world
 
 ## Apendix I: Group Meetings
 
