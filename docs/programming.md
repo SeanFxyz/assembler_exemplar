@@ -42,21 +42,21 @@ var nand := {
 a stylistic decision, to make it easier to see the bit values for
 each set of inputs. The key values could also be written as 0, 1, 2, and 3.)
 
-Given values for *a* and *b*, we can use this
-dictionary to find the correct output by bit-shifting *a* to the left
-using the left-shift operator `<<` to make room on the right for *b*'s bits,
+Given values for ***a*** and ***b***, we can use this
+dictionary to find the correct output by bit-shifting ***a*** to the left
+using the left-shift operator `<<` to make room on the right for ***b***'s bits,
 then combining the two with the bitwise OR operator `|`.
 
-Given inputs *a* and *b* for a two-input chip like the NAND gate, we
+Given inputs ***a*** and ***b*** for a two-input chip like the NAND gate, we
 can use the chip's corresponding dictionary to get the correct
-output by bit-shifting *a* to the left (`<<`) to make room for *b*'s bits,
+output by bit-shifting ***a*** to the left (`<<`) to make room for ***b***'s bits,
 then combining the two with bitwise OR (`|`) to create the dictionary key.
 In GDScript (and Python), the key can be created with the expression
-`a << l | b`, where `l` is the number of bits in *a*
+`a << l | b`, where `l` is the number of bits in ***a***
 (`l = 1` for the NAND gate).
 Following is a visual example of this process:
 
-Let's say we have a chip that has 4-bit input *a*, 2-bit input *b*,
+Let's say we have a chip that has 4-bit input ***a***, 2-bit input ***b***,
 and one 6-bit output.
 The dictionary for this chip may look like this:
 
@@ -72,11 +72,11 @@ var weird_chip := {
 ```
 
 We are given `a=0b0101` and `b=0b11`.
-We bit-shift *a* leftward by total size of the remaining inputs:
+We bit-shift ***a*** leftward by total size of the remaining inputs:
 ```
 0b0101 << 2 = 0b010100
 ```
-We then bitwise OR *a* and *b*, which fills in *b*'s bits into the space
+We then bitwise OR ***a*** and ***b***, which fills in ***b***'s bits into the space
 on the right that was cleared by bit-shifting:
 
 ```
