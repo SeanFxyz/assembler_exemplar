@@ -31,9 +31,9 @@ For example, the `nand` dictionary would be as follows:
 ```
 # (may revise so mapped values are dictionaries, rather than arrays)
 var nand := {
-    0b00: [1]
-    0b01: [1]
-    0b10: [1]
+    0b00: [1],
+    0b01: [1],
+    0b10: [1],
     0b11: [0]
 }
 ```
@@ -51,7 +51,7 @@ Given inputs *a* and *b* for a two-input chip like the NAND gate, we
 can use the chip's corresponding dictionary to get the correct
 output by bit-shifting *a* to the left (`<<`) to make room for *b*'s bits,
 then combining the two with bitwise OR (`|`) to create the dictionary key.
-In GDScript (and Python), key can be created with the expression
+In GDScript (and Python), the key can be created with the expression
 `a << l | b`, where `l` is the number of bits in *a*
 (`l = 1` for the NAND gate).
 Following is a visual example of this process:
