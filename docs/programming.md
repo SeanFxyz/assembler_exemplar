@@ -51,7 +51,7 @@ Given inputs *a* and *b* for a two-input chip like the NAND gate, we
 can use the chip's corresponding dictionary to get the correct
 output by bit-shifting *a* to the left (`<<`) to make room for *b*'s bits,
 then combining the two with bitwise OR (`|`) to create the dictionary key.
-In GDScript (and Python), key can be created with the expression
+In GDScript (and Python), the key can be created with the expression
 `a << l | b`, where `l` is the number of bits in *a*
 (l = 1 for the NAND gate).
 If the chip has more than two inputs, more bit-shifting and bitwise OR
