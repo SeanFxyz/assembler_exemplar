@@ -7,7 +7,7 @@ used in the Godot Engine.
 ## Singletons
 
 In the Godot Engine, singletons are Nodes which have one instance that is
-gloabally accessible from all scripts. They are good for holding data
+globally accessible from all scripts. They are good for holding data
 or code that needs to persist between scenes or simply needs to be
 accessible to various parts of the program.
 
