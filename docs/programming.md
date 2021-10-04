@@ -29,6 +29,7 @@ For example, the `nand` dictionary would be as follows:
 (may revise so mapped values are dictionaries, rather than arrays)
 
 ```
+# (may revise so mapped values are dictionaries, rather than arrays)
 var nand := {
     0b00: [1]
     0b01: [1]
