@@ -2,7 +2,7 @@
 
 This document is meant to explain the underlying program design of
 *Assembler Exemplar*, including the various scripts, Scenes, and Singletons
-used in the Godot Engine.
+that will be created for the Godot Engine implementation.
 
 ## Singletons
 
@@ -53,8 +53,50 @@ output by bit-shifting *a* to the left (`<<`) to make room for *b*'s bits,
 then combining the two with bitwise OR (`|`) to create the dictionary key.
 In GDScript (and Python), key can be created with the expression
 `a << l | b`, where `l` is the number of bits in *a*
-(l = 1 for the NAND gate).
-If the chip has more than two inputs, more bit-shifting and bitwise OR
-operations will be needed to incorporate all inputs into the key.
+(`l = 1` for the NAND gate).
+Following is a visual example of this process:
+
+Let's say we have a chip that has 4-bit input *a*, 2-bit input *b*,
+and one 6-bit output.
+The dictionary for this chip may look like this:
+
+```
+var weird_chip := {
+    0b000000: [0b000001],
+    0b000001: [0b000010],
+    0b000010: [0b000011],
+    0b000011: [0b000100],
+    0b000100: [0b000101],
+    0b000101: [0b001011],
+    ...
+```
+
+We are given `a=0b0101` and `b=0b11`.
+We bit-shift *a* leftward by total size of the remaining inputs:
+```
+0b0101 << 2 = 0b010100
+```
+We then bitwise OR *a* and *b*, which fills in *b*'s bits into the space
+on the right that was cleared by bit-shifting:
+
+```
+a, shifted: 010100
+b:              11
+bitwise-or: 010111
+```
+
+So our key is `0b010111`.
+
+This process is generalized by the following pseudo-code, although the use
+of loops is not advised in the actual implementation for performance reasons:
+
+```
+key = 0
+l = total length of remaining unincorporated inputs
+for i in inputs:
+    key = key | (i << l)
+    l = l - length(i)
+```
+
 In GDScript, `int` values are 64-bit integers, so the total bits of the
 chip inputs cannot exceed 64 for this type of dictionary.
