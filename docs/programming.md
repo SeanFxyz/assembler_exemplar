@@ -2,7 +2,7 @@
 
 This document is meant to explain the underlying program design of
 *Assembler Exemplar*, including the various scripts, Scenes, and Singletons
-used in the Godot Engine.
+used in the Godot Engine implementation of the game.
 
 ## Singletons
 
@@ -31,9 +31,9 @@ For example, the `nand` dictionary would be as follows:
 ```
 # (may revise so mapped values are dictionaries, rather than arrays)
 var nand := {
-    0b00: [1]
-    0b01: [1]
-    0b10: [1]
+    0b00: [1],
+    0b01: [1],
+    0b10: [1],
     0b11: [0]
 }
 ```
