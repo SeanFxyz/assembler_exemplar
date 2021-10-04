@@ -39,7 +39,7 @@ var nand := {
 
 (The use here of the `0b` binary literal notation provided by GDScript is
 a stylistic decision, to make it easier to see the bit values for
-each set of inputs.)
+each set of inputs. The key values could also be written as 0, 1, 2, and 3.)
 
 Given values for *a* and *b*, we can use this
 dictionary to find the correct output by bit-shifting *a* to the left
