@@ -46,7 +46,7 @@ dictionary to find the correct output by bit-shifting *a* to the left
 using the left-shift operator `<<` to make room on the right for *b*'s bits,
 then combining the two with the bitwise OR operator `|`.
 
-Given inptus *a* and *b* for a two-input chip like the NAND gate, we
+Given inputs *a* and *b* for a two-input chip like the NAND gate, we
 can use the chip's corresponding dictionary to get the correct
 output by bit-shifting *a* to the left (`<<`) to make room for *b*'s bits,
 then combining the two with bitwise OR (`|`) to create the dictionary key.
