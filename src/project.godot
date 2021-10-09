@@ -15,7 +15,7 @@ config/icon="res://images/icon.png"
 
 [autoload]
 
-ChipIo="*res://singletons/ChipIO.gd"
+ChipIO="*res://singletons/ChipIO.gd"
 
 [physics]
 
