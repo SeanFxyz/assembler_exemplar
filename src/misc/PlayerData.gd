@@ -2,14 +2,11 @@
 # player data. These can be used in whatever Scene/Node will be responsible
 # for loading player solution data when opening a level.
 
-func load_level_data(level_name: String) -> Dictionary:
-	var level_data := {}
+func load_savfile(file_name: String) -> Dictionary:
+	var sav_data := {}
 	
 	var file := File.new()
-	var err := file.open_compressed(
-		"user://solutions/" + level_name,
-		File.READ,
-		File.COMPRESSION_ZSTD)
+	var err := file.open_compressed(file_name, File.READ, File.COMPRESSION_ZSTD)
 	if err != OK:
 		# TODO: respond to Error stored in err appropriately
 		return {"error": err}
@@ -24,16 +21,33 @@ func load_level_data(level_name: String) -> Dictionary:
 			"error_string": parse_result.error_string
 		}
 	
-	level_data = parse_result.result
-	# TODO: read recovery file, if exists, and update level data
+	sav_data = parse_result.result
 	
-	return level_data
+	return sav_data
 
-func write_level_data(level_name: String, level_data: Dictionary) -> int:
+func load_recfile(file_name: String) -> Array:
+	var rec_data := []
+	
+	var file := File.new()
+	var err := file.open(file_name, File.READ)
+	if err != OK:
+		# TODO: respond to Error stored in err appropriately
+		return rec_data
+	
+	while (true):
+		var line := file.get_line()
+		if line:
+			rec_data.append(line)
+		else:
+			break
+		
+	return rec_data
+
+func write_savfile(file_name: String, level_data: Dictionary) -> int:
 	
 	var file := File.new()
 	var err := file.open_compressed(
-		"user://solutions/" + level_name,
+		file_name,
 		File.READ,
 		File.COMPRESSION_ZSTD)
 	if err != OK:
@@ -43,4 +57,4 @@ func write_level_data(level_name: String, level_data: Dictionary) -> int:
 	file.store_string(json)
 	file.close()
 	
-	return OK
+	return OK	
