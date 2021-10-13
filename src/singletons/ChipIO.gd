@@ -11,3 +11,6 @@ var nand := {
 var chips := {
 	"nand": nand
 }
+
+func find_chip(name: String) -> Dictionary:
+	return chips[name.to_lower()]
