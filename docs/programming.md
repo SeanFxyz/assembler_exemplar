@@ -102,9 +102,9 @@ for i in inputs:
 In GDScript, `int` values are 64-bit integers, so the total bits of the
 chip inputs cannot exceed 64 for this type of dictionary.
 
-# Data Design
+## Data Design
 
-## Save Files
+### Save Files
 
 Each save file, or `savfile`, use the `.sav` extension, and is essentially
 a JSON text file compressed by Godot using the
@@ -165,3 +165,57 @@ Each key's purpose is described in more detail below.
             an array of two numbers as before, but we have an array of
             positions for each wire to indicate all of the grid squares
             the wire occupies, because wires may overlap.
+
+
+### Recovery Data
+
+The recovery data format will consist of single lines of text, each
+containing a JSON object that describes an alteration to the chip.
+
+The structure of the JSON object will vary according to the type of operation.
+
+* `"move_input"`
+    Example:
+    ```
+    { "op": "move_input", "input": "some_input", "pos": [x, y] }
+    ```
+* `"move_output"`
+    Example:
+    ```
+    { "op": "move_output", "output": "some_output", "pos": [x, y] }
+    ```
+* `"add_chip"`
+    Example:
+    ```
+    { "op": "add_chip", "id": "new_id", "type": "some_type", "pos": [x, y] }
+    ```
+* `"delete_chip"`
+    Example:
+    ```
+    { "op": "delete_chip", "id": "some_id" }
+    ```
+* `"add_wire"`
+    Example:
+    ```
+    { "op": "add_wire", "id": "new_id", "pos": [x, y] }
+    ```
+* `"delete_wire"`
+    Example:
+    ```
+    { "op": "delete_wire", "id": "some_id" }
+    ```
+* `"merge_wire"`
+    Example:
+    ```
+    { "op": "merege_wire", "id1": "some_id", "id2": "some_other_id" }
+    ```
+* `"split_wire"`
+    Example:
+    ```
+    { "op": "split_wire", "id": "some_id", "new_1": "new_id", "new_2": "another_new_id", "pos": [x, y] }
+    ```
+* `"rename_solution"`
+    Example:
+    ```
+    { "op": "rename_solution", "old": "solution_name", "new": "new_solution_name" }
+    ```
