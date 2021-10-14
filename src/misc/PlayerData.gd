@@ -74,30 +74,39 @@ func write_savfile(file_name: String, level_data: Dictionary) -> int:
 # returns an error code
 func update_from_rec(sav_data: Dictionary, rec_data: Array) -> void:
 
+	var err: int
+
 	for line in rec_data:
 		var rec_op = parse_json(line)
 		var op_type = rec_op["op"]
 
-		if   op_type == "MOVE_INPUT":
-			return move_input(sav_data, rec_op)
-		elif op_type == "MOVE_OUTPUT":
-			return move_output(sav_data, rec_op)
-		elif op_type == "ADD_CHIP":
-			return add_chip(sav_data, rec_op)
-		elif op_type == "DELETE_CHIP":
-			return delete_chip(sav_data, rec_op)
-		elif op_type == "ADD_WIRE":
-			return add_wire(sav_data, rec_op)
-		elif op_type == "DELETE_WIRE":
-			return delete_wire(sav_data, rec_op)
-		elif op_type == "MERGE_WIRE":
-			return merge_wire(sav_data, rec_op)
-		elif op_type == "SPLIT_WIRE":
-			return split_wire(sav_data, rec_op)
-		elif op_type == "RENAME_SOLUTION":
-			return rename_solution(sav_data, rec_op)
+		if   op_type == "move_input":
+			err = move_input(sav_data, rec_op)
+		elif op_type == "move_output":
+			err = move_output(sav_data, rec_op)
+		elif op_type == "add_chip":
+			err = add_chip(sav_data, rec_op)
+		elif op_type == "delete_chip":
+			err = delete_chip(sav_data, rec_op)
+		elif op_type == "add_wire":
+			err = add_wire(sav_data, rec_op)
+		elif op_type == "delete_wire":
+			err = delete_wire(sav_data, rec_op)
+		elif op_type == "add_wire":
+			err = add_wire(sav_data, rec_op)
+		elif op_type == "merge_wire":
+			err = merge_wire(sav_data, rec_op)
+		elif op_type == "split_wire":
+			err = split_wire(sav_data, rec_op)
+		elif op_type == "rename_solution":
+			err = rename_solution(sav_data, rec_op)
 		else:
-			return FAILED
+			err = FAILED
+
+		if err != OK:
+			break
+
+	return err
 
 
 # move_input(sav_data: Dictionary, rec_op: Dictionary) -> int
