@@ -2,6 +2,20 @@
 # player data. These can be used in whatever Scene/Node will be responsible
 # for loading player solution data when opening a level.
 
+# load_leveldata(level_name: String) -> Dictionary
+# Currently, just a very simple function to at least illustrate the basic
+# process I'm imagining for loading a player's saved data for a specified
+# level.
+func load_leveldata(level_name: String) -> Dictionary:
+
+	var sav_data := load_savfile("user://" + level_name + ".sav")
+	var rec_data := load_recfile("user://" + level_name + ".rec")
+
+	update_from_rec(sav_data, rec_data)
+
+	return sav_data
+
+
 # load_savfile(file_name: String) -> Dictionary
 # loads the data in a save file
 func load_savfile(file_name: String) -> Dictionary:
@@ -119,6 +133,6 @@ func move_input(sav_data: Dictionary, rec_op: Dictionary) -> int:
 	# Get the sub-dictionary for inputs
 	var inputs : Dictionary = solution["inputs"]
 
-	inputs[rec_op["changed_input"]] = rec_op["pos"]
+	inputs[rec_op["input"]] = rec_op["pos"]
 
 	return OK
