@@ -101,3 +101,67 @@ for i in inputs:
 
 In GDScript, `int` values are 64-bit integers, so the total bits of the
 chip inputs cannot exceed 64 for this type of dictionary.
+
+# Data Design
+
+## Save Files
+
+Each save file, or `savfile`, use the `.sav` extension, and is essentially
+a JSON text file compressed by Godot using the
+[Zstandard](https://facebook.github.io/zstd/) compression algorithm.
+It should consist of a single JSON object with similar contents to the
+following:
+
+```
+{
+    "level": "level-name",
+    "solutions": {
+        "some-solution": {
+            "inputs": {
+                "some-input-name": [x, y],
+                ...
+            },
+            "outputs": {
+                "some-output-name": [x, y],
+                ...
+            },
+            "chips": {
+                "some-chip-ID": { "type": "chip-type", "pos": [5, 0] },
+                ...
+            },
+            "wires": {
+                "some-wire-id": [ [x1, y1], [x2, y2], ... ],
+                ...
+            }
+        },
+        ...
+    }
+}
+```
+
+Each key's purpose is described in more detail below.
+
+* `"level"` - Maps to a string containing the level's name.
+* `"solutions"` - Maps to an object containing all of the user's solutions.
+* Solution object - There is one named "some-solution" in above example.
+                    This maps to an object describing the content of one of
+                    the player's solutions to this level.
+* `"inputs"` - This object should contain an entry for each of the chip inputs.
+             Each entry will have a string key mapped to an array of two
+             numbers representing the x and y values in the input's position.
+* `"outputs"` - This object should contain an entry for each of the chip
+              outputs. Each entry will have a string key mapped to an array
+              of two numbers representing the x and y values in the output's
+              position.
+* `"chips"` - An object mapping chip ID strings to objects representing chip
+            components placed by the player. Each of these objects will have
+            the following keys:
+
+                - `"type"` - The type of the chip as a string.
+                - `"pos"` - A an array of two numbers representing the x and y
+                          coordinates of the chip.
+
+* `"wires"` - Maps wire ID strings to arrays of positions. Each position is
+            an array of two numbers as before, but we have an array of
+            positions for each wire to indicate all of the grid squares
+            the wire occupies, because wires may overlap.
