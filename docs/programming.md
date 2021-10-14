@@ -35,7 +35,7 @@ var nand := {
     0b00: [1],
     0b01: [1],
     0b10: [1],
-    0b11: [0]
+    0b11: [0],
 }
 ```
 
@@ -126,12 +126,12 @@ following:
                 ...
             },
             "chips": {
-                "some-chip-ID": { "type": "chip-type", "pos": [5, 0] },
+                "some-chip-id": { "type": "chip-type", "pos": [5, 0] },
                 ...
             },
             "wires": {
                 "some-wire-id": {
-                    { "id": "some_segment_id", "pos": [x, y] },
+                    "id": { "some_segment_id", "pos": [x, y] },
                     ...
                 },
                 ...
