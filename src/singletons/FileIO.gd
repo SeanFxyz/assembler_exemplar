@@ -1,6 +1,4 @@
-# This script is a temporary place to implement some functions for handling
-# player data. These can be used in whatever Scene/Node will be responsible
-# for loading player solution data when opening a level.
+extends Node
 
 # load_leveldata(level_name: String) -> Dictionary
 # Currently, just a very simple function to at least illustrate the basic
