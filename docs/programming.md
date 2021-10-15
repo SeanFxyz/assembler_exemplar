@@ -21,21 +21,19 @@ Since more than one part of the program needs to know the correct output of
 a chip given a particular input, this singleton centralizes that
 functionality.
 
-Each chip will have a dictionary which has integer keys mapped to arrays
-[or dictionaries?]
-of integers. Each integer key contains a combination of the bits from all input
-values, and the corresponding array contains integer values representing each
-output that should
+Each chip will have a dictionary which has integer keys mapped to dictionaries
+containing output values.
+Each integer key contains a combination of the bits from all input
+values, and the corresponding dictionary contains integer values
+representing each output.
 For example, the `nand` dictionary would be as follows:
-(may revise so mapped values are dictionaries, rather than arrays)
 
 ```
-# (may revise so mapped values are dictionaries, rather than arrays)
 var nand := {
-    0b00: [1],
-    0b01: [1],
-    0b10: [1],
-    0b11: [0],
+    0b00: { "out": 1 },
+    0b01: { "out": 1 },
+    0b10: { "out": 1 },
+    0b11: { "out": 0 },
 }
 ```
 
@@ -63,12 +61,12 @@ The dictionary for this chip may look like this:
 
 ```
 var weird_chip := {
-    0b000000: [0b000001],
-    0b000001: [0b000010],
-    0b000010: [0b000011],
-    0b000011: [0b000100],
-    0b000100: [0b000101],
-    0b000101: [0b001011],
+    0b000000: { "out": 0b000001 },
+    0b000001: { "out": 0b000010 },
+    0b000010: { "out": 0b000011 },
+    0b000011: { "out": 0b000100 },
+    0b000100: { "out": 0b000101 },
+    0b000101: { "out": 0b001011 },
     ...
 ```
 
@@ -101,6 +99,7 @@ for i in inputs:
 
 In GDScript, `int` values are 64-bit integers, so the total bits of the
 chip inputs cannot exceed 64 for this type of dictionary.
+
 
 ## File Formats
 
