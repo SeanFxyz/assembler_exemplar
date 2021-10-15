@@ -27,6 +27,7 @@ var dmux : Dictionary = {
 # Enables finding chip dictionaries by name.
 var chips := {
 	"nand": nand,
+	"dmux": dmux,
 }
 
 # Find a chip I/O dictionary by name (case-insensitive)
