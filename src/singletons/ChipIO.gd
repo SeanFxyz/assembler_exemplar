@@ -6,7 +6,7 @@ extends Node
 # Function:  If a=b=1 then out=0 else out=1
 # Comment:   The gate is considered primitive and thus there is
 #            no need to implement it [in-game].
-var nand : Dictionary = {
+var nand := {
 	0b00: { "out": 1 },
 	0b01: { "out": 1 },
 	0b10: { "out": 1 },
@@ -17,12 +17,13 @@ var nand : Dictionary = {
 # Inputs:    in, sel
 # Outputs:   a, b
 # Function:  If sel=0 then {a=in, b=0} else {a=0, b=in}
-var dmux : Dictionary = {
+var dmux := {
 	0b00: { "a": 0, "b": 0 },
 	0b01: { "a": 0, "b": 0 },
 	0b10: { "a": 1, "b": 0 },
 	0b11: { "a": 0, "b": 1 },
 }
+
 
 # Enables finding chip dictionaries by name.
 var chips := {
