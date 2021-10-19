@@ -6,6 +6,53 @@ globally accessible from all scripts. They are good for holding data
 or code that needs to persist between scenes or simply needs to be
 accessible to various parts of the program.
 
+## `LevelData`
+
+`LevelData` is responsible for providing the "metadata" of game levels,
+meaning the data that is required to initially populate the info panels,
+chip selection menu(s), and other parts of the UI.
+
+`LevelData` should provide the following methods for accessing this data:
+
+* `get_levels() -> Array` - Returns a list of all level names.
+* `get_level_data(level: String) -> Dictionary` - Returns a dictionary
+    containing data for the level specified by parameter `level`.
+
+The dictionary returned by a call to `get_level_data` contains the
+following keys:
+
+* `"name"` - The name of the level (must be unique)
+* `"io_name"` - The name of the chip's dictionary in the `ChipIO` singleton.
+* `"depends"` - An array containing the names of levels which the player
+              needs to complete before attempting this one.
+* `"inputs"` - An array of objects representing inputs to the chip.
+             Each of these objects will have the following fields:
+
+             - `"name"` - The name of the input (string).
+             - `"nbits"` - The number of bits provided by the input (number).
+             - `"pos"` - The default position of the input (two-number array).
+
+* `"outputs"` - An array of objects representing outputs to the chip.
+             Each of these objects will have the following fields:
+
+             - `"name"` - The name of the output (string).
+             - `"nbits"` - The number of bits provided by the output (number).
+             - `"pos"` - The default position of the output (two-number array).
+
+## `PlayerData`
+
+`PlayerData` provides access to player-specific data, including the content
+of the player's solutions to levels, level completion status, scores, etc.
+It abstracts access to this data, so other parts of the program do not need
+deal directly with the serialization or storage of this data.
+
+For now, it will be using the `FileIO` singleton to save data in the file
+formats specified [here](file_formats.md), but future web or otherwise
+cloud-based implementations of *AE* may use other data storage methods,
+and `PlayerData` can be updated to use those instead, while
+gameplay-related code can simply rely on `PlayerData` to store data
+appropriately.
+
 ## `ChipIO`
 
 The `ChipIO` Singleton include pre-populated dictionaries mapping chip
@@ -94,3 +141,14 @@ for i in inputs:
 
 In GDScript, `int` values are 64-bit integers, so the total bits of the
 chip inputs cannot exceed 64 for this type of dictionary.
+
+
+## `FileIO`
+
+This singleton is home to code related to reading and writing *AE*'s
+file formats.
+It should probably only be used directly by data-handling
+singletons, such as `PlayerData`, so that other parts of the application
+can rely on these singletons as a layer of abstraction for access to
+different kinds of data, and the specifics of data storage and access
+can be changed without adjusting gameplay-related code.

@@ -1,11 +1,35 @@
 ###### *Assembler Exemplar* Programmer's Documentation
 # File Formats
 
-## Save Files
+## Score File
 
-Each save file, or `savfile`, use the `.sav` extension, and is essentially
+A score file `score.json` will be maintained for the player.
+This score file tracks
+level completion, the names of known valid solutions the player has created,
+and the scoring information for those solutions. It is an ordinary
+plaintext JSON file containing a JSON object with the following keys:
+
+* `"completed"` - An array containing the names of completed levels.
+* `"levels"` - An object mapping level names to objects containing
+               level-specific score data. These objects will each have the
+               following keys:
+
+             - `"top"` - a "score object" that records the top score achieved
+                         for the level, even if the solution that
+                         produced this score no longer exists or has been
+                         modified
+             - `"solutions"` - object mapping solution names to
+                               "score objects"
+
+## Solution Save Files
+
+Solution files describe the contents of the player's solutions to a
+particular level.
+
+Each solution file uses the `.sav` extension, and is
 a JSON text file compressed by Godot using the
-[Zstandard](https://facebook.github.io/zstd/) compression algorithm.
+[Zstandard](https://facebook.github.io/zstd/)
+compression algorithm.
 It should consist of a single JSON object with similar contents to the
 following:
 
@@ -72,9 +96,10 @@ Each key's purpose is described in more detail below.
 ## Recovery Data
 
 The recovery data format will consist of lines of text, each
-containing a JSON object that describes an alteration to the chip.
+containing a JSON object that describes an alteration to a particular
+solution of a particular level.
 
-The structure of the JSON object will vary according to the type of operation.
+The structure of the JSON object will vary according to the type of operation:
 
 * `"move_input"`
 
@@ -82,7 +107,7 @@ The structure of the JSON object will vary according to the type of operation.
 
     Example:
     ```
-    { "op": "move_input", "input": "some_input", "pos": [x, y] }
+    { "op": "move_input", "solution": "solution_name", "input": "some_input", "pos": [x, y] }
     ```
 
 * `"move_output"`
@@ -92,7 +117,7 @@ The structure of the JSON object will vary according to the type of operation.
 
     Example:
     ```
-    { "op": "move_output", "output": "some_output", "pos": [x, y] }
+    { "op": "move_output", "solution": "solution_name", "output": "some_output", "pos": [x, y] }
     ```
 
 * `"add_chip"`
@@ -102,7 +127,7 @@ The structure of the JSON object will vary according to the type of operation.
 
     Example:
     ```
-    { "op": "add_chip", "id": "new_id", "type": "some_type", "pos": [x, y] }
+    { "op": "add_chip", "solution": "solution_name", "id": "new_id", "type": "some_type", "pos": [x, y] }
     ```
 
 * `"delete_chip"`
@@ -111,7 +136,7 @@ The structure of the JSON object will vary according to the type of operation.
 
     Example:
     ```
-    { "op": "delete_chip", "id": "some_id" }
+    { "op": "delete_chip", "solution": "solution_name", "id": "some_id" }
     ```
 
 * `"add_wire"`
@@ -120,7 +145,7 @@ The structure of the JSON object will vary according to the type of operation.
 
     Example:
     ```
-    { "op": "add_wire", "id": "new_id" }
+    { "op": "add_wire", "solution": "solution_name", "id": "new_id" }
     ```
 
 * `"delete_wire"`
@@ -130,7 +155,7 @@ The structure of the JSON object will vary according to the type of operation.
 
     Example:
     ```
-    { "op": "delete_wire", "id": "some_id" }
+    { "op": "delete_wire", "solution": "solution_name", "id": "some_id" }
     ```
 
 * `"add_segment"`
@@ -140,7 +165,7 @@ The structure of the JSON object will vary according to the type of operation.
 
     Example:
     ```
-    { "op": "add_segment", "wire_id": "parent_wire_id", "id": "some_id", "pos": [x, y] }
+    { "op": "add_segment", "solution": "solution_name", "wire_id": "parent_wire_id", "id": "some_id", "pos": [x, y] }
     ```
 
 * `"delete_segment"`
@@ -150,7 +175,7 @@ The structure of the JSON object will vary according to the type of operation.
 
     Example:
     ```
-    { "op": "delete_segment", "wire_id": "parent_wire_id", "id": "some_id"}
+    { "op": "delete_segment", "solution": "solution_name", "wire_id": "parent_wire_id", "id": "some_id"}
     ```
 
 * `"rename_solution"`
