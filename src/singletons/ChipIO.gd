@@ -6,7 +6,7 @@ extends Node
 # Function:  If a=b=1 then out=0 else out=1
 # Comment:   The gate is considered primitive and thus there is
 #            no need to implement it [in-game].
-var nand := {
+var Nand := {
 	0b00: { "out": 1 },
 	0b01: { "out": 1 },
 	0b10: { "out": 1 },
@@ -32,14 +32,14 @@ var Or := {
 	0b11: { "out": 1 },
 }
 
-var xor := {
+var Xor := {
 	0b00: { "out": 0 },
 	0b01: { "out": 1 },
 	0b10: { "out": 1 },
 	0b11: { "out": 0 },
 }
 
-var mux := {
+var Mux := {
 	0b000: { "out": 0 },
 	0b010: { "out": 0 },
 	0b100: { "out": 1 },
@@ -54,7 +54,7 @@ var mux := {
 # Inputs:    in, sel
 # Outputs:   a, b
 # Function:  If sel=0 then {a=in, b=0} else {a=0, b=in}
-var dmux := {
+var DMux := {
 	0b00: { "a": 0, "b": 0 },
 	0b01: { "a": 0, "b": 0 },
 	0b10: { "a": 1, "b": 0 },
@@ -64,13 +64,13 @@ var dmux := {
 
 # Enables finding chip dictionaries by name.
 var chips := {
-	"nand": nand,
+	"nand": Nand,
 	"not": Not,
 	"and": And,
 	"or": Or,
-	"xor": xor,
-	"mux": mux,
-	"dmux": dmux,
+	"xor": Xor,
+	"mux": Mux,
+	"dmux": DMux,
 }
 
 # Find a chip I/O dictionary by name (case-insensitive)
