@@ -1,6 +1,5 @@
 extends Node
 
-# load_leveldata(level_name: String) -> Dictionary
 # Currently, just a very simple function to at least illustrate the basic
 # process I'm imagining for loading a player's saved data for a specified
 # level.
@@ -14,7 +13,6 @@ func load_leveldata(level_name: String) -> Dictionary:
 	return sav_data
 
 
-# load_savfile(file_name: String) -> Dictionary
 # loads the data in a save file
 func load_savfile(file_name: String) -> Dictionary:
 
@@ -41,7 +39,6 @@ func load_savfile(file_name: String) -> Dictionary:
 	return sav_data
 
 
-# load_recfile(file_name: String) -> Array
 # loads the data in a recovery file into an Array of the file's lines
 func load_recfile(file_name: String) -> Array:
 	var rec_data := []
@@ -62,7 +59,6 @@ func load_recfile(file_name: String) -> Array:
 	return rec_data
 
 
-# write_savfile(file_name: String, level_data: Dictionary) -> int
 # writes data from an appropriately formatted Dictionary to a savefile
 func write_savfile(file_name: String, level_data: Dictionary) -> int:
 
@@ -81,7 +77,6 @@ func write_savfile(file_name: String, level_data: Dictionary) -> int:
 	return OK
 
 
-# update_from_rec(save_data: Dictionary, rec_data: Array) -> void
 # Update a save data dictionary from an array of recovery file lines.
 # returns an error code
 func update_from_rec(sav_data: Dictionary, rec_data: Array) -> void:
