@@ -1,12 +1,17 @@
 extends Node
 
+
+var _scorefile_name := "user://score.json"
+var _save_location  := "user://save/"
+
+
 # Currently, just a very simple function to at least illustrate the basic
 # process I'm imagining for loading a player's saved data for a specified
 # level.
 func load_leveldata(level_name: String) -> Dictionary:
 
-	var sav_data := load_savfile("user://" + level_name + ".sav")
-	var rec_data := load_recfile("user://" + level_name + ".rec")
+	var sav_data := load_savfile("user://save/" + level_name + ".sav")
+	var rec_data := load_recfile("user://save/" + level_name + ".rec")
 
 	update_from_rec(sav_data, rec_data)
 
