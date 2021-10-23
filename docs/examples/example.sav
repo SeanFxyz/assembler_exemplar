@@ -1,24 +1,21 @@
 {
-    "level": "and",
+    "level": "level-name",
     "solutions": {
-        "Solution 1": {
+        "some-solution": {
             "inputs": {
-                "a": [0, 0],
-                "b": [0, 2]
+                "some-input-name": [x, y],
             },
             "outputs": {
-                "out": [1, 12]
+                "some-output-name": [x, y],
             },
             "chips": {
-                "0": { "type": "nand", "pos": [5, 0] },
-                "1": { "type": "not", "pos": [10, 1] }
+                "some-chip-id": { "type": "chip-type", "pos": [5, 0] },
             },
             "wires": {
-                "0": [ [1, 0], [2, 0], [3, 0], [4, 0] ],
-                "1": [ [1, 2], [2, 2], [3, 2], [4, 2] ],
-                "2": [ [8, 1], [9, 1] ],
-                "3": [ [11, 1] ]
+                "some-wire-id": {
+                    "id": { "some_segment_id", "pos": [x, y] },
+                },
             }
-        }
+        },
     }
 }
