@@ -17,13 +17,29 @@ var _solution_template := {
 }
 
 
+# The name of the current level. When the player opens a level in the Chip
+# Designer, this should be updated.
+var current_level := "" setget set_current_level
+
 # Solutions data for the current level.
 var solutions : Dictionary
 
 
-# The name of the current level. When the player opens a level in the Chip
-# Designer, this should be updated.
-var current_level := "" setget set_current_level
+# Current solution to be updated. Should be updated when the user
+# switches solutions.
+var current_solution : String setget set_current_solution
+
+# Inputs for the current selected solution
+var inputs : Dictionary
+
+# Outputs for the current selected solution
+var outputs: Dictionary
+
+# Chips in the curernt solution
+var chips: Dictionary
+
+# Wires in the current solution
+var wires: Dictionary
 
 
 # Set current level and load its data.
@@ -37,10 +53,6 @@ func set_current_level(level: String) -> bool:
 
 	return true
 
-
-# Current solution to be updated. Should be updated when the user
-# switches solutions.
-var current_solution : String setget set_current_solution
 
 
 # Sets the current solution and updates relevant references accordingly.
@@ -88,111 +100,36 @@ func delete_solution(sol_name: String) -> bool:
 
 
 # set an input's x/y position
-set_input_pos(solution: String, input: String, pos: Vector2) -> bool:
-	inputs["pos"] = [pos.x, pos.y]
-	return true
+func move_input(input: String, pos: Vector2) -> void:
+	inputs[input]["pos"] = [pos.x, pos.y]
+	# TODO: queue appending action to recovery file
 
 
 # set an output's x/y position
-set_output_pos(input: String, pos: Vector2) -> bool:
-	outputs["pos"] = [pos.x, pos.y]
-	return true
+func move_output(output: String, pos: Vector2) -> void:
+	outputs[output]["pos"] = [pos.x, pos.y]
+	# TODO: queue appending action to recovery file
 
 
-# Update solution data from recovery data
-func update_from_rec(solutions: Dictionary, rec_data: Array) -> int:
-
-	var err := OK
-
-	for rec_op in rec_data:
-		var op_type : String = rec_op["op"]
-
-		if   op_type == "move_input":
-			err = move_input(sav_data, rec_op)
-		elif op_type == "move_output":
-			err = move_output(sav_data, rec_op)
-		elif op_type == "add_chip":
-			err = add_chip(sav_data, rec_op)
-		elif op_type == "delete_chip":
-			err = delete_chip(sav_data, rec_op)
-		elif op_type == "add_wire":
-			err = add_wire(sav_data, rec_op)
-		elif op_type == "delete_wire":
-			err = delete_wire(sav_data, rec_op)
-		elif op_type == "extend_wire":
-			err = extend_wire(sav_data, rec_op)
-		elif op_type == "merge_wire":
-			err = merge_wire(sav_data, rec_op)
-		elif op_type == "split_wire":
-			err = split_wire(sav_data, rec_op)
-		elif op_type == "rename_solution":
-			err = rename_solution(sav_data, rec_op)
-		else:
-			err = FAILED
-
-		if err != OK:
-			break
-
-	return err
+# add a chip at the given position
+func add_chip(chip_id: int, chip_type: String, pos: Vector2) -> void:
+	chips[chip_id] = { "type": chip_type, pos: [pos.x, pos.y] }
+	# TODO: queue appending action to recovery file
 
 
-# move an input's x/y position in sav_data as specified by rec_op,
-# returning error code
-func move_input(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	# Get the sub-dictionary for the particular solution being modified
-	var solution : Dictionary = sav_data["solutions"][rec_op["solutions"]]
-
-	# Get the sub-dictionary for inputs
-	var inputs : Dictionary = solution["inputs"]
-
-	inputs[rec_op["input"]] = rec_op["pos"]
-
-	return OK
+# delete the chip specified from the current solution
+func delete_chip(chip_id: int) -> void:
+	chips.erase(chip_id)
+	# TODO: queue appending action to recovery file
 
 
-# move an ouput's x/y position in sav_data as specified by rec_op,
-# returning error code
-func move_output(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
+# set the position of the existing chip speicified
+func move_chip(chip_id: int, pos: Vector2) -> void:
+	chips[chip_id]["pos"] = [pos.x, pos.y]
+	# TODO: queue appending action to recovery file
 
 
-# add a chip to sav_data according to the "id", "type", and "pos"
-# specified in rec_op
-func add_chip(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# delete a chip from sav_data according to the "id" specified in
-# rec_op
-func delete_chip(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# add a new wire to sav_data according to the "id" and "pos" specified
-# in rec_op
-func add_wire(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# delete a wire from sav_data according to the "id" value specified by
-# rec_op's "id" value.
-func delete_wire(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# add a segment with id "id" and position "pos" to wire "wire_id"
-# in sav_data using values given in rec_op
-func add_segment(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# delete a segment with id "id" from wire "wire_id"
-# in sav_data using values given in rec_op
-func delete_segment(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# rename the solution in sav_data specified by rec_op's "old" key with
-# the new name given in the "new" key
-func rename_solution(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
+# add a wire segment at the given position
+func add_segment(seg_id: int, wire_id: int, pos: Vector2) -> void:
+	wires[wire_id][seg_id] = [pos.x, pos.y]
+	# TODO: queue appending action to recovery file
