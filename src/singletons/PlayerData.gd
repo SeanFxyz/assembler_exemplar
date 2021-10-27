@@ -45,14 +45,11 @@ var wires: Dictionary
 # Set current level and load its data.
 # If the level has no existing solutions, create one with the default
 # name.
-func set_current_level(level: String) -> bool:
+func set_current_level(level: String) -> void:
 
 	solutions = FileIO.load_leveldata(level)
 
 	current_level = level
-
-	return true
-
 
 
 # Sets the current solution and updates relevant references accordingly.
@@ -60,7 +57,7 @@ func set_current_solution(new_value: String) -> void:
 	current_solution = new_value
 
 	if not solutions.has(current_solution):
-		create_solution(current_solution
+		create_solution(current_solution)
 
 	inputs  = solutions[current_solution]["inputs"]
 	outputs = solutions[current_solution]["outputs"]
@@ -79,6 +76,7 @@ func create_solution(new_name: String) -> bool:
 
 # Rename a solution for the current level.
 func rename_solution(old_name: String, new_name: String) -> bool:
+	# TODO: check that the name doesn't already exist
 	solutions[new_name] = solutions[old_name].duplicate()
 	if current_solution == old_name:
 		set_current_solution(new_name)

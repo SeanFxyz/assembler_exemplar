@@ -26,50 +26,46 @@ plaintext JSON file containing a JSON object with the following keys:
 Solution files describe the contents of the player's solutions to a
 particular level.
 
-Each solution file uses the `.sav` extension, and is
-a JSON text file compressed by Godot using the
+Each solution file uses the `.sav` extension, and contains a
+Base64 encoding of a GDScript Dictionary, endoded using Godot's `Marshals`
+class.
+The file is compressed by Godot using the
 [Zstandard](https://facebook.github.io/zstd/)
 compression algorithm.
-It should consist of a single JSON object with similar contents to the
+It should consist of a single Dictionary with contents similar to the
 following:
 
 ```
 {
-    "level": "level-name",
-    "solutions": {
-        "some-solution": {
-            "inputs": {
-                "some-input-name": [x, y],
-                ...
-            },
-            "outputs": {
-                "some-output-name": [x, y],
-                ...
-            },
-            "chips": {
-                "some-chip-id": { "type": "chip-type", "pos": [5, 0] },
-                ...
-            },
-            "wires": {
-                "some-wire-id": {
-                    "id": { "some_segment_id", "pos": [x, y] },
-                    ...
-                },
-                ...
-            }
+    "Solution 1": {
+        "inputs": {
+            "some-input-name": [x, y],
+            ...
         },
-        ...
-    }
+        "outputs": {
+            "some-output-name": [x, y],
+            ...
+        },
+        "chips": {
+            1: { "type": "chip-type", "pos": [5, 0] },
+            ...
+        },
+        "wires": {
+            1: {
+                1: { "some_segment_id", "pos": [x, y] },
+                ...
+            },
+            ...
+        }
+    },
+    ...
 }
 ```
 
 Each key's purpose is described in more detail below.
 
-* `"level"` - Maps to a string containing the level's name.
-* `"solutions"` - Maps to an object containing all of the user's solutions.
-* Solution object - There is one named "some-solution" in above example.
-                    This maps to an object describing the content of one of
-                    the player's solutions to this level.
+* Solution name - At the top level, we have a dictionary mapping solution
+                  names to corresponding dictionaries.
 * `"inputs"` - This object should contain an entry for each of the chip inputs.
              Each entry will have a string key mapped to an array of two
              numbers representing the x and y values in the input's position.
@@ -89,6 +85,7 @@ Each key's purpose is described in more detail below.
 * `"wires"` - Maps wire ID strings wire objects
             Each wire object in turn maps segment IDs to segment objects,
             which have the following keys:
+
                 - `"id"` - The id of the segment.
                 - `"pos"` - The position of the segment
 
@@ -96,10 +93,10 @@ Each key's purpose is described in more detail below.
 ## Recovery Data
 
 The recovery data format will consist of lines of text, each
-containing a JSON object that describes an alteration to a particular
-solution of a particular level.
+containing a Base64 encoding of a GDScript Dictionary which describes
+modifications to the solutions of a particular level.
 
-The structure of the JSON object will vary according to the type of operation:
+The structure of the Dictionary will vary according to the type of operation:
 
 * `"move_input"`
 
