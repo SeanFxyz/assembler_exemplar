@@ -11,6 +11,7 @@ config_version=4
 [application]
 
 config/name="Assembler Exemplar"
+run/main_scene="res://scenes/ChipDesigner/ChipDesigner.tscn"
 config/icon="res://images/icon.png"
 
 [autoload]
