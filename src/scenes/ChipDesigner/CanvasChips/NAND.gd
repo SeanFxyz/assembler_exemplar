@@ -1,5 +1,4 @@
-extends KinematicBody2D
-
+extends Area2D
 
 # Where to implement inputs
 var inputs = {

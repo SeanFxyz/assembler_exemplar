@@ -7,7 +7,7 @@ extends Node
 
 # If err == OK == 0, does nothing. Otherwise, prints err_msg and quits
 # the application.
-func _check_err(err_msg: String = "File I/O error", err: int) -> void:
+func _check_err(err_msg: String, err: int) -> void:
 	if err != OK:
 		print(err_msg)
 		get_tree().quit()
