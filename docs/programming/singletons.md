@@ -28,16 +28,16 @@ following keys:
 * `"inputs"` - An array of objects representing inputs to the chip.
              Each of these objects will have the following fields:
 
-             - `"name"` - The name of the input (string).
-             - `"nbits"` - The number of bits provided by the input (number).
-             - `"pos"` - The default position of the input (two-number array).
+     - `"name"` - The name of the input (string).
+     - `"nbits"` - The number of bits provided by the input (number).
+     - `"pos"` - The default position of the input (two-number array).
 
 * `"outputs"` - An array of objects representing outputs to the chip.
              Each of these objects will have the following fields:
 
-             - `"name"` - The name of the output (string).
-             - `"nbits"` - The number of bits provided by the output (number).
-             - `"pos"` - The default position of the output (two-number array).
+     - `"name"` - The name of the output (string).
+     - `"nbits"` - The number of bits provided by the output (number).
+     - `"pos"` - The default position of the output (two-number array).
 
 ## `PlayerData`
 
