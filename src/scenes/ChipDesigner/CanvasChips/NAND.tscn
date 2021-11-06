@@ -21,5 +21,14 @@ centered = false
 [node name="Inputs" type="Node2D" parent="."]
 
 [node name="A" type="Area2D" parent="Inputs"]
+position = Vector2( 0, 32 )
+
+[node name="B" type="Area2D" parent="Inputs"]
+position = Vector2( 0, 96 )
+
+[node name="Outputs" type="Node2D" parent="."]
+
+[node name="Output" type="Area2D" parent="Outputs"]
+position = Vector2( 128, 64 )
 
 [connection signal="input_event" from="." to="." method="_on_Drag"]

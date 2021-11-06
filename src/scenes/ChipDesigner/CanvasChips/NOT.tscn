@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://images/NOT.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 39.9554, 23.4555 )
+
+[node name="NOT" type="Area2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.634921, 0.64 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 40.0446, 23.7055 )
+shape = SubResource( 1 )
+
+[node name="input" type="Node2D" parent="."]
+
+[node name="in" type="Area2D" parent="input"]
+
+[node name="Output" type="Node2D" parent="."]
+position = Vector2( 0, 24 )
+
+[node name="out" type="Area2D" parent="Output"]
+position = Vector2( 80, 24 )
