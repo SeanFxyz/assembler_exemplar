@@ -30,5 +30,3 @@ position = Vector2( 0, 96 )
 
 [node name="Output" type="Area2D" parent="Outputs"]
 position = Vector2( 128, 64 )
-
-[connection signal="input_event" from="." to="." method="_on_Drag"]
