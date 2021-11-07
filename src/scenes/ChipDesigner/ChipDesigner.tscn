@@ -19,6 +19,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="NAND" parent="." instance=ExtResource( 1 )]
+
+[node name="NOT" parent="." instance=ExtResource( 3 )]
+visible = false
+
 [node name="AND" parent="." instance=ExtResource( 7 )]
 
 [node name="OR" parent="." instance=ExtResource( 8 )]
