@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/AND.png-aca914f508181ecac8f5af9439539345.stex"
+path="res://.import/XOR.png-b44288182990d7f755398dee73074eb2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/AND.png"
-dest_files=[ "res://.import/AND.png-aca914f508181ecac8f5af9439539345.stex" ]
+source_file="res://images/chips/XOR.png"
+dest_files=[ "res://.import/XOR.png-b44288182990d7f755398dee73074eb2.stex" ]
 
 [params]
 

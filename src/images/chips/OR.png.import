@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/MUX.png-78cc82f786ba2e4bc0a9bcc05a132573.stex"
+path="res://.import/OR.png-509e32feee991015fa79d50411ec989d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/MUX.png"
-dest_files=[ "res://.import/MUX.png-78cc82f786ba2e4bc0a9bcc05a132573.stex" ]
+source_file="res://images/chips/OR.png"
+dest_files=[ "res://.import/OR.png-509e32feee991015fa79d50411ec989d.stex" ]
 
 [params]
 

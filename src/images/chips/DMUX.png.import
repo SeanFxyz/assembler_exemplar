@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/NAND.png-313c1de7debcce1f8713eac78415252a.stex"
+path="res://.import/DMUX.png-c6f62ef786dad8ed7bd7bacd41b6bc44.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/NAND.png"
-dest_files=[ "res://.import/NAND.png-313c1de7debcce1f8713eac78415252a.stex" ]
+source_file="res://images/chips/DMUX.png"
+dest_files=[ "res://.import/DMUX.png-c6f62ef786dad8ed7bd7bacd41b6bc44.stex" ]
 
 [params]
 
@@ -28,7 +28,6 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
-process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

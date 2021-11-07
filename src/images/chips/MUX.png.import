@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/DMUX.png-d5c71c3dc5ddd6684e22f9f1c541bcd4.stex"
+path="res://.import/MUX.png-9114325b207090441256b35a26c32f98.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/DMUX.png"
-dest_files=[ "res://.import/DMUX.png-d5c71c3dc5ddd6684e22f9f1c541bcd4.stex" ]
+source_file="res://images/chips/MUX.png"
+dest_files=[ "res://.import/MUX.png-9114325b207090441256b35a26c32f98.stex" ]
 
 [params]
 
