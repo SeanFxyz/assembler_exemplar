@@ -8,6 +8,13 @@ extends Node
 #    * Periodically update the current level's .sav file
 #      (this should also clear the recovery file).
 
+
+# The name to give a new solution created by the player.
+# Must contain a %d placeholder, which will be replaced by a number
+# when a new solution name is requested.
+var new_solution_base_name := "Solution %d"
+
+
 # template structure for player solutions
 var _solution_template := {
 	"inputs": {},
@@ -45,11 +52,11 @@ var wires: Dictionary
 # Set current level and load its data.
 # If the level has no existing solutions, create one with the default
 # name.
-func set_current_level(level: String) -> void:
+func set_current_level(new_value: String) -> void:
+	var rec_data : Array
+	FileIO.load_leveldata(new_value, solutions, rec_data)
 
-	solutions = FileIO.load_leveldata(level)
-
-	current_level = level
+	current_level = new_value
 
 
 # Sets the current solution and updates relevant references accordingly.
@@ -63,6 +70,27 @@ func set_current_solution(new_value: String) -> void:
 	outputs = solutions[current_solution]["outputs"]
 	chips   = solutions[current_solution]["chips"]
 	wires   = solutions[current_solution]["wires"]
+
+
+func _ready():
+	pass
+
+
+func new_solution_name():
+	if (solutions):
+		var new_solution_num := 1 
+		var new_solution_name := new_solution_base_name % new_solution_num
+		for sol in solutions:
+			if new_solution_name == sol:
+				new_solution_num += 1
+				new_solution_name = new_solution_base_name % new_solution_num
+		return new_solution_base_name % new_solution_num
+	else:
+		return "solution"
+
+
+func save() -> void:
+	pass
 
 
 # Create a new solution for the current level.

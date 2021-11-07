@@ -7,7 +7,7 @@ extends Node
 
 # If err == OK == 0, does nothing. Otherwise, prints err_msg and quits
 # the application.
-func _check_err(err_msg: String, err: int) -> void:
+func _check_err(err: int, err_msg: String) -> void:
 	if err != OK:
 		print(err_msg)
 		get_tree().quit()
@@ -41,20 +41,37 @@ func open_recfile(level_name: String) -> File:
 	var file_name := _save_location + level_name + ".rec"
 
 	var err := file.open(file_name, File.READ_WRITE)
-	_check_err("Could not open rec file for appending.", err)
+	_check_err(err, "Could not open rec file for appending.")
 
 	file.seek_end()
 
 	return file
 
 
-# Load the sav file for a given level name and return the level's
-# save data.
-func load_leveldata(level_name: String) -> Dictionary:
+# Get save file name for the given level name
+func level_to_savfile(level_name: String) -> String:
+	return _save_location + level_name + ".sav"
 
+
+# Get recovery file name for the given level name
+func level_to_recfile(level_name: String) -> String:
+	return _save_location + level_name + ".rec"
+	
+
+# Load the sav file and rec file for a given level name.
+# Sets sol_ref to point to a solutions dictionary and rec_ref to a
+# recovery data array.
+# Returns error code
+func load_leveldata(level_name: String,
+					sol_ref: Dictionary,
+					rec_ref: Array) -> void:
+
+	sol_ref = {}
+	rec_ref = []
+	
 	# evaluate filenames for savfile and recfile
-	var savfile_name := _save_location + level_name + ".sav"
-	var recfile_name := _save_location + level_name + ".rec"
+	var savfile_name := level_to_savfile(level_name)
+	var recfile_name := level_to_recfile(level_name)
 
 	# Check if savfile exists. If not, create a template file for the level.
 	var file := File.new()
@@ -62,19 +79,18 @@ func load_leveldata(level_name: String) -> Dictionary:
 		write_savfile(savfile_name, {})
 
 	# Load sav data.
-	var solutions := load_savfile(savfile_name)
+	sol_ref = load_savfile(savfile_name)
 
 	# If rec file exists...
 	if file.file_exists(recfile_name):
-
 		# Load the rec file
-		var rec_data := load_recfile(recfile_name)
+		rec_ref = load_recfile(recfile_name)
+		
 
-		# Update loaded level data from the recfile.
-		var err := update_from_rec(sav_data, rec_data)
-		_check_err("Unable to update from loaded rec file", err)
-
-	return solutions
+func save_leveldata(level_name: String, solutions: Dictionary) -> void:
+	# evaluate filenames for savfile and recfile
+	var savfile_name := _save_location + level_name + ".sav"
+	var recfile_name := _save_location + level_name + ".rec"
 
 
 # loads the data in a save file
@@ -83,7 +99,7 @@ func load_savfile(file_name: String) -> Dictionary:
 	var file := File.new()
 	var err := file.open_compressed(file_name, File.READ, File.COMPRESSION_ZSTD)
 
-	_check_err("Could not load save file.", err)
+	_check_err(err, "Could not load save file.")
 
 	var solutions: Dictionary = Marshalls.base64_to_variant(file.get_as_text())
 	file.close()
@@ -116,11 +132,11 @@ func load_recfile(file_name: String) -> Array:
 	var file := File.new()
 	var err := file.open(file_name, File.READ)
 
-	_check_err("Could not read recfile.", err)
+	_check_err(err, "Could not read recfile.")
 	if err == ERR_FILE_NOT_FOUND:
 		return rec_data
 	else:
-		_check_err("Could not read recfile.", err)
+		_check_err(err, "Could not read recfile.")
 
 	while (true):
 		var line := file.get_line()
@@ -130,102 +146,3 @@ func load_recfile(file_name: String) -> Array:
 			break
 
 	return rec_data
-
-
-# Update solution data from recovery data
-func update_from_rec(solutions: Dictionary, rec_data: Array) -> int:
-
-	var err := OK
-
-	for rec_op in rec_data:
-		var op_type : String = rec_op["op"]
-
-		if   op_type == "move_input":
-			err = move_input(sav_data, rec_op)
-		elif op_type == "move_output":
-			err = move_output(sav_data, rec_op)
-		elif op_type == "add_chip":
-			err = add_chip(sav_data, rec_op)
-		elif op_type == "delete_chip":
-			err = delete_chip(sav_data, rec_op)
-		elif op_type == "add_wire":
-			err = add_wire(sav_data, rec_op)
-		elif op_type == "delete_wire":
-			err = delete_wire(sav_data, rec_op)
-		elif op_type == "extend_wire":
-			err = extend_wire(sav_data, rec_op)
-		elif op_type == "merge_wire":
-			err = merge_wire(sav_data, rec_op)
-		elif op_type == "split_wire":
-			err = split_wire(sav_data, rec_op)
-		elif op_type == "rename_solution":
-			err = rename_solution(sav_data, rec_op)
-		else:
-			err = FAILED
-
-		if err != OK:
-			break
-
-	return err
-
-
-# move an input's x/y position in sav_data as specified by rec_op,
-# returning error code
-func move_input(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	# Get the sub-dictionary for the particular solution being modified
-	var solution : Dictionary = sav_data["solutions"][rec_op["solutions"]]
-
-	# Get the sub-dictionary for inputs
-	var inputs : Dictionary = solution["inputs"]
-
-	inputs[rec_op["input"]] = rec_op["pos"]
-
-	return OK
-
-
-# move an ouput's x/y position in sav_data as specified by rec_op,
-# returning error code
-func move_output(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# add a chip to sav_data according to the "id", "type", and "pos"
-# specified in rec_op
-func add_chip(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# delete a chip from sav_data according to the "id" specified in
-# rec_op
-func delete_chip(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# add a new wire to sav_data according to the "id" and "pos" specified
-# in rec_op
-func add_wire(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# delete a wire from sav_data according to the "id" value specified by
-# rec_op's "id" value.
-func delete_wire(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# add a segment with id "id" and position "pos" to wire "wire_id"
-# in sav_data using values given in rec_op
-func add_segment(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# delete a segment with id "id" from wire "wire_id"
-# in sav_data using values given in rec_op
-func delete_segment(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
-
-
-# rename the solution in sav_data specified by rec_op's "old" key with
-# the new name given in the "new" key
-func rename_solution(sav_data: Dictionary, rec_op: Dictionary) -> int:
-	pass
