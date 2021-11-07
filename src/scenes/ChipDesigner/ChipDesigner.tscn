@@ -18,7 +18,6 @@ __meta__ = {
 }
 
 [node name="NAND" parent="." instance=ExtResource( 1 )]
-visible = false
 
 [node name="NOT" parent="." instance=ExtResource( 3 )]
 visible = false
