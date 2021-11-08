@@ -3,7 +3,7 @@ extends Area2D
 # Where to implement inputs
 var inputs = {
 }
-var snap_inc = 50
+var snap_inc = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

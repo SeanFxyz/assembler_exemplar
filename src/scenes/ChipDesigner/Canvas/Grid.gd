@@ -4,7 +4,7 @@ export var lower_x_bound = -10000
 export var upper_x_bound = 10000
 export var lower_y_bound = -10000
 export var upper_y_bound = 10000 
-export var snap_inc = 50
+export var snap_inc = 10
 export var grid_line_color = Color(.5, .5, .5, 1)
 #onready var view_rect = get_viewport().get_visible_rect()
 

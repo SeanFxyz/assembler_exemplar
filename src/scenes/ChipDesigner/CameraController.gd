@@ -4,7 +4,7 @@ extends Camera2D
 var zoom_cur := 1.0
 
 # Minimum zoom level
-var zoom_min := 1.0
+var zoom_min := .5
 
 # Maximum zoom level
 var zoom_max := 5.0
