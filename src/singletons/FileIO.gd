@@ -87,15 +87,14 @@ func load_leveldata(level_name: String,
 		rec_ref = load_recfile(recfile_name)
 		
 
+# Save the given solutions data to the save file for the names level
 func save_leveldata(level_name: String, solutions: Dictionary) -> void:
-	# evaluate filenames for savfile and recfile
-	var savfile_name := _save_location + level_name + ".sav"
-	var recfile_name := _save_location + level_name + ".rec"
+	var savfile_name := level_to_savfile(level_name)
+	write_savfile(savfile_name, solutions)
 
 
 # loads the data in a save file
 func load_savfile(file_name: String) -> Dictionary:
-
 	var file := File.new()
 	var err := file.open_compressed(file_name, File.READ, File.COMPRESSION_ZSTD)
 
@@ -108,7 +107,7 @@ func load_savfile(file_name: String) -> Dictionary:
 
 
 # writes data from an appropriately formatted Dictionary to a savefile
-func write_savfile(file_name: String, level_data: Dictionary) -> int:
+func write_savfile(file_name: String, data: Dictionary) -> int:
 
 	var file := File.new()
 	var err := file.open_compressed(
@@ -117,7 +116,7 @@ func write_savfile(file_name: String, level_data: Dictionary) -> int:
 		File.COMPRESSION_ZSTD)
 
 	if err == OK:
-		file.store_string(Marshalls.variant_to_base64(level_data))
+		file.store_string(Marshalls.variant_to_base64(data))
 
 	if file.is_open():
 		file.close()

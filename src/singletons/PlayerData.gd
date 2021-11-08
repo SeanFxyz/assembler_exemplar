@@ -89,8 +89,9 @@ func new_solution_name():
 		return "solution"
 
 
+# Triggers manual save for current level
 func save() -> void:
-	pass
+	FileIO.save_leveldata(current_level, solutions)
 
 
 # Create a new solution for the current level.
@@ -127,35 +128,29 @@ func delete_solution(sol_name: String) -> bool:
 
 # set an input's x/y position
 func move_input(input: String, pos: Vector2) -> void:
-	inputs[input]["pos"] = [pos.x, pos.y]
-	# TODO: queue appending action to recovery file
+	inputs[input]["pos"] = pos
 
 
 # set an output's x/y position
 func move_output(output: String, pos: Vector2) -> void:
-	outputs[output]["pos"] = [pos.x, pos.y]
-	# TODO: queue appending action to recovery file
+	outputs[output]["pos"] = pos
 
 
 # add a chip at the given position
 func add_chip(chip_id: int, chip_type: String, pos: Vector2) -> void:
-	chips[chip_id] = { "type": chip_type, pos: [pos.x, pos.y] }
-	# TODO: queue appending action to recovery file
+	chips[chip_id] = { "type": chip_type, pos: pos }
 
 
 # delete the chip specified from the current solution
 func delete_chip(chip_id: int) -> void:
 	chips.erase(chip_id)
-	# TODO: queue appending action to recovery file
 
 
 # set the position of the existing chip speicified
 func move_chip(chip_id: int, pos: Vector2) -> void:
-	chips[chip_id]["pos"] = [pos.x, pos.y]
-	# TODO: queue appending action to recovery file
+	chips[chip_id]["pos"] = pos
 
 
 # add a wire segment at the given position
 func add_segment(seg_id: int, wire_id: int, pos: Vector2) -> void:
-	wires[wire_id][seg_id] = [pos.x, pos.y]
-	# TODO: queue appending action to recovery file
+	wires[wire_id][seg_id] = pos
