@@ -20,6 +20,7 @@ size = Vector2( 1024, 600 )
 handle_input_locally = false
 usage = 0
 render_target_update_mode = 3
+physics_object_picking = true
 
 [node name="Camera2D" type="Camera2D" parent="Viewport"]
 current = true
