@@ -14,7 +14,6 @@ __meta__ = {
 }
 
 [node name="CanvasSwitcher" type="Tabs" parent="."]
-visible = false
 anchor_left = 0.2
 anchor_right = 0.8
 margin_top = 10.0
@@ -23,10 +22,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-current = true
 
 [node name="Canvas" parent="." instance=ExtResource( 3 )]
 anchor_left = 0.2
