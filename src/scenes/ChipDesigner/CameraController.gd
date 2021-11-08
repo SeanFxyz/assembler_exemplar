@@ -28,13 +28,12 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action("ui_zoom_out"):
 		zoom_cur = min(zoom_max, zoom_cur + zoom_inc)
 		zoom = Vector2(zoom_cur, zoom_cur)
-	elif event.is_action("ui_drag_camera"):
-		if not is_dragged:
-			return
-		elif event is InputEventMouseMotion:
-			position += event.position - prev_mouse_position
-			prev_mouse_position = event.position
-		if event.is_action_released("ui_drag_camera"):
-			prev_mouse_position = Vector2()
-			is_dragged = false
-		
+	elif event.is_action_pressed("ui_drag_camera"):
+		prev_mouse_position = event.position
+		is_dragged = true
+	elif event.is_action_released("ui_drag_camera"):
+		prev_mouse_position = Vector2()
+		is_dragged = false
+	elif is_dragged and event is InputEventMouseMotion:
+		position -= event.position - prev_mouse_position
+		prev_mouse_position = event.position
