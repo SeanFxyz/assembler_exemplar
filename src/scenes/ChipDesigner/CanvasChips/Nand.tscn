@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://images/chips/NAND.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/Nand.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64, 60.9454 )
@@ -19,5 +20,9 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="Inputs" type="Node2D" parent="."]
+
+[node name="ChipInput" parent="Inputs" instance=ExtResource( 3 )]
+
+[node name="ChipInput2" parent="Inputs" instance=ExtResource( 3 )]
 
 [node name="Outputs" type="Node2D" parent="."]
