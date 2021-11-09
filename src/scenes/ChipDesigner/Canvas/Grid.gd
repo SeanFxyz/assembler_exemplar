@@ -1,3 +1,4 @@
+tool
 extends Node2D
 
 export var lower_x_bound = -10000

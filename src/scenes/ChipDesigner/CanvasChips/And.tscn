@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://images/chips/AND.png" type="Texture" id=1]
+[ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipOutput.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 64, 48 )
+
+[node name="AND" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 64, 48 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 1.15315, 1.31507 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Inputs" type="Node2D" parent="."]
+
+[node name="ChipInput" parent="Inputs" instance=ExtResource( 4 )]
+position = Vector2( 0, 20 )
+
+[node name="ChipInput" parent="Inputs/ChipInput" instance=ExtResource( 4 )]
+position = Vector2( 0, 50 )
+
+[node name="Outputs" type="Node2D" parent="."]
+
+[node name="ChipOutput" parent="Outputs" instance=ExtResource( 3 )]
+position = Vector2( 120, 39.961 )

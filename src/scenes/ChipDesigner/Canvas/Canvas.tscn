@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/Canvas/Canvas.gd" type="Script" id=1]
-[ext_resource path="res://scenes/ChipDesigner/CanvasChips/NAND.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ChipDesigner/CanvasChips/Nand.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ChipDesigner/CameraController.gd" type="Script" id=3]
 [ext_resource path="res://scenes/ChipDesigner/Canvas/Grid.gd" type="Script" id=4]
 
