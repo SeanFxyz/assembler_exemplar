@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://images/chips/NOT.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipOutput.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ChipDesigner/CanvasChips/CanvasChip.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 39.9554, 23.4555 )
 
-[node name="NOT" type="Area2D"]
+[node name="Not" type="Area2D"]
+script = ExtResource( 4 )
+chip_type = "Not"
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.634921, 0.64 )
