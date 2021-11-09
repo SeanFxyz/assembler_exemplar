@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://images/chips/NAND.png" type="Texture" id=1]
-[ext_resource path="res://scenes/ChipDesigner/CanvasChips/NAND.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ChipDesigner/CanvasChips/Nand.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64, 60.9454 )
@@ -20,13 +20,4 @@ centered = false
 
 [node name="Inputs" type="Node2D" parent="."]
 
-[node name="A" type="Area2D" parent="Inputs"]
-position = Vector2( 0, 32 )
-
-[node name="B" type="Area2D" parent="Inputs"]
-position = Vector2( 0, 96 )
-
 [node name="Outputs" type="Node2D" parent="."]
-
-[node name="Output" type="Area2D" parent="Outputs"]
-position = Vector2( 128, 64 )

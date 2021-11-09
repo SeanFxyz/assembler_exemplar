@@ -18,16 +18,4 @@ shape = SubResource( 1 )
 
 [node name="Inputs" type="Node2D" parent="."]
 
-[node name="input" type="Area2D" parent="Inputs"]
-position = Vector2( 0, 32 )
-
-[node name="SEL" type="Area2D" parent="Inputs"]
-position = Vector2( 31.8949, 72.6353 )
-
 [node name="Outputs" type="Node2D" parent="."]
-
-[node name="A" type="Area2D" parent="Outputs"]
-position = Vector2( 64, 16 )
-
-[node name="B" type="Area2D" parent="Outputs"]
-position = Vector2( 64, 64 )

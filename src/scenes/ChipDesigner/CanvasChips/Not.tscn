@@ -18,10 +18,5 @@ shape = SubResource( 1 )
 
 [node name="Inputs" type="Node2D" parent="."]
 
-[node name="in" type="Area2D" parent="Inputs"]
-
 [node name="Outputs" type="Node2D" parent="."]
 position = Vector2( 0, 24 )
-
-[node name="output" type="Area2D" parent="Outputs"]
-position = Vector2( 80, 24 )
