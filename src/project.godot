@@ -20,6 +20,7 @@ ChipIO="*res://singletons/ChipIO.gd"
 FileIO="*res://singletons/FileIO.gd"
 PlayerData="*res://singletons/PlayerData.gd"
 Global="*res://singletons/Global.gd"
+LevelData="*res://singletons/LevelData.gd"
 
 [input]
 
