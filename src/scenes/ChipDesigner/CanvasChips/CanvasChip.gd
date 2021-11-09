@@ -1,9 +1,9 @@
-extends Node2D
+extends Area2D
 
 # Where to implement inputs
-var inputs = {
-}
 var snap_inc = 10
+
+export var chip_type := ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
