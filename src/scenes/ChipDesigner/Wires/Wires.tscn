@@ -4,9 +4,43 @@
 
 [node name="Wires" type="Node2D"]
 
-[node name="wire" type="Line2D" parent="."]
+[node name="HorizWire" type="Line2D" parent="."]
+visible = false
 modulate = Color( 0.92549, 0.0470588, 0.0470588, 1 )
-points = PoolVector2Array( 0, 0, 0, 0 )
-width = 4.0
+scale = Vector2( 2, 1 )
+points = PoolVector2Array( 4, 0, 0, 0, -4, 0 )
+width = 2.0
 default_color = Color( 1, 0, 0, 1 )
 script = ExtResource( 1 )
+
+[node name="VertWire" type="Line2D" parent="."]
+visible = false
+position = Vector2( 0, 5.48571 )
+scale = Vector2( 0.8, 1.25714 )
+points = PoolVector2Array( 0, 2, 0, -10.7273 )
+width = 2.0
+default_color = Color( 1, 0, 0, 1 )
+
+[node name="DownRight" type="Line2D" parent="."]
+visible = false
+points = PoolVector2Array( 0, -8, 0, -8, 0, 0, 8, 0 )
+width = 2.0
+default_color = Color( 1, 0, 0, 1 )
+
+[node name="DownLeft" type="Line2D" parent="."]
+visible = false
+points = PoolVector2Array( 0, 0, 0, -8, 0, -8, 0, -8, 0, 0, -8, 0 )
+width = 2.0
+default_color = Color( 1, 0, 0, 1 )
+
+[node name="UpRight" type="Line2D" parent="."]
+visible = false
+points = PoolVector2Array( 0, 0, 0, -8, 8, -8 )
+width = 2.0
+default_color = Color( 1, 0, 0, 1 )
+
+[node name="UpLeft" type="Line2D" parent="."]
+visible = false
+points = PoolVector2Array( 0, 0, 0, -8, -8, -8 )
+width = 2.0
+default_color = Color( 1, 0, 0, 1 )
