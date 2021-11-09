@@ -4,8 +4,7 @@ extends Node2D
 
 
 var seg_grid := {}
-var Segment : PackedScene = preload(
-	"res://ChipDesigner/Wire/WireSegment.tscn")
+var Segment: PackedScene=preload("res://scenes/ChipDesigner/Wire/WireSegment.tscn")
 
 onready var segs : Node2D = $Segments
 
