@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array(  )
+}
+
+[node name="WireTypes" type="Node2D"]
+
+[node name="Path2D" type="Path2D" parent="."]
+modulate = Color( 0.92549, 0.0470588, 0.0470588, 1 )
+curve = SubResource( 1 )
