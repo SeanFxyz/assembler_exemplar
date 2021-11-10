@@ -18,8 +18,7 @@ func _ready():
 
 
 func _on_Button_Chip1_pressed():
-	## Function to Send user to design chip 1 ()
-	pass # Replace with function body.
+	get_tree().change_scene("res://scenes/ChipDesigner/ChipDesigner.tscn")
 
 
 
