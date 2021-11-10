@@ -63,11 +63,11 @@ func level_to_recfile(level_name: String) -> String:
 # recovery data array.
 # Returns error code
 func load_leveldata(level_name: String,
-					sol_ref: Dictionary,
-					rec_ref: Array) -> void:
+					_sol_ref: Dictionary,
+					_rec_ref: Array) -> void:
 
-	sol_ref = {}
-	rec_ref = []
+	_sol_ref = {}
+	_rec_ref = []
 	
 	# evaluate filenames for savfile and recfile
 	var savfile_name := level_to_savfile(level_name)
@@ -79,12 +79,12 @@ func load_leveldata(level_name: String,
 		write_savfile(savfile_name, {})
 
 	# Load sav data.
-	sol_ref = load_savfile(savfile_name)
+	_sol_ref = load_savfile(savfile_name)
 
 	# If rec file exists...
 	if file.file_exists(recfile_name):
 		# Load the rec file
-		rec_ref = load_recfile(recfile_name)
+		_rec_ref = load_recfile(recfile_name)
 		
 
 # Save the given solutions data to the save file for the names level

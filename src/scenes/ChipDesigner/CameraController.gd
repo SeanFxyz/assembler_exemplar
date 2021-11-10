@@ -1,17 +1,5 @@
 extends Camera2D
 
-# Current zoom level
-var zoom_cur := 1.0
-
-# Minimum zoom level
-var zoom_min := .5
-
-# Maximum zoom level
-var zoom_max := 5.0
-
-# Zoom increment
-var zoom_inc := 0.1
-
 # Whether the camera is being dragged
 var is_dragged := false
 
@@ -19,18 +7,20 @@ var is_dragged := false
 var prev_mouse_position := Vector2()
 
 func _ready():
-	zoom = Vector2(zoom_cur, zoom_cur)
+	zoom = Vector2(CanvasInfo.zoom_cur, CanvasInfo.zoom_cur)
 
 func _input(event: InputEvent) -> void:
 	if (event is InputEventMouse and
 			get_viewport_rect().has_point(event.position)):
 		
-		if event.is_action("ui_zoom_in"):
-			zoom_cur = max(zoom_min, zoom_cur - zoom_inc)
-			zoom = Vector2(zoom_cur, zoom_cur)
-		elif event.is_action("ui_zoom_out"):
-			zoom_cur = min(zoom_max, zoom_cur + zoom_inc)
-			zoom = Vector2(zoom_cur, zoom_cur)
+		if event.is_action("ui_zoom_in") and CanvasInfo.chips_dragged <= 0:
+			CanvasInfo.zoom_cur = max(CanvasInfo.zoom_min,
+									  CanvasInfo.zoom_cur - CanvasInfo.zoom_inc)
+			zoom = Vector2(CanvasInfo.zoom_cur, CanvasInfo.zoom_cur)
+		elif event.is_action("ui_zoom_out") and CanvasInfo.chips_dragged <= 0:
+			CanvasInfo.zoom_cur = min(CanvasInfo.zoom_max,
+									  CanvasInfo.zoom_cur + CanvasInfo.zoom_inc)
+			zoom = Vector2(CanvasInfo.zoom_cur, CanvasInfo.zoom_cur)
 		elif event.is_action_pressed("ui_drag_camera"):
 			prev_mouse_position = event.position
 			is_dragged = true

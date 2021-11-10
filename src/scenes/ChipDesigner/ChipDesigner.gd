@@ -30,5 +30,4 @@ func _on_ItemList_nothing_selected():
 func _on_Canvas_mouse_on():
 	if item_selected == true:
 		item_selected = false
-		print("ChipDesginer: adding chip to canvas")
 		current_canvas.add_chip(chip_scenes[selected_item])

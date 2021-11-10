@@ -20,9 +20,12 @@ func _process(_delta):
 			emit_signal("mouse_off")
 		has_mouse = false
 
+
 func add_chip(chip_scene):
+	
 	var new_chip = chip_scene.instance()
-	new_chip.position = viewport.get_mouse_position()
+	new_chip.position = chip_container.get_local_mouse_position()
+	new_chip.prev_mouse_position = viewport.get_mouse_position()
 	new_chip.is_dragged = true
 
 	chip_container.add_child(new_chip)
