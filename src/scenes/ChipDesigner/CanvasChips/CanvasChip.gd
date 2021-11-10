@@ -14,12 +14,14 @@ var prev_mouse_position = Vector2()
 var is_dragged = false
 
 func _on_Drag(_viewport, event, _shape_idx):
+	
+	
 	# Allow dragging if user clicks CollisionShape2D
 	if event.is_action_pressed("ui_select"):
-		print(event)
 		get_tree().set_input_as_handled()
 		prev_mouse_position = event.position
 		is_dragged = true
+		CanvasInfo.chips_dragged += 1
 		
 func _input(event):
 	# Disable dragging if click is released
@@ -29,6 +31,7 @@ func _input(event):
 	if event.is_action_released("ui_select"):
 		prev_mouse_position = Vector2()
 		is_dragged = false
+		CanvasInfo.chips_dragged -= 1
 		# Snap to grid
 		position = position.snapped(Vector2(snap_inc, snap_inc))
 	
