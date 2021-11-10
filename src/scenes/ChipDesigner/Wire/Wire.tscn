@@ -3,6 +3,7 @@
 [ext_resource path="res://scenes/ChipDesigner/Wire/Wire.gd" type="Script" id=2]
 
 [node name="Wire" type="Node2D"]
+modulate = Color( 1, 0, 0, 1 )
 script = ExtResource( 2 )
 
 [node name="Segments" type="Node2D" parent="."]

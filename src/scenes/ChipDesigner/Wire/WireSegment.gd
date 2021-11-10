@@ -1,16 +1,32 @@
-extends Sprite
+extends Node2D
 
-onready var modulator : CanvasModulate = $CanvasModulate
+onready var sprite : AnimatedSprite = $AnimatedSprite
 
-enum SegSprite {
-	ALL = 0,
-	LEFT = 1,
-	RIGHT = 2,
-	UP = 3,
-	DOWN = 4,
-	LEFT_RIGHT = 5,
-	UP_DOWN = 6
-}
+var is_dragged : bool
+var grid_pos   : GridPos setget set_grid_pos
 
-func set_color(color: Color):
-	modulator.color = color
+signal extend_wire(x, y)
+
+
+func set_shape(shape: int):
+	sprite.frame = shape
+
+
+func set_grid_pos(new_value: GridPos):
+	grid_pos = new_value
+	position.x = grid_pos.x
+	position.y = grid_pos.y
+	position *= CanvasInfo.grid_inc
+
+
+func _on_input_event(_viewport, event, _shape_idx):
+	if event.is_action_pressed("ui_select"):
+		get_tree().set_input_as_handled()
+		is_dragged = true
+
+
+func _on_mouse_exited():
+	if is_dragged:
+		print("Segment: extend wire")
+		emit_signal("extend_wire", grid_pos)
+		is_dragged = false

@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "GridPos",
+"language": "GDScript",
+"path": "res://classes/GridPos.gd"
+} ]
+_global_script_class_icons={
+"GridPos": ""
+}
+
 [application]
 
 config/name="Assembler Exemplar"

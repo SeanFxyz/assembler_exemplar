@@ -1,10 +1,13 @@
 extends Node
 
 # Grid square size
-var grid_inc : int = 10
+const grid_inc : int = 10
 
 # How many chips are being dragged
 var chips_dragged : int = 0
+
+# How many entities the mouse is touching
+var entities_hovered : int = 0
 
 # Current zoom level
 var zoom_cur : float = 1.0
