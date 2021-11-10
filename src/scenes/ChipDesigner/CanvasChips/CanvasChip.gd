@@ -5,6 +5,8 @@ var snap_inc = 10
 
 export var chip_type := ""
 
+onready var sprite_rect : Rect2 = $Sprite.get_rect()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# warning-ignore:return_value_discarded

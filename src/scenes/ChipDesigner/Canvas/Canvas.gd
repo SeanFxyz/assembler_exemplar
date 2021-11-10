@@ -38,6 +38,12 @@ func add_chip(chip_scene: PackedScene):
 	
 	var new_chip = chip_scene.instance()
 	new_chip.position = chip_container.get_local_mouse_position()
+	
+	# TODO: THIS SECTION IS DISGUSTING FIX IT
+	var sprite = new_chip.get_node("Sprite")
+	new_chip.position -= sprite.get_rect().size * sprite.scale / 2
+	
+	
 	new_chip.prev_mouse_position = viewport.get_mouse_position()
 	new_chip.is_dragged = true
 
