@@ -25,7 +25,12 @@ func _on_input_event(_viewport, event, _shape_idx):
 		is_dragged = true
 
 
+func _on_mouse_entered():
+	CanvasInfo.entities_hovered += 1
+
+
 func _on_mouse_exited():
+	CanvasInfo.entities_hovered -= 1
 	if is_dragged:
 		print("Segment: extend wire")
 		emit_signal("extend_wire", grid_pos)
