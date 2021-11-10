@@ -1,3 +1,8 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/ChipDesigner/Wire/Wire.gd" type="Script" id=2]
 
 [node name="Wire" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Segments" type="Node2D" parent="."]
