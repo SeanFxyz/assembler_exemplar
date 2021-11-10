@@ -1,4 +1,4 @@
-extends Control
+extends Node
 
 
 # Declare member variables here. Examples:
@@ -8,7 +8,8 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$VBoxContainer/StartButton.grab_focus()
+	$VBoxContainer2/Button_Chip1.grab_focus()
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,9 +17,12 @@ func _ready():
 #	pass
 
 
-func _on_StartButton_pressed():
-	get_tree().change_scene("res://scenes/LevelMenu/LevelMenu.tscn")
+func _on_Button_Chip1_pressed():
+	## Function to Send user to design chip 1 ()
+	pass # Replace with function body.
 
 
-func _on_QuitButton_pressed():
-	get_tree().quit()
+
+func _on_Button_pressed():
+	get_tree().change_scene("res://scenes/MainMenu/MainMenu.tscn")
+
