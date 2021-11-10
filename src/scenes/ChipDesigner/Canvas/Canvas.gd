@@ -4,8 +4,10 @@ extends ViewportContainer
 signal mouse_on
 signal mouse_off
 
-onready var viewport := $Viewport
+onready var viewport       := $Viewport
+onready var camera         := $Viewport/Camera2D
 onready var chip_container := $Viewport/Chips
+
 var has_mouse := true
 
 func _process(_delta):
@@ -18,6 +20,9 @@ func _process(_delta):
 			emit_signal("mouse_off")
 		has_mouse = false
 
-func add_chip(chip_name):
-	
-	chip_countainer.add_child()
+func add_chip(chip_scene):
+	var new_chip = chip_scene.instance()
+	new_chip.position = viewport.get_mouse_position()
+	new_chip.is_dragged = true
+
+	chip_container.add_child(new_chip)
