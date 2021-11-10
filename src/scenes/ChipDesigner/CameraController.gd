@@ -1,7 +1,5 @@
 extends Camera2D
 
-signal zoom_factor_changed(new_zoom_factor)
-
 # Whether the camera is being dragged
 var is_dragged := false
 
@@ -15,11 +13,11 @@ func _input(event: InputEvent) -> void:
 	if (event is InputEventMouse and
 			get_viewport_rect().has_point(event.position)):
 		
-		if event.is_action("ui_zoom_in"):
+		if event.is_action("ui_zoom_in") and CanvasInfo.chips_dragged <= 0:
 			CanvasInfo.zoom_cur = max(CanvasInfo.zoom_min,
 									  CanvasInfo.zoom_cur - CanvasInfo.zoom_inc)
 			zoom = Vector2(CanvasInfo.zoom_cur, CanvasInfo.zoom_cur)
-		elif event.is_action("ui_zoom_out"):
+		elif event.is_action("ui_zoom_out") and CanvasInfo.chips_dragged <= 0:
 			CanvasInfo.zoom_cur = min(CanvasInfo.zoom_max,
 									  CanvasInfo.zoom_cur + CanvasInfo.zoom_inc)
 			zoom = Vector2(CanvasInfo.zoom_cur, CanvasInfo.zoom_cur)
