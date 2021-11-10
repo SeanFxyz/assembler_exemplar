@@ -33,5 +33,5 @@ func _input(event):
 		position = position.snapped(Vector2(snap_inc, snap_inc))
 	
 	if is_dragged and event is InputEventMouseMotion:
-		position += event.position - prev_mouse_position
+		position += (event.position - prev_mouse_position) * CanvasInfo.zoom_cur
 		prev_mouse_position = event.position
