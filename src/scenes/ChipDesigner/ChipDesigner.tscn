@@ -45,12 +45,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
 items = [ "Dummy Chip", ExtResource( 4 ), false, "Nand", ExtResource( 5 ), false ]
+allow_reselect = true
 max_columns = 0
 icon_scale = 0.1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="mouse_on" from="Canvas" to="." method="_on_Canvas_mouse_on"]
 [connection signal="item_selected" from="ItemListControl/ItemList" to="." method="_on_ItemList_item_selected"]
-[connection signal="mouse_exited" from="ItemListControl/ItemList" to="." method="_on_ItemList_mouse_exited"]
 [connection signal="nothing_selected" from="ItemListControl/ItemList" to="." method="_on_ItemList_nothing_selected"]

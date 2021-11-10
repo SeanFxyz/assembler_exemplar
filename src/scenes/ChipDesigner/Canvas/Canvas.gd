@@ -5,6 +5,7 @@ signal mouse_on
 signal mouse_off
 
 onready var viewport := $Viewport
+onready var chip_container := $Viewport/Chips
 var has_mouse := true
 
 func _process(_delta):
@@ -16,3 +17,7 @@ func _process(_delta):
 		if has_mouse == true:
 			emit_signal("mouse_off")
 		has_mouse = false
+
+func add_chip(chip_name):
+	
+	chip_countainer.add_child()
