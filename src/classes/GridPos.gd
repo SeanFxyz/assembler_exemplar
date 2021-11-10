@@ -11,7 +11,7 @@ var y : int
 func _init(_x: int, _y: int):
 	x = _x
 	y = _y
-	
+
 
 func _to_string() -> String:
 	return "[GridPos:(" + str(x) + ", " + str(y) + ")]"
@@ -30,15 +30,15 @@ func _to_string() -> String:
 func to_key() -> int:
 	var a : int = 2 * x if x >= 0 else -2 * x - 1
 	var b : int = 2 * y if y >= 0 else -2 * y - 1
-	
+
 	return int( 0.5 * (a + b) * (a + b + 1) + b )
 
 
-# Creates a GridPos from the given key value, effectively reversing the
-# process performed by to_key().
+# Initializes the GridPos x and y valuesfrom the given key value, effectively
+# reversing the process performed by to_key().
 # http://en.wikipedia.org/wiki/Pairing_function#Inverting_the_Cantor_pairing_function
 func from_key(key: int) -> void:
-	
+
 	var w := floor( (sqrt(8 * key + 1) - 1) / 2 )
 	var t := (w*w + w) / 2
 	var b := int(key - t)
