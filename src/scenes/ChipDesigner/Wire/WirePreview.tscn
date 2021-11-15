@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/ChipDesigner/Wire/WirePreview.gd" type="Script" id=1]
+[ext_resource path="res://scenes/ChipDesigner/Canvas/Grid.tscn" type="PackedScene" id=2]
+
+[node name="WirePreview" type="Node2D"]
+script = ExtResource( 1 )
+color = Color( 0, 0, 0, 0.768627 )
+
+[node name="Grid" parent="." instance=ExtResource( 2 )]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 21.0
+margin_right = 71.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
