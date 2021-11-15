@@ -8,13 +8,27 @@ var x : int
 var y : int
 
 
-func _init(_x: int, _y: int):
+func _init(_x:int= 0, _y:int= 0, from=null) -> void:
 	x = _x
 	y = _y
 
 
 func _to_string() -> String:
 	return "[GridPos:(" + str(x) + ", " + str(y) + ")]"
+
+
+# Returns the equivalent Vector2 position according to CanvasInfo's grid_inc
+func to_vector2() -> Vector2:
+	var offset := Vector2(CanvasInfo.grid_inc, CanvasInfo.grid_inc) / 2
+	return Vector2(x, y) * CanvasInfo.grid_inc + offset
+
+
+# Initializes GridPos from given Vector2 position
+func from_vector2(v: Vector2) -> GridPos:
+	var offset := CanvasInfo.grid_inc / 2
+	x = v.x / CanvasInfo.grid_inc
+	y = v.y / CanvasInfo.grid_inc
+	return self
 
 
 # Creates a unique numerical value corresponding to the current
@@ -49,8 +63,8 @@ func from_key(key: int) -> void:
 	# warning-ignore:integer_division
 	# warning-ignore:integer_division
 	# warning-ignore:integer_division
-	x = int(a / 2) if a % 2 == 0 else (a + 1) / -2
-	y = int(b / 2) if b % 2 == 0 else (b + 1) / -2
+	x = a / 2 if a % 2 == 0 else (a + 1) / -2
+	y = b / 2 if b % 2 == 0 else (b + 1) / -2
 
 
 # Returns a dictionary of grid positions adjacent to this position.
