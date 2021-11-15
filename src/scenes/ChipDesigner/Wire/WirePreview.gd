@@ -3,8 +3,15 @@ extends Node2D
 export var color : Color
 
 var is_vert : bool = false
+var start_pos : Vector2 setget set_start_pos
 
-onready var _label := $Label
+
+func set_start_pos(new_value: Vector2) -> void:
+	start_pos = CanvasInfo.snap_center(new_value)
+
+
+func _ready():
+	set_start_pos(Vector2(400, 400))
 
 
 func _process(_delta):
@@ -12,26 +19,24 @@ func _process(_delta):
 
 
 func _draw():
-	var start_gridpos := GridPos.new().from_vector2(position).to_vector2()
-	var mouse_pos := get_local_mouse_position()
-	var mouse_gridpos := GridPos.new().from_vector2(mouse_pos).to_vector2()
+	var mouse_pos := CanvasInfo.snap_center(get_local_mouse_position())
 	
-	var grid_offset := Vector2(CanvasInfo.grid_inc, CanvasInfo.grid_inc) / 2
+	var grid_offset := CanvasInfo.grid_snap / 2
 	
-	if start_gridpos.x == mouse_gridpos.x or start_gridpos.y == mouse_gridpos.y:
-		var rect_pos : Vector2 = start_gridpos - grid_offset
-		var size : Vector2 = mouse_gridpos + grid_offset - rect_pos
+	if start_pos.x == mouse_pos.x or start_pos.y == mouse_pos.y:
+		var rect_pos : Vector2 = start_pos - grid_offset
+		var size : Vector2 = mouse_pos + grid_offset - rect_pos
 		draw_rect(Rect2(rect_pos, size), color)
 	else:
-		var p1 : Vector2 = start_gridpos - grid_offset
+		var p1 : Vector2 = start_pos - grid_offset
 		var p2 : Vector2
 		if is_vert:
-			p2 = Vector2(start_gridpos.x, mouse_gridpos.y - start_gridpos.y)
+			p2 = Vector2(start_pos.x, mouse_pos.y)
 		else:
-			p2 = Vector2(mouse_gridpos.x - start_gridpos.x, start_gridpos.y)
+			p2 = Vector2(mouse_pos.x, start_pos.y)
 		
 		var s1 := p2 + grid_offset - p1
-		var s2 := (mouse_gridpos + grid_offset) - (p2 - grid_offset)
+		var s2 := (mouse_pos + grid_offset) - (p2 - grid_offset)
 		
 		draw_rect(Rect2(p1, s1), color)
 		draw_rect(Rect2(p2 - grid_offset, s2), color)
