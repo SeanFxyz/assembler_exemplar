@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/right.png-fcaa91f203a6cc718281e74b9e7ac0aa.stex"
+path="res://.import/down.png-49264db83fbe9fbd404e4b98f386b132.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/WireSegment/right.png"
-dest_files=[ "res://.import/right.png-fcaa91f203a6cc718281e74b9e7ac0aa.stex" ]
+source_file="res://images/WireTiles/down.png"
+dest_files=[ "res://.import/down.png-49264db83fbe9fbd404e4b98f386b132.stex" ]
 
 [params]
 
