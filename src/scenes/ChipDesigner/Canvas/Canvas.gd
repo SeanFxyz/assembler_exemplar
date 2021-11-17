@@ -28,10 +28,10 @@ func _process(_delta):
 			emit_signal("mouse_off")
 		has_mouse = false
 
-	if (has_mouse and
-			Input.is_action_just_pressed("ui_select") and
-			CanvasInfo.entities_hovered <= 0):
-		add_wire()
+	if has_mouse:
+		if (Input.is_action_just_pressed("ui_select") and
+				CanvasInfo.entities_hovered <= 0):
+			add_wire_at_mouse()
 
 
 func add_chip(chip_scene: PackedScene):
@@ -39,7 +39,7 @@ func add_chip(chip_scene: PackedScene):
 	var new_chip = chip_scene.instance()
 	new_chip.position = chip_container.get_local_mouse_position()
 	
-	# TODO: THIS SECTION IS DISGUSTING FIX IT
+	# TODO: THIS IS DISGUSTING FIX IT
 	var sprite = new_chip.get_node("Sprite")
 	new_chip.position -= sprite.get_rect().size * sprite.scale / 2
 	
@@ -50,7 +50,7 @@ func add_chip(chip_scene: PackedScene):
 	chip_container.add_child(new_chip)
 
 
-func add_wire():
+func add_wire_at_mouse():
 	var new_wire = Wire.instance()
 	wire_container.add_child(new_wire)
-	new_wire.add_seg_at_mouse()
+	new_wire.start_segment()

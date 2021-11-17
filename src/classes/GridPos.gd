@@ -17,17 +17,21 @@ func _to_string() -> String:
 	return "[GridPos:(" + str(x) + ", " + str(y) + ")]"
 
 
-# Returns the equivalent Vector2 position according to CanvasInfo's grid_inc
-func to_vector2() -> Vector2:
-	var offset := Vector2(CanvasInfo.grid_inc, CanvasInfo.grid_inc) / 2
-	return Vector2(x, y) * CanvasInfo.grid_inc + offset
+# Returns a Vector2 position at the top-left of the grid square.
+func to_pos() -> Vector2:
+	return CanvasInfo.snap(Vector2(x, y))
+
+
+# Returns a Vector2 position at the center of the grid square.
+func to_center_pos() -> Vector2:
+	return CanvasInfo.snap_center(Vector2(x, y))
 
 
 # Initializes GridPos from given Vector2 position
 func from_vector2(v: Vector2) -> GridPos:
-	var offset := CanvasInfo.grid_inc / 2
-	x = v.x / CanvasInfo.grid_inc
-	y = v.y / CanvasInfo.grid_inc
+	var snapped = CanvasInfo.snap(v)
+	x = snapped.x
+	y = snapped.y
 	return self
 
 

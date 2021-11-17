@@ -2,6 +2,7 @@ extends Node2D
 
 const Segment: PackedScene=preload("res://scenes/ChipDesigner/Wire/WireSegment.tscn")
 
+
 var seg_grid := {}
 
 onready var segments : Node2D = $Segments
@@ -11,14 +12,20 @@ func _ready():
 	pass
 
 
+func start_segment():
+	var seg_start := get_local_mouse_position()
+
+
 func init_segment(pos: GridPos) -> Node2D:
 	var new_seg : Node2D = Segment.instance()
 
 	new_seg.grid_pos = pos
 	seg_grid[pos.to_key()] = new_seg
 
-	new_seg.connect("extend_wire", self, "_on_segment_extend_wire")
-	new_seg.connect("delete", self, "_on_segment_delete")
+	if new_seg.connect("extend_wire", self, "_on_segment_extend_wire") != OK:
+		print("Wire: failed connecting segment signal")
+	if new_seg.connect("delete", self, "_on_segment_delete") != OK:
+		print("Wire: failed connecting segment signal")
 
 	return new_seg
 
