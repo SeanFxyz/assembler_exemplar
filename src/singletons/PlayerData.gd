@@ -21,6 +21,7 @@ var _solution_template := {
 	"outputs": {},
 	"chips": {},
 	"wires": {},
+	"score": {},
 }
 
 
@@ -48,6 +49,8 @@ var chips: Dictionary
 # Wires in the current solution
 var wires: Dictionary
 
+# Current score = Total of Nand chips implemented in solution
+var score : float
 
 # Set current level and load its data.
 # If the level has no existing solutions, create one with the default
@@ -70,6 +73,7 @@ func set_current_solution(new_value: String) -> void:
 	outputs = solutions[current_solution]["outputs"]
 	chips   = solutions[current_solution]["chips"]
 	wires   = solutions[current_solution]["wires"]
+	score   = solutions[current_solution]["score"]
 
 
 func _ready():
