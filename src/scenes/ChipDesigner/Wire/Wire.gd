@@ -1,6 +1,6 @@
 extends Node2D
 
-const Segment: PackedScene=preload("res://scenes/ChipDesigner/Wire/WireSegment.tscn")
+const Segment: PackedScene=preload("res://scenes/ChipDesigner/Wires/Wires.tscn")
 
 var seg_grid := {}
 

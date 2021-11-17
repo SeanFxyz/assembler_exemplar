@@ -7,7 +7,7 @@ func _ready():
 	connect("mouse_exited", self, "_on_mouse_exited")
 
 var prev_mouse_position = Vector2()
-var end_mouse_position
+var end_mouse_position = Vector2()
 var new_line = Line2D
 var is_dragged = false
 
@@ -16,8 +16,10 @@ func _on_mouse_entered(event):
 
 func _on_Drag(event):
 	is_dragged = true
-	end_mouse_position = get_local_mouse_position()
+	end_mouse_position = set_point_position(2, get_local_mouse_position())
+	new_line = prev_mouse_position + end_mouse_position
 
 func _on_mouse_exited(event):
 	is_dragged = false
-	new_line = add_point(get_local_mouse_position(), 1)
+	var middle_point = end_mouse_position.AXIS_X
+	new_line = add_point(middle_point, 1)
