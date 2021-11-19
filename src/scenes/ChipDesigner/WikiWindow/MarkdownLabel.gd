@@ -61,6 +61,28 @@ func code_block_handler(value : String) -> String:
 	# Return the string, altered or not
 	return value
 
+# TODO: Finish o_list_handler
+# func o_list_handler(value : String) -> String:
+#     # Check if it is a single-digit number
+#     if (int(line.substr(0, 1)) && line.substr(1, 2) == " "):
+
+#     # If not, check if it is a double-digit number
+#     elif (int(line.substr(0, 2)) && line.substr(2, 3) == " ")):
+
+#     # Indent the list
+#     value = "[indent]" + value + "[indent]"
+
+#     return value
+
+func uo_list_handler(value : String) -> String:
+	# Make the unordered list identifier (* or -) bold
+	value = value.insert(0, "[bold]")
+	value = value.insert(7, "[/bold]")
+	# Indent the list
+	value = "[indent]" + value + "[indent]"
+
+	return value
+
 # Convert markdown to bbcode
 func md_to_bb(value : String) -> String:
 	# The returned string converted to bbcode
@@ -71,22 +93,47 @@ func md_to_bb(value : String) -> String:
 
 	var md_lines = value.split('\n')
 	for line in md_lines:
+		# Check if code block
 		if (in_code_block || line == "```"):
 			bb_string +=  code_block_handler(line)
 			# Put the "\n" back in
 			bb_string += "\n"
 		else:
+
+			# Check if header
 			if (line.begins_with("#")):
 				bb_string += header_handler(line)
 				# Put the "\n" back in
 				bb_string += "\n"
+
+            # TODO: Finish o_list_handler
+            # # Check if ordered list
+            # # First check if it is a single-digit number
+            # elif ((int(line.substr(0, 1)) && line.substr(1, 2) == " ") ||
+            #         # Next check if it is a double-digit number
+            #         (int(line.substr(0, 2)) && line.substr(2, 3) == " ")):
+
+            #     bb_string += o_list_handler(line)
+			#     # Put the "\n" back in
+			#     bb_string += "\n"
+
+			# Check if unordered list
+			elif (line.begins_with("* ") || line.begins_with("- ")):
+				bb_string += uo_list_handler(line)
+				# Put the "\n" back in
+				bb_string += "\n"
+
+			# Check if blank line
 			elif (line == ""):
 				bb_string += "\n"
+
 			# We are in normal paragraph if we reach this point
 			else:
 				bb_string += line + " "
 	# Remove any trailing whitespace
 	bb_string = bb_string.replace(" \n", "\n")
+
+	# TODO: Check bb_string for italics in md, then add them in bb_code
 
 	return bb_string
 
@@ -101,4 +148,4 @@ func _ready():
 	print(code_block_handler("arst"))
 	print(code_block_handler("arst"))
 	print(code_block_handler("```"))
-	print(md_to_bb("arst arst arst\narst arst arst\n\n#Test\n\n##Test\n\n###Test\n\n```\ntest test test\ntest test test\n```\n\narst arst arst\narst arst arst\n\narst arst arst"))
+	print(md_to_bb("arst arst arst\narst arst arst\n\n#Test\n\n##Test\n\n###Test\n\n```\ntest test test\ntest test test\n```\n\narst arst arst\narst arst arst\n\narst arst arst\n\n* test of unordered list"))
