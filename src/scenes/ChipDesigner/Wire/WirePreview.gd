@@ -2,8 +2,12 @@ extends Node2D
 
 export var color : Color
 
-var is_vert : bool = true
+var is_vert : bool = true # should the first segment of the path be vertical?
 var start_pos : Vector2 setget set_start_pos
+
+
+func _ready():
+	set_start_pos(Vector2(50, 50))
 
 
 func set_start_pos(new_value: Vector2) -> void:
@@ -17,17 +21,22 @@ func _process(_delta):
 func _draw():
 	var mouse_pos := CanvasInfo.snap(get_global_mouse_position())
 	
-	var p2 : Vector2
 	if is_vert:
-		p2 = Vector2(start_pos.x, mouse_pos.y)
+		var p2 := Vector2(start_pos.x, mouse_pos.y)
+		draw_preview(start_pos, p2)
+		if p2 != mouse_pos:
+			p2.x += sign(mouse_pos.x - p2.x) * CanvasInfo.grid_inc
+			draw_preview(p2, mouse_pos)
+	
 	else:
-		p2 = Vector2(mouse_pos.x, start_pos.y)
-		
-	draw_wire_path(start_pos, p2)
-	draw_wire_path(p2, mouse_pos)
+		var p2 := Vector2(mouse_pos.x, start_pos.y)
+		draw_preview(start_pos, p2)
+		if p2 != mouse_pos:
+			p2.y += sign(mouse_pos.y - p2.y) * CanvasInfo.grid_inc
+			draw_preview(p2, mouse_pos)
 		
 
-func draw_wire_path(start: Vector2, end: Vector2):
+func draw_preview(start: Vector2, end: Vector2):
 	var start_offset := Vector2()
 	var end_offset   := Vector2()
 	if end.x >= start.x:
