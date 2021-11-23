@@ -1,18 +1,25 @@
 extends Area2D
 
 # Where to implement inputs
-var snap_inc = 10
+var snap_inc := CanvasInfo.grid_inc
 
 export var chip_type := ""
+
+# Unique chip ID
+onready var chip_id : int = CanvasInfo.next_chip_id()
+
 
 onready var sprite_rect : Rect2 = $Sprite.get_rect()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# warning-ignore:return_value_discarded
-	connect("input_event", self, "_on_Drag")
-	connect("mouse_entered", self, "_on_mouse_entered")
-	connect("mouse_exited", self, "_on_mouse_exited")
+	if connect("input_event", self, "_on_Drag") != OK:
+		printerr("CanvasChip: failed to connect signal: input_event")
+	if connect("mouse_entered", self, "_on_mouse_entered") != OK:
+		printerr("CanvasChip: failed to connect signal: mouse_entered")
+	if connect("mouse_exited", self, "_on_mouse_exited") != OK:
+		printerr("CanvasChip: failed to connect signal: mouse_exited")
+
 
 var prev_mouse_position = Vector2()
 var is_dragged = false
