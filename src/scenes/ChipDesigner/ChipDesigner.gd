@@ -1,14 +1,15 @@
 extends Control
 
-onready var canvas_switcher := $CanvasSwitcher
-onready var current_canvas := $Canvas
-onready var item_selected := false
+onready var canvas_switcher       := $CanvasSwitcher
+onready var canvas_container      := $CanvasContainer
+onready var current_canvas        := $Canvas
+onready var item_selected         := false
 onready var mouse_moved_to_canvas := false
-onready var selected_item : String
+onready var selected_item         : String
 
-var Dummy:PackedScene=preload("res://scenes/ChipDesigner/CanvasChips/Dummy.tscn")
-var Nand:PackedScene=preload("res://scenes/ChipDesigner/CanvasChips/Nand.tscn")
-var Not:PackedScene=preload("res://scenes/ChipDesigner/CanvasChips/Not.tscn")
+var Dummy:PackedScene = preload("res://scenes/ChipDesigner/CanvasChips/Dummy.tscn")
+var Nand:PackedScene  = preload("res://scenes/ChipDesigner/CanvasChips/Nand.tscn")
+var Not:PackedScene   = preload("res://scenes/ChipDesigner/CanvasChips/Not.tscn")
 # TODO: Add the rest of the chips as PackedScene variables
 
 var chip_scenes := {

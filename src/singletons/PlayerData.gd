@@ -80,8 +80,8 @@ func _ready():
 	pass
 
 
-func new_solution_name():
-	if (solutions):
+func next_solution_name() -> String:
+	if solutions:
 		var new_solution_num := 1 
 		var new_solution_name := new_solution_base_name % new_solution_num
 		for sol in solutions:
@@ -93,18 +93,41 @@ func new_solution_name():
 		return "solution"
 
 
+func next_chip_id() -> int:
+	return 0
+
+
+func fix_solution_name(name: String) -> String:
+	var num := 1
+	
+	var new_name := name
+	while solutions.has(new_name):
+		new_name = name + "(" + str(num) + ")"
+		num += 1
+	
+	return new_name
+
+
 # Triggers manual save for current level
 func save() -> void:
 	FileIO.save_leveldata(current_level, solutions)
 
 
-# Create a new solution for the current level.
-func create_solution(new_name: String) -> bool:
-	if solutions.has(new_name):
-		return false
+# Create a new solution for the current level, returning the final name of the
+# created solution.
+func create_solution(new_name:= "") -> String:
+	var name : String
+	
+	if new_name != "":
+		name = fix_solution_name(new_name)
 	else:
-		solutions[new_name] = _solution_template.duplicate()
-		return true
+		name = next_solution_name()
+		
+	if solutions.has(name):
+		return "false"
+	else:
+		solutions[name] = _solution_template.duplicate()
+		return name
 
 
 # Rename a solution for the current level.
@@ -113,6 +136,7 @@ func rename_solution(old_name: String, new_name: String) -> bool:
 	solutions[new_name] = solutions[old_name].duplicate()
 	if current_solution == old_name:
 		set_current_solution(new_name)
+# warning-ignore:return_value_discarded
 	solutions.erase(old_name)
 
 	return true
@@ -125,6 +149,7 @@ func delete_solution(sol_name: String) -> bool:
 	if current_solution == sol_name:
 		set_current_solution(solutions.keys()[0])
 
+# warning-ignore:return_value_discarded
 	solutions.erase(sol_name)
 
 	return true
@@ -147,6 +172,7 @@ func add_chip(chip_id: int, chip_type: String, pos: Vector2) -> void:
 
 # delete the chip specified from the current solution
 func delete_chip(chip_id: int) -> void:
+# warning-ignore:return_value_discarded
 	chips.erase(chip_id)
 
 

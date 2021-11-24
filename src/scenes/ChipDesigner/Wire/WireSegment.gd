@@ -1,51 +1,93 @@
 extends Node2D
 
-onready var sprite : AnimatedSprite = $AnimatedSprite
-var texture := preload("res://images/WireTiles/all.png")
+signal seg_input(seg, event)
 
+var start        : GridPos = GridPos.new(5, 8) setget set_start
+var end          : GridPos = GridPos.new(5, 5) setget set_end
 var is_dragged   : bool
-var is_extending : bool
-var start_pos    : GridPos = GridPos.new(0, 0) # setget set_start_pos
-var end_pos      : GridPos = GridPos.new(0, 5) # setget set_end_pos
-var is_vert      : bool
+var highlighted  : bool    = false             setget set_highlighted
+var rect         : Rect2   = Rect2()
 
-signal extend_wire(x, y)
+onready var collider := $CollisionShape2D
+
+func _ready():
+	update_seg()
 
 
-func set_start_pos(new_value) -> void:
-	if is_vert:
-		end_pos.x = new_value.x
-	else:
-		end_pos.y = new_value.y
+func update_seg():
 	
-	start_pos = new_value
+	var start_offset := Vector2()
+	var end_offset   := Vector2()
+	if end.x >= start.x:
+		start_offset.x = 0
+		end_offset.x   = CanvasInfo.grid_inc
+	else:
+		start_offset.x = CanvasInfo.grid_inc
+		end_offset.x   = 0
+	if end.y >= start.y:
+		start_offset.y = 0
+		end_offset.y   = CanvasInfo.grid_inc
+	else:
+		start_offset.y = CanvasInfo.grid_inc
+		end_offset.y   = 0
+	
+	var rect_start := start.to_pos() + start_offset
+	rect.position = rect_start
+	rect.end      = end.to_pos() + end_offset
+	
+	
+	# Not sure why, but using the `collider` variable initialized on ready
+	# didn't seem to work here.
+	var _collider : CollisionShape2D = $CollisionShape2D
+	_collider.position = rect_start + rect.size / 2
+	_collider.shape.extents = rect.size.abs() / 2
 	
 	update()
 
 
-func set_end_pos(new_value) -> void:
-	if is_vert:
-		start_pos.x = new_value.x
-	else:
-		end_pos.y = new_value.y
+func set_start(new_value: GridPos) -> void:
+	if new_value.x != end.x and new_value.y != end.y:
+		if start.x == end.x:
+			# this is a vertical segment
+			end.x = new_value.x
+		elif start.y == end.y:
+			# this is a horizontal segment
+			end.y = new_value.y
 	
-	end_pos = new_value
-	
-	update()
+	start = new_value
+	update_seg()
+
+
+func set_end(new_value: GridPos) -> void:
+	if new_value.x != start.x and new_value.y != end.y:
+		if start.x == end.x:
+			# this is a vertical segment
+			end.x = new_value.x
+		elif start.y == end.y:
+			# this is a horizontal segment
+			end.y = new_value.y
+			
+	end = new_value
+	update_seg()
+
+
+func set_highlighted(new_value: bool):
+	highlighted = new_value
+	update_seg()
+
+
+func remove():
+	queue_free()
 
 
 func _draw():
-	if is_vert:
-		var x     := start_pos.x
-		var start := start_pos.y
-		var end   := end_pos.y
-		for y in range(start, end + 1):
-			draw_texture(texture, Vector2(x, y) * CanvasInfo.grid_inc)
-	else:
-		var y     := start_pos.y
-		var start := start_pos.x
-		var end   := end_pos.y
-		for x in range(start, end + 1):
-			draw_texture(texture, Vector2(x, y) * CanvasInfo.grid_inc)
-			
+	draw_rect(rect, modulate)
 	
+	if highlighted:
+		draw_rect(rect, CanvasInfo.highlight_color, false, 1.0)
+
+
+func _on_input_event(_viewport, event, _shape_idx):
+	if event is InputEventMouseButton:
+		print("WireSegment: clicked")
+	emit_signal("seg_input", self, event)

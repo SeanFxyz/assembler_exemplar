@@ -19,17 +19,17 @@ func _to_string() -> String:
 
 # Returns a Vector2 position at the top-left of the grid square.
 func to_pos() -> Vector2:
-	return CanvasInfo.snap(Vector2(x, y))
+	return Vector2(x, y) * CanvasInfo.grid_inc
 
 
 # Returns a Vector2 position at the center of the grid square.
 func to_center_pos() -> Vector2:
-	return CanvasInfo.snap_center(Vector2(x, y))
+	return CanvasInfo.snap_center(Vector2(x, y) * CanvasInfo.grid_inc)
 
 
 # Initializes GridPos from given Vector2 position
-func from_vector2(v: Vector2) -> GridPos:
-	var snapped = CanvasInfo.snap(v)
+func from_pos(v: Vector2) -> GridPos:
+	var snapped = CanvasInfo.snap(v) / CanvasInfo.grid_inc
 	x = snapped.x
 	y = snapped.y
 	return self

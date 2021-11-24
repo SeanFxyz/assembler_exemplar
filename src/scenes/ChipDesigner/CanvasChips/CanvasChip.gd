@@ -6,7 +6,7 @@ var snap_inc := CanvasInfo.grid_inc
 export var chip_type := ""
 
 # Unique chip ID
-onready var chip_id : int = CanvasInfo.next_chip_id()
+onready var chip_id : int = PlayerData.next_chip_id()
 
 
 onready var sprite_rect : Rect2 = $Sprite.get_rect()

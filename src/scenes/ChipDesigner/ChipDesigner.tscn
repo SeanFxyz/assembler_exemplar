@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcher.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ChipDesigner/ChipDesigner.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ChipDesigner/Canvas/Canvas.tscn" type="PackedScene" id=3]
 [ext_resource path="res://images/chips/DummyChip.png" type="Texture" id=4]
 [ext_resource path="res://images/chips/NAND.png" type="Texture" id=5]
+[ext_resource path="res://scenes/ChipDesigner/CanvasSwitcherTabs.gd" type="Script" id=6]
+[ext_resource path="res://scenes/ChipDesigner/CanvasSwitcherTabContainer.gd" type="Script" id=7]
 
 [node name="ChipDesigner" type="Control"]
 anchor_right = 1.0
@@ -15,17 +17,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CanvasSwitcher" type="Tabs" parent="."]
-anchor_left = 0.2
-anchor_right = 0.8
-margin_top = 10.0
-tab_align = 0
+[node name="CanvasSwitcher" type="Control" parent="."]
+anchor_left = 0.15
+anchor_right = 0.85
+anchor_bottom = 0.85
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Tabs" type="Tabs" parent="CanvasSwitcher"]
+anchor_right = 1.0
+anchor_bottom = 0.05
+tab_align = 0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="CanvasSwitcher"]
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 1.0
+tabs_visible = false
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Canvas" parent="." instance=ExtResource( 3 )]
+visible = false
 anchor_left = 0.15
 anchor_right = 0.85
 anchor_bottom = 0.85
@@ -52,6 +73,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="add_tab_selected" from="CanvasSwitcher/Tabs" to="CanvasSwitcher" method="_on_add_tab_selected"]
+[connection signal="canvas_tab_selected" from="CanvasSwitcher/Tabs" to="CanvasSwitcher" method="_on_canvas_tab_selected"]
 [connection signal="mouse_on" from="Canvas" to="." method="_on_Canvas_mouse_on"]
 [connection signal="item_selected" from="ItemListControl/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="nothing_selected" from="ItemListControl/ItemList" to="." method="_on_ItemList_nothing_selected"]

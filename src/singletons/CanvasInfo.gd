@@ -9,6 +9,9 @@ const grid_snap : Vector2 = Vector2(grid_inc, grid_inc)
 # Grid center offset vector
 const center_offset : Vector2 = grid_snap / 2
 
+# Highlight color
+const highlight_color : Color = Color.whitesmoke
+
 # How many chips are being dragged
 var chips_dragged : int = 0
 

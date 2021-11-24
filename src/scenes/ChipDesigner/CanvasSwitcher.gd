@@ -1,26 +1,26 @@
-extends Tabs
+extends Control
+
+signal canvas_switched(canvas)
 
 var Canvas:PackedScene=preload("res://scenes/ChipDesigner/Canvas/Canvas.tscn")
 
-var add_pos := 0
-var canvas_tabs := {}
+var solution_canvases := {}
 
-func _ready():
-	add_tab("+")
-	connect("tab_clicked", self, "_on_tab_clicked")	
+onready var tabs := $Tabs
+onready var tab_container := $TabContainer
 
-
-func _on_tab_clicked(tab: int):
-	add_canvas(PlayerData.new_solution_name())
-
-
-func add_canvas(name: String):
-	add_tab(name)
-	var tab_c := get_tab_count()
-	add_pos = tab_c - 1
-	move_tab(add_pos, add_pos - 1)
+func _on_add_tab_selected():
+	var new_solution_name := PlayerData.create_solution()
+	PlayerData.current_solution = new_solution_name
 	
-	var canvas : ViewportContainer = Canvas.instance()
-	canvas_tabs[add_pos - 1] = canvas
+	tabs.add_canvas_tab(new_solution_name)
 	
-	pass
+	var new_canvas = Canvas.instance()
+	new_canvas.solution = new_solution_name
+	tab_container.add_canvas_tab(new_solution_name, new_canvas)
+	
+	emit_signal("canvas_switched", new_canvas)
+
+
+func _on_canvas_tab_selected(name: String):
+	tab_container.select_canvas_tab(name)

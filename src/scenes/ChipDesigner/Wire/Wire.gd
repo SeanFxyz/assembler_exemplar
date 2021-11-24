@@ -1,75 +1,78 @@
 extends Node2D
 
-const Segment: PackedScene=preload("res://scenes/ChipDesigner/Wires/Wires.tscn")
+signal start_extend
+signal end_extend
+signal drag_dir(is_vert)
+
+const Segment: PackedScene=preload("res://scenes/ChipDesigner/Wire/WireSegment.tscn")
 
 
-var seg_grid := {}
-
-onready var segments : Node2D = $Segments
-
-
-func _ready():
-	pass
+var is_extend       : bool    = false
+var drag_is_vert    : int     = false
+var drag_start      : Vector2
 
 
-func start_segment():
-	var seg_start := get_local_mouse_position()
+func add_segment_path(start: Vector2, end: Vector2, is_vert: bool) -> void:
+	var s1_end : Vector2
+	if is_vert:
+		s1_end = Vector2(start.x, end.y)
+	else:
+		s1_end = Vector2(end.x, start.y)
+	
+	add_segment(start, s1_end)
+	
+	if s1_end != end:
+		add_segment(s1_end, end)
 
 
-func init_segment(pos: GridPos) -> Node2D:
-	var new_seg : Node2D = Segment.instance()
-
-	new_seg.grid_pos = pos
-	seg_grid[pos.to_key()] = new_seg
-
-	if new_seg.connect("extend_wire", self, "_on_segment_extend_wire") != OK:
-		print("Wire: failed connecting segment signal")
-	if new_seg.connect("delete", self, "_on_segment_delete") != OK:
-		print("Wire: failed connecting segment signal")
-
-	return new_seg
+func add_segment(start: Vector2, end: Vector2) -> void:
+	var new_seg = Segment.instance()
+	new_seg.start = GridPos.new().from_pos(start)
+	new_seg.end   = GridPos.new().from_pos(end)
+	
+	new_seg.connect("seg_input", self, "_on_seg_input")
+	
+	add_child(new_seg)
+	print_debug("Wire: added segment: ", new_seg.start, ", ", new_seg.end)
 
 
-func add_seg_at_mouse() -> void:
-	var mouse_pos : Vector2 = get_local_mouse_position()
-
-	var grid_pos := GridPos.new(int(mouse_pos.x / CanvasInfo.grid_inc),
-								int(mouse_pos.y / CanvasInfo.grid_inc))
-
-	var new_seg : Node2D = init_segment(grid_pos)
-
-	new_seg.is_dragged = true
-
-	segments.add_child(new_seg)
+func _on_seg_input(seg: CollisionObject2D, event: InputEvent) -> void:
+	if   event.is_action_pressed("ui_select"):
+		start_extend()
+	elif event.is_action_pressed("ui_delete"):
+		seg.remove()
+	elif event is InputEventMouseMotion and is_drag_moved():
+		fix_drag_dir()
 
 
-func update_seg_shape(segment):
-	var neighbors : Dictionary = segment.grid_pos.get_neighbors()
-	if seg_grid.has(neighbors["left"].to_key()):
-		segment.left = true
-	if seg_grid.has(neighbors["right"].to_key()):
-		segment.right = true
-	if seg_grid.has(neighbors["up"].to_key()):
-		segment.up = true
-	if seg_grid.has(neighbors["down"].to_key()):
-		segment.down = true
+func is_drag_moved() -> bool:
+	if is_extend and CanvasInfo.snap(get_local_mouse_position()) != drag_start:
+		return true
+	else:
+		return false
 
 
-func update_neighbor_segs(pos: GridPos):
-	for npos in pos.get_neighbors():
-		var npos_key : int = npos.to_key()
-		if seg_grid.has(npos_key):
-			update_seg_shape(seg_grid[npos_key])
+func start_extend() -> void:
+	emit_signal("start_extend")
+	
+	drag_is_vert = false
+	
+	drag_start = CanvasInfo.snap(get_local_mouse_position())
+	
 
+func fix_drag_dir() -> void:
+	var snapped_mouse_pos := CanvasInfo.snap(get_local_mouse_position())
+	
+	if snapped_mouse_pos.x != drag_start.x:
+		drag_is_vert = false
+		emit_signal("drag_dir", false)
+	elif snapped_mouse_pos.y != drag_start.y:
+		drag_is_vert = true
+		emit_signal("drag_dir", true)
+	
 
-func _on_segment_extend_wire(pos: GridPos):
-	print("Wire: extend wire")
-	var cur_mouse_pos := get_local_mouse_position()
-
-
-func _on_segment_delete(pos: GridPos):
-	print("Wire: delete segment")
-	var pos_key = pos.to_key()
-	seg_grid[pos_key].queue_free()
-	seg_grid.erase(pos_key)
-	update_neighbor_segs(pos)
+func end_extend() -> void:
+	#TODO: add new segment(s)
+	add_segment_path(drag_start, get_local_mouse_position(), drag_is_vert)
+	
+	emit_signal("end_extend")
