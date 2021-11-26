@@ -60,7 +60,7 @@ func add_chip(chip_scene: PackedScene):
 	new_chip.position = mouse_pos
 	
 	# TODO: THIS IS DISGUSTING FIX IT
-	var sprite = new_chip.get_node("Sprite")
+	var sprite : Sprite = new_chip.get_node("Sprite")
 	new_chip.position -= sprite.get_rect().size * sprite.scale / 2
 	
 	new_chip.prev_mouse_position = viewport.get_mouse_position()

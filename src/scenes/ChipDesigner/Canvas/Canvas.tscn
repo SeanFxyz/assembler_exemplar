@@ -33,6 +33,6 @@ script = ExtResource( 4 )
 [node name="WirePreview" parent="Viewport" instance=ExtResource( 2 )]
 visible = false
 
-[node name="Chips" type="Node2D" parent="Viewport"]
-
 [node name="Wires" type="Node2D" parent="Viewport"]
+
+[node name="Chips" type="Node2D" parent="Viewport"]
