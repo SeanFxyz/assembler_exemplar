@@ -71,11 +71,11 @@ func add_chip(chip_scene: PackedScene):
 
 # Starts a new wire
 func start_new_wire():
-	wire_preview.start_pos = mouse_pos
-	wire_preview.show()
-	
 	is_new_wire = true
 	is_new_wire_dir_set = false
+	
+	wire_preview.start_pos = mouse_pos
+	wire_preview.show()
 	
 	new_wire_start = CanvasInfo.snap(mouse_pos)
 	
@@ -94,7 +94,8 @@ func fix_new_wire_dir():
 
 # Creates a new wire node based on where the user dragged the mouse.
 func end_new_wire():
-	print_debug("Canvas: end_new_wire()")
+	is_new_wire = false
+	
 	wire_preview.hide()
 	
 	var new_wire : Node2D = Wire.instance()
@@ -106,6 +107,7 @@ func end_new_wire():
 		print_debug("Failed to connect signal.")
 	wire_container.add_child(new_wire)
 	new_wire.add_segment_path(new_wire_start, mouse_pos, wire_preview.is_vert)
+
 
 func _on_Wire_start_extend(wire):
 	is_extend_wire = true
