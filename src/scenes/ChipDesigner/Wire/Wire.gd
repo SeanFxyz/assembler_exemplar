@@ -6,12 +6,22 @@ signal drag_dir(is_vert)
 
 const Segment: PackedScene=preload("res://scenes/ChipDesigner/Wire/WireSegment.tscn")
 
+# Indicates whether the user is dragging the mouse to *extend* the wire.
+var is_extend    : bool    = false
 
-var is_extend       : bool    = false
-var drag_is_vert    : int     = false
-var drag_start      : Vector2
+# Indicates whether the mouse drag to extend the wire started with a vertical
+# motion.
+var drag_is_vert : int     = false
+
+# The start position of the mouse drag to extend the wire.
+var drag_start   : Vector2
+
+onready var segments : Node2D  = $Segments
 
 
+# Add one or two segments to the wire as needed to get from `start` to `end`.
+# `is_vert` determines whether the *first* segment will be vertical (true) or
+# horizontal (false).
 func add_segment_path(start: Vector2, end: Vector2, is_vert: bool) -> void:
 	var s1_end : Vector2
 	if is_vert:
@@ -25,6 +35,9 @@ func add_segment_path(start: Vector2, end: Vector2, is_vert: bool) -> void:
 		add_segment(s1_end, end)
 
 
+# Adds a segment to this wire from the given start point to the given end point.
+# The start and end are in world-space coordinates within the Canvas, but
+# will be snapped to the grid.
 func add_segment(start: Vector2, end: Vector2) -> void:
 	var new_seg = Segment.instance()
 	new_seg.start = GridPos.new().from_pos(start)
@@ -32,10 +45,14 @@ func add_segment(start: Vector2, end: Vector2) -> void:
 	
 	new_seg.connect("seg_input", self, "_on_seg_input")
 	
-	add_child(new_seg)
+	segments.add_child(new_seg)
 	print_debug("Wire: added segment: ", new_seg.start, ", ", new_seg.end)
 
 
+# Triggers when a connected WireSegment emits the "seg_input" signal,
+# indicating that its "input_event" signal has been emitted.
+# `seg` is the segment that emitted the signal.
+# `event` is the InputEvent that triggered the signal.
 func _on_seg_input(seg: CollisionObject2D, event: InputEvent) -> void:
 	if   event.is_action_pressed("ui_select"):
 		start_extend()
@@ -45,6 +62,7 @@ func _on_seg_input(seg: CollisionObject2D, event: InputEvent) -> void:
 		fix_drag_dir()
 
 
+# Test whether the mouse has moved away from the drag start position.
 func is_drag_moved() -> bool:
 	if is_extend and CanvasInfo.snap(get_local_mouse_position()) != drag_start:
 		return true
@@ -52,14 +70,15 @@ func is_drag_moved() -> bool:
 		return false
 
 
+# Start extending this wire.
 func start_extend() -> void:
 	emit_signal("start_extend")
-	
-	drag_is_vert = false
-	
 	drag_start = CanvasInfo.snap(get_local_mouse_position())
 	
 
+# Detect which directionality (horizontal or vertical) the user's mouse has
+# taken, correct the drag_is_vert variable accordingly, and emit the "drag_dir"
+# signal to tell the Canvas what we have corrected it too.
 func fix_drag_dir() -> void:
 	var snapped_mouse_pos := CanvasInfo.snap(get_local_mouse_position())
 	
@@ -71,8 +90,14 @@ func fix_drag_dir() -> void:
 		emit_signal("drag_dir", true)
 	
 
+# End the extension of this wire.
 func end_extend() -> void:
-	#TODO: add new segment(s)
 	add_segment_path(drag_start, get_local_mouse_position(), drag_is_vert)
-	
 	emit_signal("end_extend")
+	is_extend = false
+
+
+# TODO: Update the wire's contacts with chip inputs and outputs.
+# For now, we can probably just use Area2D contact detection.
+func update_contacts() -> void:
+	pass
