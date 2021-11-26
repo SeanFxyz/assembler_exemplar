@@ -1,3 +1,4 @@
+tool
 extends RichTextLabel
 
 # Keep track of whether or not we are in a code block
@@ -7,6 +8,7 @@ var md_text : String setget set_md_text
 
 func set_md_text(value):
 	md_text = value
+	bbcode_text = md_to_bb(md_text)
 
 # Determines type of header, returns bbcode representation
 func header_handler(content : String) -> String:
@@ -106,14 +108,14 @@ func md_to_bb(value : String) -> String:
 				# Put the "\n" back in
 				bb_string += "\n"
 
-            # TODO: Finish o_list_handler
-            # # Check if ordered list
-            # # First check if it is a single-digit number
-            # elif ((int(line.substr(0, 1)) && line.substr(1, 2) == " ") ||
-            #         # Next check if it is a double-digit number
-            #         (int(line.substr(0, 2)) && line.substr(2, 3) == " ")):
+			# TODO: Finish o_list_handler
+			# # Check if ordered list
+			# # First check if it is a single-digit number
+			# elif ((int(line.substr(0, 1)) && line.substr(1, 2) == " ") ||
+			#         # Next check if it is a double-digit number
+			#         (int(line.substr(0, 2)) && line.substr(2, 3) == " ")):
 
-            #     bb_string += o_list_handler(line)
+			#     bb_string += o_list_handler(line)
 			#     # Put the "\n" back in
 			#     bb_string += "\n"
 
