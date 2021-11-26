@@ -1,8 +1,8 @@
 tool
 extends Control
 
-export var head_text   : String setget set_head_text
-export var body_text : String setget set_body_text
+export var head_text   := "Info Panel" setget set_head_text
+export(String, MULTILINE) var body_text : String setget set_body_text
 
 onready var is_ready := true
 onready var head     := $Head
