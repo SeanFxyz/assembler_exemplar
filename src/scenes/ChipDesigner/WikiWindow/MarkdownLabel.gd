@@ -4,7 +4,7 @@ extends RichTextLabel
 # Keep track of whether or not we are in a code block
 var in_code_block = false
 
-var md_text : String setget set_md_text
+export var md_text : String setget set_md_text
 
 func set_md_text(value):
 	md_text = value
