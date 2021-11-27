@@ -141,13 +141,13 @@ func md_to_bb(value : String) -> String:
 
 # TESTING
 func _ready():
-	print(header_handler("arst"))
-	print(header_handler("#    ars  it"))
-	print(header_handler("##arst"))
-	print(header_handler("###arstar#st #"))
-	print(code_block_handler("```"))
-	print(code_block_handler("arst"))
-	print(code_block_handler("arst"))
-	print(code_block_handler("arst"))
-	print(code_block_handler("```"))
-	print(md_to_bb("arst arst arst\narst arst arst\n\n#Test\n\n##Test\n\n###Test\n\n```\ntest test test\ntest test test\n```\n\narst arst arst\narst arst arst\n\narst arst arst\n\n* test of unordered list"))
+	print_debug(header_handler("arst"))
+	print_debug(header_handler("#    ars  it"))
+	print_debug(header_handler("##arst"))
+	print_debug(header_handler("###arstar#st #"))
+	print_debug(code_block_handler("```"))
+	print_debug(code_block_handler("arst"))
+	print_debug(code_block_handler("arst"))
+	print_debug(code_block_handler("arst"))
+	print_debug(code_block_handler("```"))
+	print_debug(md_to_bb("arst arst arst\narst arst arst\n\n#Test\n\n##Test\n\n###Test\n\n```\ntest test test\ntest test test\n```\n\narst arst arst\narst arst arst\n\narst arst arst\n\n* test of unordered list"))
