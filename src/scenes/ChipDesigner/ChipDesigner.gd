@@ -1,7 +1,6 @@
 extends Control
 
 onready var canvas_switcher       := $CanvasSwitcher
-onready var canvas_container      := $CanvasContainer
 onready var current_canvas        := $Canvas
 onready var item_selected         := false
 onready var mouse_moved_to_canvas := false
@@ -32,3 +31,15 @@ func _on_Canvas_mouse_on():
 	if item_selected == true:
 		item_selected = false
 		current_canvas.add_chip(chip_scenes[selected_item])
+
+
+func _on_SaveButton_pressed():
+	pass # Replace with function body.
+
+
+func _on_test_control_pressed(control):
+	pass # Replace with function body.
+
+
+func _on_TestControl_test_control_toggled(control, pressed):
+	pass # Replace with function body.

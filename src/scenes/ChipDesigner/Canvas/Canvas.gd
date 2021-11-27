@@ -11,7 +11,9 @@ onready var chip_container := $Viewport/Chips
 onready var wire_container := $Viewport/Wires
 onready var wire_preview   := $Viewport/WirePreview
 
-var solution            : String
+var enabled             : bool    = true setget set_enabled
+
+var solution            : String setget set_solution
 
 var mouse_pos           : Vector2
 var has_mouse           : bool    = false
@@ -52,6 +54,20 @@ func _process(_delta):
 			start_new_wire()
 		elif is_extend_wire and Input.is_action_just_released("ui_select"):
 			extending_wire.end_extend()
+
+
+func set_enabled(new_value: bool) -> void:
+	enabled = new_value
+	set_process(new_value)
+	set_process_input(new_value)
+	set_process_unhandled_input(new_value)
+	set_process_unhandled_key_input(new_value)
+
+
+func set_solution(new_value: String) -> void:
+	solution = new_value
+	# TODO: populate canvas with solution data from PlayerData
+	#populate(PlayerData.get_solution_data())
 
 
 func add_chip(chip_scene: PackedScene):
