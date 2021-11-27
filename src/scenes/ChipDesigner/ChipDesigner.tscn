@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcher.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ChipDesigner/ChipDesigner.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://scenes/ChipDesigner/InfoPanel/InfoPanel.tscn" type="PackedScene" id=8]
 [ext_resource path="res://images/save.png" type="Texture" id=9]
 [ext_resource path="res://scenes/ChipDesigner/TestControl.gd" type="Script" id=10]
+[ext_resource path="res://Fonts/ButtonFont.tres" type="DynamicFont" id=11]
 
 [node name="ChipDesigner" type="Control"]
 anchor_right = 1.0
@@ -103,8 +104,6 @@ anchor_left = 0.85
 anchor_top = 0.85
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 25.0
-margin_bottom = -25.0
 alignment = 1
 script = ExtResource( 10 )
 __meta__ = {
@@ -112,33 +111,41 @@ __meta__ = {
 }
 
 [node name="ResetButton" type="Button" parent="TestControl"]
-margin_right = 35.0
-margin_bottom = 40.0
+margin_left = 13.0
+margin_right = 40.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 11 )
 text = "|<<"
+align = 0
 
 [node name="StepBackButton" type="Button" parent="TestControl"]
-margin_left = 39.0
-margin_right = 66.0
-margin_bottom = 40.0
+margin_left = 44.0
+margin_right = 65.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 11 )
 text = "|<"
 
 [node name="StepForwardButton" type="Button" parent="TestControl"]
-margin_left = 70.0
-margin_right = 97.0
-margin_bottom = 40.0
+margin_left = 69.0
+margin_right = 90.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 11 )
 text = ">|"
 
 [node name="PlayButton" type="Button" parent="TestControl"]
-margin_left = 101.0
-margin_right = 121.0
-margin_bottom = 40.0
+margin_left = 94.0
+margin_right = 112.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 11 )
 toggle_mode = true
 text = ">"
 
 [node name="FastForwardButton" type="Button" parent="TestControl"]
-margin_left = 125.0
-margin_right = 153.0
-margin_bottom = 40.0
+margin_left = 116.0
+margin_right = 140.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 11 )
+toggle_mode = true
 text = ">>"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
