@@ -78,7 +78,7 @@ func code_block_handler(value : String) -> String:
 
 func uo_list_handler(value : String) -> String:
 	# Make the unordered list identifier (* or -) bold
-	value = value.replace("* ", "• ")
+	value = value.replace("* ", "- ")
 	value = value.insert(0, "[b]")
 	value = value.insert(4, "[/b]")
 	# Indent the list
