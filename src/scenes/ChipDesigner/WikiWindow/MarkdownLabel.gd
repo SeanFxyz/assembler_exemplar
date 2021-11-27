@@ -31,13 +31,13 @@ func header_handler(content : String) -> String:
 		# Determine what level of header content should be
 		# Level 1 header
 		if (hash_count == 1):
-			content = "[b][i][u]" + content + "[/u][/i][/b]"
+			content = "[font=res://Fonts/Level1Header.tres]" + content + "[/font]"
 		# Level 2 header
 		if (hash_count == 2):
-			content = "[b][i]" + content + "[/i][/b]"
+			content = "[font=res://Fonts/Level2Header.tres]" + content + "[/font]"
 		# Level 3 header
 		if (hash_count == 3):
-			content = "[b]" + content + "[/b]"
+			content = "[font=res://Fonts/Level3Header.tres]" + content + "[/font]"
 
 		return content
 	else:
@@ -50,14 +50,14 @@ func code_block_handler(value : String) -> String:
 	if (!in_code_block && value == "```"):
 		# Remove "```" and start code block
 		value.erase(0, 3)
-		value += "[code]"
+		value += "[code][color=silver]"
 		in_code_block = true
 
 	# If at the end of a code block
 	elif (in_code_block && value == "```"):
 		# Remove "```" and end code block
 		value.erase(0, 3)
-		value += "[/code]"
+		value += "[/color][/code]"
 		in_code_block = false
 
 	# Return the string, altered or not
@@ -78,10 +78,11 @@ func code_block_handler(value : String) -> String:
 
 func uo_list_handler(value : String) -> String:
 	# Make the unordered list identifier (* or -) bold
-	value = value.insert(0, "[bold]")
-	value = value.insert(7, "[/bold]")
+	value = value.replace("* ", "- ")
+	value = value.insert(0, "[b]")
+	value = value.insert(4, "[/b]")
 	# Indent the list
-	value = "[indent]" + value + "[indent]"
+	value = "[indent]" + value + "[/indent]"
 
 	return value
 
@@ -132,6 +133,7 @@ func md_to_bb(value : String) -> String:
 			# We are in normal paragraph if we reach this point
 			else:
 				bb_string += line + " "
+				bb_string += "\n"
 	# Remove any trailing whitespace
 	bb_string = bb_string.replace(" \n", "\n")
 

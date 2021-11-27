@@ -1,16 +1,43 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/WikiWindow/MarkdownLabel.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/CodeBlock.tres" type="DynamicFont" id=2]
 
 [node name="MarkdownLabel" type="RichTextLabel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_fonts/mono_font = ExtResource( 2 )
 bbcode_enabled = true
-bbcode_text = "[b][i][u]Hello World[/u][/i][/b]
+bbcode_text = "[font=res://Fonts/Level1Header.tres]Level 1 Header[/font]
+[font=res://Fonts/Level2Header.tres]Level 2 Header[/font]
+[font=res://Fonts/Level3Header.tres]Level 3 Header[/font]
+[indent][b]-[/b] unordered list[/indent]
+[code][color=silver]
+code block
+[/color][/code]
+Normal paragraph
+ 
 "
-text = "Hello World
+text = "Level 1 Header
+Level 2 Header
+Level 3 Header
+	- unordered list
+
+code block
+
+Normal paragraph
+ 
 "
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+md_text = "# Level 1 Header
+## Level 2 Header
+### Level 3 Header
+* unordered list
+```
+code block
+```
+Normal paragraph
+ "
