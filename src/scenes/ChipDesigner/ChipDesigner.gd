@@ -23,9 +23,11 @@ func _on_ItemList_item_selected(index):
 	selected_item = $ItemListControl/ItemList.get_item_text(index)
 	print(selected_item)
 
+
 func _on_ItemList_nothing_selected():
 	print("nothing selected")
 	item_selected = false
+
 
 func _on_Canvas_mouse_on():
 	if item_selected == true:
@@ -41,5 +43,5 @@ func _on_test_control_pressed(control):
 	pass # Replace with function body.
 
 
-func _on_TestControl_test_control_toggled(control, pressed):
+func _on_test_control_toggled(control, pressed):
 	pass # Replace with function body.

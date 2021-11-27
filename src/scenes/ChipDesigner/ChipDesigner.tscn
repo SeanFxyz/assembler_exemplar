@@ -165,7 +165,7 @@ icon = ExtResource( 9 )
 [connection signal="item_selected" from="ItemListControl/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="nothing_selected" from="ItemListControl/ItemList" to="." method="_on_ItemList_nothing_selected"]
 [connection signal="test_control_pressed" from="TestControl" to="." method="_on_test_control_pressed"]
-[connection signal="test_control_toggled" from="TestControl" to="." method="_on_TestControl_test_control_toggled"]
+[connection signal="test_control_toggled" from="TestControl" to="." method="_on_test_control_toggled"]
 [connection signal="pressed" from="TestControl/ResetButton" to="TestControl" method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="TestControl/StepBackButton" to="TestControl" method="_on_StepBackButton_pressed"]
 [connection signal="pressed" from="TestControl/StepForwardButton" to="TestControl" method="_on_StepForwardButton_pressed"]

@@ -10,11 +10,11 @@ var rect         : Rect2   = Rect2()
 
 onready var collider := $CollisionShape2D
 
-func _ready():
+func _ready() -> void:
 	update_seg()
 
 
-func update_seg():
+func update_seg() -> void:
 	
 	var start_offset := Vector2()
 	var end_offset   := Vector2()

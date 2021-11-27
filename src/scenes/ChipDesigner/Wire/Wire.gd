@@ -19,6 +19,10 @@ var drag_start   : Vector2
 onready var segments : Node2D  = $Segments
 
 
+func _ready() -> void:
+	add_segment(Vector2(50, 50), Vector2(50, 100))
+
+
 # Add one or two segments to the wire as needed to get from `start` to `end`.
 # `is_vert` determines whether the *first* segment will be vertical (true) or
 # horizontal (false).
