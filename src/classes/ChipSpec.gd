@@ -27,3 +27,28 @@ func format_input(input_states: Array):
 	for i in range(len(input_widths) - 1):
 		key = key << input_widths[i] | input_widths[i + 1]
 	return key
+
+
+func make_solution_template() -> Dictionary:
+	var template := {
+		"inputs": {},
+		"outputs": {},
+		"chips": {},
+		"wires": {},
+		"score": {},
+	}
+	
+	var io_y    := 1
+	var io_size : int = CanvasInfo.io_size
+	
+	for name in input_names:
+		template["inputs"][name] = [1, io_y]
+		io_size += io_size + 1
+	
+	io_y = 1
+	
+	for name in output_names:
+		template["outputs"][name] = [CanvasInfo.circuit_width, io_y]
+		io_y += io_size + 1
+	
+	return template
