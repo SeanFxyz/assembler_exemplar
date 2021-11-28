@@ -40,6 +40,7 @@ func update_seg():
 	# didn't seem to work here.
 	var _collider : CollisionShape2D = $CollisionShape2D
 	_collider.position = rect_start + rect.size / 2
+	_collider.shape = RectangleShape2D.new()
 	_collider.shape.extents = rect.size.abs() / 2
 	
 	update()

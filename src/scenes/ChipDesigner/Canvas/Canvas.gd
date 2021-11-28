@@ -11,7 +11,9 @@ onready var chip_container := $Viewport/Chips
 onready var wire_container := $Viewport/Wires
 onready var wire_preview   := $Viewport/WirePreview
 
-var solution            : String
+var enabled             : bool    = true setget set_enabled
+
+var solution            : String setget set_solution
 
 var mouse_pos           : Vector2
 var has_mouse           : bool    = false
@@ -54,13 +56,27 @@ func _process(_delta):
 			extending_wire.end_extend()
 
 
+func set_enabled(new_value: bool) -> void:
+	enabled = new_value
+	set_process(new_value)
+	set_process_input(new_value)
+	set_process_unhandled_input(new_value)
+	set_process_unhandled_key_input(new_value)
+
+
+func set_solution(new_value: String) -> void:
+	solution = new_value
+	# TODO: populate canvas with solution data from PlayerData
+	#populate(PlayerData.get_solution_data())
+
+
 func add_chip(chip_scene: PackedScene):
 	
 	var new_chip = chip_scene.instance()
 	new_chip.position = mouse_pos
 	
 	# TODO: THIS IS DISGUSTING FIX IT
-	var sprite = new_chip.get_node("Sprite")
+	var sprite : Sprite = new_chip.get_node("Sprite")
 	new_chip.position -= sprite.get_rect().size * sprite.scale / 2
 	
 	new_chip.prev_mouse_position = viewport.get_mouse_position()
@@ -71,11 +87,11 @@ func add_chip(chip_scene: PackedScene):
 
 # Starts a new wire
 func start_new_wire():
-	wire_preview.start_pos = mouse_pos
-	wire_preview.show()
-	
 	is_new_wire = true
 	is_new_wire_dir_set = false
+	
+	wire_preview.start_pos = mouse_pos
+	wire_preview.show()
 	
 	new_wire_start = CanvasInfo.snap(mouse_pos)
 	
@@ -94,7 +110,8 @@ func fix_new_wire_dir():
 
 # Creates a new wire node based on where the user dragged the mouse.
 func end_new_wire():
-	print_debug("Canvas: end_new_wire()")
+	is_new_wire = false
+	
 	wire_preview.hide()
 	
 	var new_wire : Node2D = Wire.instance()
@@ -106,6 +123,7 @@ func end_new_wire():
 		print_debug("Failed to connect signal.")
 	wire_container.add_child(new_wire)
 	new_wire.add_segment_path(new_wire_start, mouse_pos, wire_preview.is_vert)
+
 
 func _on_Wire_start_extend(wire):
 	is_extend_wire = true
