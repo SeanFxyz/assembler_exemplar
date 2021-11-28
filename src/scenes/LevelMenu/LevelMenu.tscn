@@ -10,6 +10,8 @@ size = 25
 font_data = ExtResource( 1 )
 
 [node name="LevelMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 theme = ExtResource( 4 )
 script = ExtResource( 2 )
 __meta__ = {
@@ -17,80 +19,75 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_right = 0.99
-margin_left = 144.63
-margin_top = 40.2599
-margin_right = 861.63
-margin_bottom = 135.26
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.25
+grow_horizontal = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="VBoxContainer"]
-margin_right = 717.0
+margin_right = 243.0
 margin_bottom = 52.0
 text = "SELECT A LEVEL"
 align = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
-margin_left = 301.944
-margin_top = 121.202
-margin_right = 497.944
-margin_bottom = 460.202
+anchor_left = 0.4
+anchor_top = 0.5
+anchor_right = 0.4
+anchor_bottom = 0.5
+grow_horizontal = 2
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LevelButton" parent="VBoxContainer2" instance=ExtResource( 3 )]
-margin_top = 117.0
-margin_right = 196.0
-margin_bottom = 149.0
-text = "Not"
-level = "Nand"
+margin_right = 49.0
+margin_bottom = 36.0
+text = "Nand"
 
 [node name="LevelButton2" parent="VBoxContainer2" instance=ExtResource( 3 )]
-margin_top = 153.0
-margin_right = 196.0
-margin_bottom = 185.0
-text = "And"
-level = "Nand"
+margin_top = 40.0
+margin_right = 49.0
+margin_bottom = 76.0
+text = "Nand"
 
 [node name="LevelButton3" parent="VBoxContainer2" instance=ExtResource( 3 )]
-margin_top = 189.0
-margin_right = 196.0
-margin_bottom = 221.0
-text = "Or"
-level = "Nand"
+margin_top = 80.0
+margin_right = 49.0
+margin_bottom = 116.0
+text = "Nand"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="."]
-margin_left = 507.94
-margin_top = 120.572
-margin_right = 703.94
-margin_bottom = 459.572
+anchor_left = 0.6
+anchor_top = 0.5
+anchor_right = 0.6
+anchor_bottom = 0.5
+grow_horizontal = 2
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LevelButton" parent="VBoxContainer3" instance=ExtResource( 3 )]
-margin_top = 117.0
-margin_right = 196.0
-margin_bottom = 149.0
-text = "Xor"
-level = "Nand"
+margin_right = 52.0
+margin_bottom = 36.0
+text = "Nand"
 
 [node name="LevelButton2" parent="VBoxContainer3" instance=ExtResource( 3 )]
-margin_top = 153.0
-margin_right = 196.0
-margin_bottom = 185.0
-text = "Mux"
-level = "Nand"
+margin_top = 40.0
+margin_right = 52.0
+margin_bottom = 76.0
+text = "Nand"
 
 [node name="LevelButton3" parent="VBoxContainer3" instance=ExtResource( 3 )]
-margin_top = 189.0
-margin_right = 196.0
-margin_bottom = 221.0
+margin_top = 80.0
+margin_right = 52.0
+margin_bottom = 116.0
 text = "DMux"
 
 [node name="BackButton" type="Button" parent="."]
