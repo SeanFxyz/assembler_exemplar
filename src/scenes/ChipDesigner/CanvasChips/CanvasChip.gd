@@ -1,15 +1,17 @@
 extends Area2D
 
+class_name CanvasChip
+
 # Where to implement inputs
-var snap_inc := CanvasInfo.grid_inc
+const snap_inc := CanvasInfo.grid_inc
 
 export var chip_type := ""
-
-# Unique chip ID
-onready var chip_id : int = PlayerData.next_chip_id()
+var prev_mouse_position = Vector2()
+var is_dragged = false
 
 
 onready var sprite_rect : Rect2 = $Sprite.get_rect()
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,9 +22,6 @@ func _ready():
 	if connect("mouse_exited", self, "_on_mouse_exited") != OK:
 		printerr("CanvasChip: failed to connect signal: mouse_exited")
 
-
-var prev_mouse_position = Vector2()
-var is_dragged = false
 
 func _on_Drag(_viewport, event, _shape_idx):
 	# Allow dragging if user clicks CollisionShape2D
