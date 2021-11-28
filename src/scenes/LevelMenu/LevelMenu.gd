@@ -1,27 +1,15 @@
 extends Node
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	$VBoxContainer2/Button_Chip1.grab_focus()
+	for level_button in get_tree().get_nodes_in_group("level_buttons"):
+		level_button.connect("level_button_pressed", self, "_on_level_button_pressed")
 
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
-func _on_Button_Chip1_pressed():
+func _on_level_button_pressed(level: String):
+	PlayerData.set_current_level(level)
 	get_tree().change_scene("res://scenes/ChipDesigner/ChipDesigner.tscn")
 
 
-
-func _on_Button_pressed():
+func _on_BackButton_pressed():
 	get_tree().change_scene("res://scenes/MainMenu/MainMenu.tscn")
-
