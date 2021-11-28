@@ -37,3 +37,14 @@ func snap(v: Vector2) -> Vector2:
 # Snap a position Vector2 to the center of its grid square.
 func snap_center(v: Vector2) -> Vector2:
 	return snap(v) + center_offset
+
+
+var wire_colors := []
+var wire_color_index := 0
+
+func init_wire_colors():
+	pass
+
+
+func next_wire_color():
+	pass

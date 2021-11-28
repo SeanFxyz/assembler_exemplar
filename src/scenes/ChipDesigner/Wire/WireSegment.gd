@@ -7,6 +7,7 @@ var end          : GridPos = GridPos.new(5, 5) setget set_end
 var is_dragged   : bool
 var highlighted  : bool    = false             setget set_highlighted
 var rect         : Rect2   = Rect2()
+var color        : Color   = Color.red
 
 onready var collider := $CollisionShape2D
 
@@ -82,7 +83,7 @@ func remove():
 
 
 func _draw():
-	draw_rect(rect, modulate)
+	draw_rect(rect, color)
 	
 	if highlighted:
 		draw_rect(rect, CanvasInfo.highlight_color, false, 1.0)
@@ -92,3 +93,11 @@ func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		print("WireSegment: clicked")
 	emit_signal("seg_input", self, event)
+
+
+func _on_mouse_entered():
+	CanvasInfo.entities_hovered += 1
+
+
+func _on_mouse_exited():
+	CanvasInfo.entities_hovered -= 1

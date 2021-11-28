@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcher.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ChipDesigner/ChipDesigner.gd" type="Script" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcherTabs.gd" type="Script" id=6]
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcherTabContainer.gd" type="Script" id=7]
 [ext_resource path="res://scenes/ChipDesigner/InfoPanel/InfoPanel.tscn" type="PackedScene" id=8]
-[ext_resource path="res://images/save.png" type="Texture" id=9]
 [ext_resource path="res://scenes/ChipDesigner/TestControl.gd" type="Script" id=10]
 [ext_resource path="res://Fonts/ButtonFont.tres" type="DynamicFont" id=11]
 
@@ -158,11 +157,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SaveButton" type="Button" parent="MarginContainer"]
-margin_right = 25.0
-margin_bottom = 20.0
-icon = ExtResource( 9 )
-
 [connection signal="add_tab_selected" from="CanvasSwitcher/Tabs" to="CanvasSwitcher" method="_on_add_tab_selected"]
 [connection signal="canvas_tab_selected" from="CanvasSwitcher/Tabs" to="CanvasSwitcher" method="_on_canvas_tab_selected"]
 [connection signal="mouse_on" from="Canvas" to="." method="_on_Canvas_mouse_on"]
@@ -175,4 +169,3 @@ icon = ExtResource( 9 )
 [connection signal="pressed" from="TestControl/StepForwardButton" to="TestControl" method="_on_StepForwardButton_pressed"]
 [connection signal="toggled" from="TestControl/PlayButton" to="TestControl" method="_on_PlayButton_toggled"]
 [connection signal="toggled" from="TestControl/FastForwardButton" to="TestControl" method="_on_FastForwardButton_toggled"]
-[connection signal="pressed" from="MarginContainer/SaveButton" to="." method="_on_SaveButton_pressed"]

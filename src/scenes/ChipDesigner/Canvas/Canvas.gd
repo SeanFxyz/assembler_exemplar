@@ -1,15 +1,17 @@
 # tool
-extends ViewportContainer
+extends Control
 
 signal mouse_on
 signal mouse_off
 
-onready var viewport       := $Viewport
-onready var camera         := $Viewport/Camera2D
-onready var grid           := $Viewport/Grid
-onready var chip_container := $Viewport/Chips
-onready var wire_container := $Viewport/Wires
-onready var wire_preview   := $Viewport/WirePreview
+onready var viewport       := $ViewportContainer/Viewport
+onready var camera         := $ViewportContainer/Viewport/Camera2D
+onready var grid           := $ViewportContainer/Viewport/Grid
+onready var chip_container := $ViewportContainer/Viewport/Chips
+onready var wire_container := $ViewportContainer/Viewport/Wires
+onready var wire_preview   := $ViewportContainer/Viewport/WirePreview
+onready var color_picker   := $ColorPicker
+onready var new_wire_color : Color = color_picker.presets[0]
 
 var enabled             : bool    = true setget set_enabled
 
@@ -87,6 +89,8 @@ func add_chip(chip_scene: PackedScene):
 
 # Starts a new wire
 func start_new_wire():
+	print_debug("Canvas: Starting new wire")
+	
 	is_new_wire = true
 	is_new_wire_dir_set = false
 	
@@ -115,17 +119,22 @@ func end_new_wire():
 	wire_preview.hide()
 	
 	var new_wire : Node2D = Wire.instance()
+	new_wire.color = new_wire_color
+	wire_container.add_child(new_wire)
+	new_wire.add_segment_path(new_wire_start, mouse_pos, wire_preview.is_vert)
+	
 	if new_wire.connect("start_extend", self, "_on_Wire_start_extend") != OK:
 		print_debug("Failed to connect signal.")
 	if new_wire.connect("end_extend", self, "_on_Wire_end_extend") != OK:
 		print_debug("Failed to connect signal.")
 	if new_wire.connect("drag_dir", self, "_on_Wire_drag_dir") != OK:
 		print_debug("Failed to connect signal.")
-	wire_container.add_child(new_wire)
-	new_wire.add_segment_path(new_wire_start, mouse_pos, wire_preview.is_vert)
+	
+	print_debug("Canvas: Ended new wire")
 
 
 func _on_Wire_start_extend(wire):
+	print_debug("Canvas: Start wire extension")
 	is_extend_wire = true
 	extending_wire = wire
 	wire_preview.start_pos = mouse_pos
@@ -134,6 +143,7 @@ func _on_Wire_start_extend(wire):
 
 func _on_Wire_end_extend():
 	wire_preview.hide()
+	print_debug("Canvas: End wire extension")
 
 
 func _on_Wire_drag_dir(is_vert: bool):
@@ -142,3 +152,20 @@ func _on_Wire_drag_dir(is_vert: bool):
 
 func remove():
 	queue_free()
+
+
+func _on_SaveButton_pressed():
+	pass # Replace with function body.
+
+
+func _on_ColorPickerButton_toggled(button_pressed):
+	if button_pressed:
+		color_picker.show()
+		CanvasInfo.entities_hovered += 1
+	else:
+		color_picker.hide()
+		CanvasInfo.entities_hovered -= 1
+
+
+func _on_ColorPicker_color_changed(color):
+	new_wire_color = color

@@ -35,10 +35,6 @@ func _on_Canvas_mouse_on():
 		current_canvas.add_chip(chip_scenes[selected_item])
 
 
-func _on_SaveButton_pressed():
-	pass # Replace with function body.
-
-
 func _on_test_control_pressed(control):
 	pass # Replace with function body.
 

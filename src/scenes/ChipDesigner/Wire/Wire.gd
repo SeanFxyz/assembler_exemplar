@@ -6,6 +6,8 @@ signal drag_dir(is_vert)
 
 const Segment: PackedScene=preload("res://scenes/ChipDesigner/Wire/WireSegment.tscn")
 
+var color        : Color   = Color.red
+
 # Indicates whether the user is dragging the mouse to *extend* the wire.
 var is_extend    : bool    = false
 
@@ -19,8 +21,8 @@ var drag_start   : Vector2
 onready var segments : Node2D  = $Segments
 
 
-func _ready() -> void:
-	add_segment(Vector2(50, 50), Vector2(50, 100))
+#func _ready() -> void:
+	#add_segment(Vector2(50, 50), Vector2(50, 100))
 
 
 # Add one or two segments to the wire as needed to get from `start` to `end`.
@@ -49,6 +51,8 @@ func add_segment(start: Vector2, end: Vector2) -> void:
 	
 	new_seg.connect("seg_input", self, "_on_seg_input")
 	
+	new_seg.color = color
+	
 	segments.add_child(new_seg)
 	print_debug("Wire: added segment: ", new_seg.start, ", ", new_seg.end)
 
@@ -76,7 +80,10 @@ func is_drag_moved() -> bool:
 
 # Start extending this wire.
 func start_extend() -> void:
-	emit_signal("start_extend")
+	print_debug("Wire: Starting extension")
+	
+	emit_signal("start_extend", self)
+	is_extend = true
 	drag_start = CanvasInfo.snap(get_local_mouse_position())
 	
 
@@ -99,6 +106,8 @@ func end_extend() -> void:
 	add_segment_path(drag_start, get_local_mouse_position(), drag_is_vert)
 	emit_signal("end_extend")
 	is_extend = false
+	
+	print_debug("Wire: Ended extension")
 
 
 # TODO: Update the wire's contacts with chip inputs and outputs.

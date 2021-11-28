@@ -1,38 +1,91 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/Canvas/Canvas.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ChipDesigner/Wire/WirePreview.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ChipDesigner/CameraController.gd" type="Script" id=3]
 [ext_resource path="res://scenes/ChipDesigner/Canvas/Grid.gd" type="Script" id=4]
+[ext_resource path="res://images/color_picker_50x50.png" type="Texture" id=5]
+[ext_resource path="res://images/save.png" type="Texture" id=6]
+[ext_resource path="res://scenes/ChipDesigner/Canvas/CanvasColorPicker.gd" type="Script" id=7]
 
-[node name="Canvas" type="ViewportContainer"]
+[node name="Canvas" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-stretch = true
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Viewport" type="Viewport" parent="."]
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 1024, 600 )
 handle_input_locally = false
 usage = 0
 render_target_update_mode = 3
 physics_object_picking = true
 
-[node name="Camera2D" type="Camera2D" parent="Viewport"]
+[node name="Camera2D" type="Camera2D" parent="ViewportContainer/Viewport"]
 position = Vector2( 512, 300 )
 current = true
 script = ExtResource( 3 )
 
-[node name="Grid" type="Node2D" parent="Viewport"]
+[node name="Grid" type="Node2D" parent="ViewportContainer/Viewport"]
 script = ExtResource( 4 )
 
-[node name="WirePreview" parent="Viewport" instance=ExtResource( 2 )]
+[node name="WirePreview" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
 visible = false
 
-[node name="Wires" type="Node2D" parent="Viewport"]
+[node name="Wires" type="Node2D" parent="ViewportContainer/Viewport"]
 
-[node name="Chips" type="Node2D" parent="Viewport"]
+[node name="Chips" type="Node2D" parent="ViewportContainer/Viewport"]
+
+[node name="SaveButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -35.6053
+margin_top = 10.4232
+margin_right = -10.6053
+margin_bottom = 30.4232
+icon = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPickerButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -36.6254
+margin_top = 40.117
+margin_right = -10.6254
+margin_bottom = 60.117
+toggle_mode = true
+icon = ExtResource( 5 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker" type="ColorPicker" parent="."]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -354.317
+margin_top = 39.9188
+margin_right = -46.3174
+margin_bottom = 501.919
+edit_alpha = false
+presets_enabled = false
+script = ExtResource( 7 )
+
+[connection signal="pressed" from="SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="toggled" from="ColorPickerButton" to="." method="_on_ColorPickerButton_toggled"]
+[connection signal="color_changed" from="ColorPicker" to="." method="_on_ColorPicker_color_changed"]
