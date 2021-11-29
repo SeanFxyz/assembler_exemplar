@@ -6,6 +6,7 @@
 radius = 1.0
 
 [node name="ChipInput" type="Area2D"]
+input_pickable = false
 
 [node name="input" type="Sprite" parent="."]
 scale = Vector2( 0.1, 0.1 )
