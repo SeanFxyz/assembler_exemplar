@@ -1,31 +1,38 @@
 class_name ChipSpec
 
+var chip_type     : String
 var input_names   : Array
-var input_widths  : Array
+var input_widths  : Dictionary
 var output_names  : Array
-var output_widths : Array
+var output_widths : Dictionary
 var io            : Dictionary
+var canvas_width  : int
+
 
 func _init(
-	inames  : Array,
-	iwidths : Array,
-	onames  : Array,
-	owidths : Array,
-	i       : Dictionary
+	inames   : Array,
+	iwidths  : Dictionary,
+	onames   : Array,
+	owidths  : Dictionary,
+	i        : Dictionary,
+	canvas_w : int = 50
 ):
 	input_names = inames
 	input_widths = iwidths
 	output_names = onames
 	output_widths = owidths
 	io = i
+	canvas_width = canvas_w
 
 
 # Takes an array of integer input values and combines them into a dictionary
 # lookup key.
-func format_input(input_states: Array):
-	var key : int = input_states[0]
-	for i in range(len(input_widths) - 1):
-		key = key << input_widths[i] | input_widths[i + 1]
+func format_input(input_states: Dictionary):
+	var inames := input_states.keys()
+	var key : int = input_states[inames[0]]
+	for iname in inames.slice(1, -1):
+		key = key << input_widths[iname] | input_states[iname]
+	
 	return key
 
 
@@ -48,7 +55,7 @@ func make_solution_template() -> Dictionary:
 	io_y = 1
 	
 	for name in output_names:
-		template["outputs"][name] = [CanvasInfo.circuit_width, io_y]
+		template["outputs"][name] = [canvas_width, io_y]
 		io_y += io_size + 1
 	
 	return template

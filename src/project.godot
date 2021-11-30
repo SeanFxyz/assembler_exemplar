@@ -20,6 +20,16 @@ _global_script_classes=[ {
 "path": "res://classes/ChipSpec.gd"
 }, {
 "base": "Reference",
+"class": "CircuitCompiler",
+"language": "GDScript",
+"path": "res://classes/CircuitCompiler.gd"
+}, {
+"base": "Reference",
+"class": "CircuitComponent",
+"language": "GDScript",
+"path": "res://classes/CircuitComponent.gd"
+}, {
+"base": "Reference",
 "class": "CircuitSim",
 "language": "GDScript",
 "path": "res://classes/CircuitSim.gd"
@@ -32,6 +42,8 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "CanvasChip": "",
 "ChipSpec": "",
+"CircuitCompiler": "",
+"CircuitComponent": "",
 "CircuitSim": "",
 "GridPos": ""
 }
@@ -80,6 +92,13 @@ ui_delete={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="CanvasChip"
+2d_physics/layer_2="ChipInput"
+2d_physics/layer_3="ChipOutput"
+2d_physics/layer_4="Wire"
 
 [physics]
 
