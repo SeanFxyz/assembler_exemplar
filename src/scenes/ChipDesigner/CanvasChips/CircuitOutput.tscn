@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/ChipDesigner/CanvasChips/CanvasChip.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ChipDesigner/CanvasChips/CircuitOutput.gd" type="Script" id=2]
 [ext_resource path="res://images/chips/output.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -10,6 +10,7 @@ radius = 15.0
 [node name="CircuitOutput" type="Area2D"]
 script = ExtResource( 2 )
 chip_type = "out"
+output_name = "in"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 15, 15 )

@@ -25,14 +25,18 @@ shape = SubResource( 1 )
 
 [node name="ChipInput" parent="Inputs" instance=ExtResource( 2 )]
 position = Vector2( 0, 30 )
+input_name = "in"
 
 [node name="ChipInput2" parent="Inputs" instance=ExtResource( 2 )]
 position = Vector2( 30, 70 )
+input_name = "sel"
 
 [node name="Outputs" type="Node2D" parent="."]
 
 [node name="ChipOutput" parent="Outputs" instance=ExtResource( 3 )]
 position = Vector2( 60, 10 )
+output_name = "a"
 
 [node name="ChipOutput2" parent="Outputs" instance=ExtResource( 3 )]
 position = Vector2( 60, 60 )
+output_name = "b"

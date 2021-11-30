@@ -23,16 +23,20 @@ shape = SubResource( 1 )
 
 [node name="Inputs" type="Node2D" parent="."]
 
+[node name="ChipInput" parent="Inputs" instance=ExtResource( 2 )]
+position = Vector2( 30, 70 )
+input_name = "sel"
+
+[node name="ChipInput2" parent="Inputs" instance=ExtResource( 2 )]
+position = Vector2( 0, 10 )
+input_name = "a"
+
+[node name="ChipInput3" parent="Inputs" instance=ExtResource( 2 )]
+position = Vector2( 0, 60 )
+input_name = "b"
+
 [node name="Outputs" type="Node2D" parent="."]
 
-[node name="ChipInput" parent="." instance=ExtResource( 2 )]
-position = Vector2( 30, 70 )
-
-[node name="ChipInput2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, 60 )
-
-[node name="ChipInput3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, 10 )
-
-[node name="ChipOutput" parent="." instance=ExtResource( 3 )]
+[node name="ChipOutput" parent="Outputs" instance=ExtResource( 3 )]
 position = Vector2( 60, 30 )
+output_name = "out"
