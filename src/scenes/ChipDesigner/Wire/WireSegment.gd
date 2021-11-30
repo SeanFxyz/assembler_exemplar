@@ -2,10 +2,19 @@ extends Node2D
 
 signal seg_input(seg, event)
 
+const state_rect_margin : int = -1 * (CanvasInfo.grid_inc / 2)
+
+# The wire the segment belongs to, unique within the Canvas
+var wire         : Node2D
+var wire_id      : int
+
+var wire_state   : int     = false
+
 var start        : GridPos = GridPos.new(5, 8) setget set_start
 var end          : GridPos = GridPos.new(5, 5) setget set_end
 var is_dragged   : bool
 var highlighted  : bool    = false             setget set_highlighted
+var hovered      : bool    = false
 var rect         : Rect2   = Rect2()
 var color        : Color   = Color.red
 
@@ -79,14 +88,17 @@ func set_highlighted(new_value: bool):
 
 
 func remove():
+	if hovered:
+		CanvasInfo.entities_hovered -= 1
 	queue_free()
 
 
 func _draw():
 	draw_rect(rect, color)
 	
-	if highlighted:
-		draw_rect(rect, CanvasInfo.highlight_color, false, 1.0)
+	if wire_state:
+		var state_rect := rect.abs().grow(-3)
+		draw_rect(state_rect, color.inverted())
 
 
 func _on_input_event(_viewport, event, _shape_idx):
@@ -97,7 +109,14 @@ func _on_input_event(_viewport, event, _shape_idx):
 
 func _on_mouse_entered():
 	CanvasInfo.entities_hovered += 1
+	hovered = true
 
 
 func _on_mouse_exited():
 	CanvasInfo.entities_hovered -= 1
+	hovered = false
+
+
+func _on_wire_state_changed(state: bool):
+	wire_state = state
+	update_seg()

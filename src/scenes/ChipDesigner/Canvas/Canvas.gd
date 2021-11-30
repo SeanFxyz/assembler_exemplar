@@ -3,19 +3,24 @@ extends Control
 
 signal mouse_on
 signal mouse_off
+signal save_requested
 
-onready var viewport       := $ViewportContainer/Viewport
-onready var camera         := $ViewportContainer/Viewport/Camera2D
-onready var grid           := $ViewportContainer/Viewport/Grid
-onready var chip_container := $ViewportContainer/Viewport/Chips
-onready var wire_container := $ViewportContainer/Viewport/Wires
-onready var wire_preview   := $ViewportContainer/Viewport/WirePreview
-onready var color_picker   := $ColorPicker
-onready var new_wire_color : Color = color_picker.presets[0]
+onready var viewport         := $ViewportContainer/Viewport
+onready var camera           := $ViewportContainer/Viewport/Camera2D
+onready var grid             := $ViewportContainer/Viewport/Grid
+onready var input_container  := $ViewportContainer/Viewport/Inputs
+onready var output_container := $ViewportContainer/Viewport/Outputs
+onready var chip_container   := $ViewportContainer/Viewport/Chips
+onready var wire_container   := $ViewportContainer/Viewport/Wires
+onready var wire_preview     := $ViewportContainer/Viewport/WirePreview
+onready var color_picker     := $ColorPicker
+onready var new_wire_color   : Color = color_picker.presets[0]
 
 var enabled             : bool    = true setget set_enabled
 
 var solution            : String setget set_solution
+var input_nodes         : Dictionary = {}
+var output_nodes        : Dictionary = {}
 
 var mouse_pos           : Vector2
 var has_mouse           : bool    = false
@@ -26,11 +31,20 @@ var is_new_wire_dir_set : bool    = false
 var is_extend_wire      : bool    = false
 var extending_wire      : Node2D
 
-var Wire : PackedScene = preload("res://scenes/ChipDesigner/Wire/Wire.tscn")
+var circuit_chip_spec   : ChipSpec
+
+var _last_wire_id       : int
+var _last_chip_id       : int
+
+var CircuitInput := preload("res://scenes/ChipDesigner/CanvasChips/CircuitInput.tscn")
+var CircuitOutput := preload("res://scenes/ChipDesigner/CanvasChips/CircuitOutput.tscn")
+var Wire := preload("res://scenes/ChipDesigner/Wire/Wire.tscn")
 
 func _ready():
-	var half_viewport_size : Vector2 = viewport.get_visible_rect().size / 2
-	camera.position = half_viewport_size
+	camera.position = viewport.get_visible_rect().size / 2
+	circuit_chip_spec = ChipIO.chip_specs[PlayerData.current_level]
+	_last_wire_id = -1
+	_last_chip_id = -1
 
 
 func _process(_delta):
@@ -64,20 +78,62 @@ func set_enabled(new_value: bool) -> void:
 	set_process_input(new_value)
 	set_process_unhandled_input(new_value)
 	set_process_unhandled_key_input(new_value)
+	has_mouse = new_value
 
 
 func set_solution(new_value: String) -> void:
 	solution = new_value
-	# TODO: populate canvas with solution data from PlayerData
-	#populate(PlayerData.get_solution_data())
+	populate(PlayerData.get_solution_data())
 
 
-func add_chip(chip_scene: PackedScene):
+func simulate_inputs(inputs: Dictionary) -> Dictionary:
+	var outputs := {}
 	
+	# Initialize inputs nodes' held values.
+	for input_name in inputs.keys():
+		input_nodes[input_name].value = inputs[input_name]
+	
+	
+	
+	return outputs
+
+func populate(data: Dictionary):
+	for input in data["inputs"].keys():
+		var input_grid_pos : Array = data["inputs"][input]
+		var new_circuit_input : Area2D = CircuitInput.instance()
+		new_circuit_input.input_name = input
+		new_circuit_input.position = CanvasInfo.arr_to_pos(input_grid_pos)
+		input_container.add_child(new_circuit_input)
+		input_nodes[input] = new_circuit_input
+	
+	for output in data["outputs"].keys():
+		var output_grid_pos : Array = data["outputs"][output]
+		var new_circuit_output : Area2D = CircuitOutput.instance()
+		new_circuit_output.output_name = output
+		new_circuit_output.position = CanvasInfo.arr_to_pos(output_grid_pos)
+		output_container.add_child(new_circuit_output)
+		output_nodes[output] = new_circuit_output
+	
+	# TODO: populate chips and wires
+
+
+func add_chip(chip_scene: PackedScene, pos: Vector2):
+	
+	var new_chip = chip_scene.instance()
+	new_chip.position = pos
+	
+	# TODO: THIS IS DISGUSTING FIX IT
+	var sprite : Sprite = new_chip.get_node("Sprite")
+	new_chip.position -= sprite.get_rect().size * sprite.scale / 2
+
+	chip_container.add_child(new_chip)
+
+
+func add_chip_on_mouse(chip_scene: PackedScene):
 	var new_chip = chip_scene.instance()
 	new_chip.position = mouse_pos
 	
-	# TODO: THIS IS DISGUSTING FIX IT
+	# TODO: THIS IS GROSS FIX IT
 	var sprite : Sprite = new_chip.get_node("Sprite")
 	new_chip.position -= sprite.get_rect().size * sprite.scale / 2
 	
@@ -119,16 +175,17 @@ func end_new_wire():
 	wire_preview.hide()
 	
 	var new_wire : Node2D = Wire.instance()
+	new_wire.wire_id = _next_wire_id()
 	new_wire.color = new_wire_color
 	wire_container.add_child(new_wire)
 	new_wire.add_segment_path(new_wire_start, mouse_pos, wire_preview.is_vert)
 	
 	if new_wire.connect("start_extend", self, "_on_Wire_start_extend") != OK:
-		print_debug("Failed to connect signal.")
+		printerr("Canvas: Failed to connect signal.")
 	if new_wire.connect("end_extend", self, "_on_Wire_end_extend") != OK:
-		print_debug("Failed to connect signal.")
+		printerr("Canvas: Failed to connect signal.")
 	if new_wire.connect("drag_dir", self, "_on_Wire_drag_dir") != OK:
-		print_debug("Failed to connect signal.")
+		printerr("Canvas: Failed to connect signal.")
 	
 	print_debug("Canvas: Ended new wire")
 
@@ -143,6 +200,8 @@ func _on_Wire_start_extend(wire):
 
 func _on_Wire_end_extend():
 	wire_preview.hide()
+	is_extend_wire = false
+	extending_wire = null
 	print_debug("Canvas: End wire extension")
 
 
@@ -154,11 +213,21 @@ func remove():
 	queue_free()
 
 
-func _on_SaveButton_pressed():
-	pass # Replace with function body.
+func _next_chip_id() -> int:
+	_last_chip_id += 1
+	return _last_chip_id
 
 
-func _on_ColorPickerButton_toggled(button_pressed):
+func _next_wire_id() -> int:
+	_last_wire_id += 1
+	return _last_wire_id
+
+
+func _on_SaveButton_pressed() -> void:
+	emit_signal("save_requested")
+
+
+func _on_ColorPickerButton_toggled(button_pressed) -> void:
 	if button_pressed:
 		color_picker.show()
 		CanvasInfo.entities_hovered += 1
@@ -167,5 +236,5 @@ func _on_ColorPickerButton_toggled(button_pressed):
 		CanvasInfo.entities_hovered -= 1
 
 
-func _on_ColorPicker_color_changed(color):
+func _on_ColorPicker_color_changed(color) -> void:
 	new_wire_color = color

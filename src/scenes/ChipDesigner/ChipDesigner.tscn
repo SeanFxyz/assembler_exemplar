@@ -147,16 +147,6 @@ custom_fonts/font = ExtResource( 11 )
 toggle_mode = true
 text = ">>"
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchor_left = 0.85
-anchor_right = 0.85
-margin_left = -30.0
-margin_top = 10.0
-margin_right = -10.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [connection signal="add_tab_selected" from="CanvasSwitcher/Tabs" to="CanvasSwitcher" method="_on_add_tab_selected"]
 [connection signal="canvas_tab_selected" from="CanvasSwitcher/Tabs" to="CanvasSwitcher" method="_on_canvas_tab_selected"]
 [connection signal="mouse_on" from="Canvas" to="." method="_on_Canvas_mouse_on"]

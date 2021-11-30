@@ -44,9 +44,13 @@ script = ExtResource( 4 )
 [node name="WirePreview" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
 visible = false
 
-[node name="Wires" type="Node2D" parent="ViewportContainer/Viewport"]
+[node name="Inputs" type="Node2D" parent="ViewportContainer/Viewport"]
+
+[node name="Outputs" type="Node2D" parent="ViewportContainer/Viewport"]
 
 [node name="Chips" type="Node2D" parent="ViewportContainer/Viewport"]
+
+[node name="Wires" type="Node2D" parent="ViewportContainer/Viewport"]
 
 [node name="SaveButton" type="Button" parent="."]
 anchor_left = 1.0
