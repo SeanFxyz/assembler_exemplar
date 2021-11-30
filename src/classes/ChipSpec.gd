@@ -1,6 +1,6 @@
 class_name ChipSpec
 
-var chip_type     : String
+
 var input_names   : Array
 var input_widths  : Dictionary
 var output_names  : Array

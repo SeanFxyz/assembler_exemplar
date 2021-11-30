@@ -5,6 +5,12 @@ extends Node
 # file formats.
 
 
+func _ready() -> void:
+	var dir := Directory.new()
+	if not dir.dir_exists("user://save"):
+		dir.make_dir("user://save")
+
+
 # If err == OK == 0, does nothing. Otherwise, prints err_msg and quits
 # the application.
 func _check_err(err: int, err_msg: String) -> void:
@@ -58,10 +64,7 @@ func level_to_recfile(level_name: String) -> String:
 	return _save_location + level_name + ".rec"
 	
 
-# Load the sav file and rec file for a given level name.
-# Sets sol_ref to point to a solutions dictionary and rec_ref to a
-# recovery data array.
-# Returns error code
+# Load the saved data for a given level name.
 func load_leveldata(level_name: String) -> Dictionary:
 
 	var solutions : Dictionary

@@ -14,7 +14,6 @@ var output_nodes  := {}
 var prev_mouse_position := Vector2()
 var is_dragged := false
 
-
 onready var inputs      : Node2D = $Inputs
 onready var outputs     : Node2D = $Outputs
 onready var chip_spec   : ChipSpec = ChipIO.chip_specs[chip_type]
