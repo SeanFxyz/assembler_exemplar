@@ -17,7 +17,7 @@ func _init(
 	owidths  : Dictionary,
 	i        : Dictionary,
 	canvas_w : int = 50,
-	comp     : Array = []
+	comp     : Array = ["Nand"]
 ):
 	input_names = inames
 	input_widths = iwidths
