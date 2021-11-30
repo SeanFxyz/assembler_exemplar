@@ -1,12 +1,13 @@
 class_name ChipSpec
 
-var chip_type     : String
+
 var input_names   : Array
 var input_widths  : Dictionary
 var output_names  : Array
 var output_widths : Dictionary
 var io            : Dictionary
 var canvas_width  : int
+var components    : Array
 
 
 func _init(
@@ -15,7 +16,8 @@ func _init(
 	onames   : Array,
 	owidths  : Dictionary,
 	i        : Dictionary,
-	canvas_w : int = 50
+	canvas_w : int = 50,
+	comp     : Array = ["Nand"]
 ):
 	input_names = inames
 	input_widths = iwidths
@@ -23,6 +25,7 @@ func _init(
 	output_widths = owidths
 	io = i
 	canvas_width = canvas_w
+	components = comp
 
 
 # Takes an array of integer input values and combines them into a dictionary

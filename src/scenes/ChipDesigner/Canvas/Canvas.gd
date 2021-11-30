@@ -40,11 +40,15 @@ var CircuitInput := preload("res://scenes/ChipDesigner/CanvasChips/CircuitInput.
 var CircuitOutput := preload("res://scenes/ChipDesigner/CanvasChips/CircuitOutput.tscn")
 var Wire := preload("res://scenes/ChipDesigner/Wire/Wire.tscn")
 
+
 func _ready():
 	camera.position = viewport.get_visible_rect().size / 2
 	circuit_chip_spec = ChipIO.chip_specs[PlayerData.current_level]
 	_last_wire_id = -1
 	_last_chip_id = -1
+	
+	populate(
+		ChipIO.chip_specs[PlayerData.current_level].make_solution_template())
 
 
 func _process(_delta):
@@ -93,9 +97,8 @@ func simulate_inputs(inputs: Dictionary) -> Dictionary:
 	for input_name in inputs.keys():
 		input_nodes[input_name].value = inputs[input_name]
 	
-	
-	
 	return outputs
+
 
 func populate(data: Dictionary):
 	for input in data["inputs"].keys():
@@ -238,3 +241,19 @@ func _on_ColorPickerButton_toggled(button_pressed) -> void:
 
 func _on_ColorPicker_color_changed(color) -> void:
 	new_wire_color = color
+
+
+func _on_SaveButton_mouse_entered():
+	CanvasInfo.entities_hovered += 1
+
+
+func _on_SaveButton_mouse_exited():
+	CanvasInfo.entities_hovered -= 1
+
+
+func _on_ColorPickerButton_mouse_entered():
+	CanvasInfo.entities_hovered += 1
+
+
+func _on_ColorPickerButton_mouse_exited():
+	CanvasInfo.entities_hovered -= 1

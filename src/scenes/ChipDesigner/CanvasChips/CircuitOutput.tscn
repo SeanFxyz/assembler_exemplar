@@ -10,7 +10,6 @@ radius = 15.0
 [node name="CircuitOutput" type="Area2D"]
 script = ExtResource( 2 )
 chip_type = "out"
-output_name = "in"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 15, 15 )
