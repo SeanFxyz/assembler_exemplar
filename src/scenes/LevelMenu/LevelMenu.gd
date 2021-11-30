@@ -2,7 +2,7 @@ extends Node
 
 
 func _ready():
-	for level_button in get_tree().get_nodes_in_group("level_buttons"):
+	for level_button in get_tree().get_nodes_in_group("level_button"):
 		level_button.connect("level_button_pressed", self, "_on_level_button_pressed")
 
 

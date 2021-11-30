@@ -1,12 +1,15 @@
 extends Node
 
+# Circuit input/output size (radius) in grid squares
+const io_size : int = 3
+
 # Grid square size
 const grid_inc : int = 10
 
 # Grid snap vector
 const grid_snap : Vector2 = Vector2(grid_inc, grid_inc)
 
-# Grid center offset vector
+# Offset from the corner to the center of a grid square.
 const center_offset : Vector2 = grid_snap / 2
 
 # Highlight color
@@ -37,6 +40,18 @@ func snap(v: Vector2) -> Vector2:
 # Snap a position Vector2 to the center of its grid square.
 func snap_center(v: Vector2) -> Vector2:
 	return snap(v) + center_offset
+
+
+# Convert an array describing a position in the canvas grid to a world position
+func arr_to_pos(a: Array) -> Vector2:
+	return Vector2(a[0], a[1]) * grid_inc
+
+
+# Convert a world position to an array describing the position in the canvas
+# grid
+func pos_to_arr(v: Vector2) -> Array:
+	var snapped = CanvasInfo.snap(v) / grid_inc
+	return [snapped.x, snapped.y]
 
 
 var wire_colors := []
