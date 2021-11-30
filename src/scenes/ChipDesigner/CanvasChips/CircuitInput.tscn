@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://images/chips/input.png" type="Texture" id=1]
+[ext_resource path="res://scenes/ChipDesigner/CanvasChips/CircuitInput.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipOutput.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 15.0
+
+[node name="CircuitInput" type="Area2D"]
+script = ExtResource( 2 )
+chip_type = "in"
+input_name = "out"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 15, 15 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Inputs" type="Node2D" parent="."]
+
+[node name="Outputs" type="Node2D" parent="."]
+
+[node name="ChipOutput" parent="Outputs" instance=ExtResource( 5 )]
+position = Vector2( 10, 10 )
+output_name = "out"
+
+[node name="Label" type="Label" parent="."]
+margin_left = -35.0
+margin_top = 32.0
+margin_right = 65.0
+margin_bottom = 79.0
+text = "IN"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

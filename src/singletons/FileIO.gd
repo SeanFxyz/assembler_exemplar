@@ -62,16 +62,12 @@ func level_to_recfile(level_name: String) -> String:
 # Sets sol_ref to point to a solutions dictionary and rec_ref to a
 # recovery data array.
 # Returns error code
-func load_leveldata(level_name: String,
-					_sol_ref: Dictionary,
-					_rec_ref: Array) -> void:
+func load_leveldata(level_name: String) -> Dictionary:
 
-	_sol_ref = {}
-	_rec_ref = []
+	var solutions : Dictionary
 	
 	# evaluate filenames for savfile and recfile
 	var savfile_name := level_to_savfile(level_name)
-	var recfile_name := level_to_recfile(level_name)
 
 	# Check if savfile exists. If not, create a template file for the level.
 	var file := File.new()
@@ -79,12 +75,9 @@ func load_leveldata(level_name: String,
 		write_savfile(savfile_name, {})
 
 	# Load sav data.
-	_sol_ref = load_savfile(savfile_name)
-
-	# If rec file exists...
-	if file.file_exists(recfile_name):
-		# Load the rec file
-		_rec_ref = load_recfile(recfile_name)
+	solutions = load_savfile(savfile_name)
+	
+	return solutions
 		
 
 # Save the given solutions data to the save file for the names level
@@ -106,22 +99,21 @@ func load_savfile(file_name: String) -> Dictionary:
 	return solutions
 
 
-# writes data from an appropriately formatted Dictionary to a savefile
-func write_savfile(file_name: String, data: Dictionary) -> int:
+# writes data Dictionary to the specified savfile
+func write_savfile(file_name: String, data: Dictionary) -> void:
 
 	var file := File.new()
 	var err := file.open_compressed(
 		file_name,
-		File.READ,
-		File.COMPRESSION_ZSTD)
+		File.WRITE,
+		File.COMPRESSION_ZSTD
+	)
 
 	if err == OK:
 		file.store_string(Marshalls.variant_to_base64(data))
-
-	if file.is_open():
 		file.close()
-
-	return err
+	else:
+		printerr("FileIO: Failed to open sav file for writing: ", err)
 
 
 # loads the data in a recovery file into an Array of the file's lines

@@ -4,7 +4,14 @@ signal start_extend
 signal end_extend
 signal drag_dir(is_vert)
 
+signal wire_state_changed(state)
+
 const Segment: PackedScene=preload("res://scenes/ChipDesigner/Wire/WireSegment.tscn")
+
+# Wire ID, unique within the Canvas
+var wire_id      : int
+var wire_state   : int     = 0 setget set_wire_state
+var color        : Color   = Color.red
 
 # Indicates whether the user is dragging the mouse to *extend* the wire.
 var is_extend    : bool    = false
@@ -17,6 +24,26 @@ var drag_is_vert : int     = false
 var drag_start   : Vector2
 
 onready var segments : Node2D  = $Segments
+
+
+#func _ready() -> void:
+	#add_segment(Vector2(50, 50), Vector2(50, 100))
+
+
+func set_wire_state(new_value: int) -> void:
+	wire_state = new_value
+	emit_signal("wire_state_changed", wire_state)
+	update_connected_inputs()
+
+
+func update_connected_inputs():
+	var seg_list := segments.get_children()
+	
+	for seg in seg_list:
+		var seg_overlaps : Array = seg.get_overlapping_areas()
+		for node in seg_overlaps:
+			if node.get_parent().chip_type == "in":
+				node.set_input_state(node.input_name)
 
 
 # Add one or two segments to the wire as needed to get from `start` to `end`.
@@ -43,10 +70,23 @@ func add_segment(start: Vector2, end: Vector2) -> void:
 	new_seg.start = GridPos.new().from_pos(start)
 	new_seg.end   = GridPos.new().from_pos(end)
 	
-	new_seg.connect("seg_input", self, "_on_seg_input")
+	if(connect("wire_state_changed", new_seg, "_on_wire_state_changed") != OK or
+			new_seg.connect("seg_input", self, "_on_seg_input") != OK):
+		printerr("Wire: failed to connect signal")
+	
+	new_seg.color = color
+	
+	new_seg.wire_id = wire_id
 	
 	segments.add_child(new_seg)
 	print_debug("Wire: added segment: ", new_seg.start, ", ", new_seg.end)
+
+
+# Remove the specified segment from the wire
+func remove_segment(seg: CollisionObject2D):
+	seg.remove()
+	if segments.get_children().size() <= 0:
+		queue_free()
 
 
 # Triggers when a connected WireSegment emits the "seg_input" signal,
@@ -57,7 +97,7 @@ func _on_seg_input(seg: CollisionObject2D, event: InputEvent) -> void:
 	if   event.is_action_pressed("ui_select"):
 		start_extend()
 	elif event.is_action_pressed("ui_delete"):
-		seg.remove()
+		remove_segment(seg)
 	elif event is InputEventMouseMotion and is_drag_moved():
 		fix_drag_dir()
 
@@ -72,7 +112,10 @@ func is_drag_moved() -> bool:
 
 # Start extending this wire.
 func start_extend() -> void:
-	emit_signal("start_extend")
+	print_debug("Wire: Starting extension")
+	
+	emit_signal("start_extend", self)
+	is_extend = true
 	drag_start = CanvasInfo.snap(get_local_mouse_position())
 	
 
@@ -95,9 +138,5 @@ func end_extend() -> void:
 	add_segment_path(drag_start, get_local_mouse_position(), drag_is_vert)
 	emit_signal("end_extend")
 	is_extend = false
-
-
-# TODO: Update the wire's contacts with chip inputs and outputs.
-# For now, we can probably just use Area2D contact detection.
-func update_contacts() -> void:
-	pass
+	
+	print_debug("Wire: Ended extension")

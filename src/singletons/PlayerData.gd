@@ -4,15 +4,13 @@ extends Node
 # In the background, it will do the following:
 #    * Maintain up-to-date player data within in-memory data structures
 #      for fast access and modification.
-#    * Append operations to the recovery file for the current level.
-#    * Periodically update the current level's .sav file
-#      (this should also clear the recovery file).
+#    * Abstract saving and loading player solution data.
 
 
 # The name to give a new solution created by the player.
 # Must contain a %d placeholder, which will be replaced by a number
 # when a new solution name is requested.
-var new_solution_base_name := "Solution %d"
+var _new_solution_base_name := "Solution %d"
 
 
 # template structure for player solutions
@@ -29,8 +27,9 @@ var _solution_template := {
 # Designer, this should be updated.
 var current_level := "" setget set_current_level
 
+
 # Solutions data for the current level.
-var solutions : Dictionary
+var solutions : Dictionary = {}
 
 
 # Current solution to be updated. Should be updated when the user
@@ -52,23 +51,42 @@ var wires: Dictionary
 # Current score = Total of Nand chips implemented in solution
 var score : float
 
+
+#func _ready():
+#	pass
+
+
 # Set current level and load its data.
 # If the level has no existing solutions, create one with the default
 # name.
+# Select the first solution.
 func set_current_level(new_value: String) -> void:
-	var rec_data : Array
-	FileIO.load_leveldata(new_value, solutions, rec_data)
-
+	_solution_template = ChipIO.chip_specs[new_value].make_solution_template()
+	
+	solutions = FileIO.load_leveldata(new_value)
+	if solutions.empty():
+		solutions = _solution_template.duplicate(true)
+		
 	current_level = new_value
+	
+	set_current_solution(solutions.keys()[0])
 
 
 # Sets the current solution and updates relevant references accordingly.
 func set_current_solution(new_value: String) -> void:
-	current_solution = new_value
+	if solutions.has(new_value):
+		current_solution = new_value
+	else:
+		current_solution = create_solution(new_value)
 
-	if not solutions.has(current_solution):
-		create_solution(current_solution)
 
+# Update the values of the following references:
+#   - inputs
+#   - outputs
+#   - chips
+#   - wires
+#   - score
+func update_refs():
 	inputs  = solutions[current_solution]["inputs"]
 	outputs = solutions[current_solution]["outputs"]
 	chips   = solutions[current_solution]["chips"]
@@ -76,30 +94,18 @@ func set_current_solution(new_value: String) -> void:
 	score   = solutions[current_solution]["score"]
 
 
-func _ready():
-	pass
-
-
 func next_solution_name() -> String:
-	if solutions:
-		var new_solution_num := 1 
-		var new_solution_name := new_solution_base_name % new_solution_num
-		for sol in solutions:
-			if new_solution_name == sol:
-				new_solution_num += 1
-				new_solution_name = new_solution_base_name % new_solution_num
-		return new_solution_base_name % new_solution_num
-	else:
-		return "solution"
-
-
-func next_chip_id() -> int:
-	return 0
+	var new_solution_num := 1
+	var new_solution_name := _new_solution_base_name % new_solution_num
+	for sol in solutions:
+		if new_solution_name == sol:
+			new_solution_num += 1
+			new_solution_name = _new_solution_base_name % new_solution_num
+	return _new_solution_base_name % new_solution_num
 
 
 func fix_solution_name(name: String) -> String:
 	var num := 1
-	
 	var new_name := name
 	while solutions.has(new_name):
 		new_name = name + "(" + str(num) + ")"
@@ -108,7 +114,18 @@ func fix_solution_name(name: String) -> String:
 	return new_name
 
 
-# Triggers manual save for current level
+func update_solution(solution: String, data: Dictionary) -> void:
+	solutions[solution] = data
+	update_refs()
+
+
+# Update the current_solution with provided solution data
+func update_current_solution(data) -> void:
+	solutions[current_solution] = data
+	update_refs()
+
+
+# Triggers save for current level
 func save() -> void:
 	FileIO.save_leveldata(current_level, solutions)
 
@@ -123,20 +140,17 @@ func create_solution(new_name:= "") -> String:
 	else:
 		name = next_solution_name()
 		
-	if solutions.has(name):
-		return "false"
-	else:
-		solutions[name] = _solution_template.duplicate()
-		return name
+	solutions[name] = _solution_template.duplicate(true)
+	return name
 
 
 # Rename a solution for the current level.
 func rename_solution(old_name: String, new_name: String) -> bool:
 	# TODO: check that the name doesn't already exist
-	solutions[new_name] = solutions[old_name].duplicate()
+	solutions[new_name] = solutions[old_name].duplicate(true)
 	if current_solution == old_name:
 		set_current_solution(new_name)
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 	solutions.erase(old_name)
 
 	return true
@@ -149,7 +163,7 @@ func delete_solution(sol_name: String) -> bool:
 	if current_solution == sol_name:
 		set_current_solution(solutions.keys()[0])
 
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 	solutions.erase(sol_name)
 
 	return true
@@ -172,7 +186,7 @@ func add_chip(chip_id: int, chip_type: String, pos: Vector2) -> void:
 
 # delete the chip specified from the current solution
 func delete_chip(chip_id: int) -> void:
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 	chips.erase(chip_id)
 
 

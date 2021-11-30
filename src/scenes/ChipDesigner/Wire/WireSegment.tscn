@@ -6,7 +6,8 @@
 extents = Vector2( 5, 5 )
 
 [node name="WireSegment" type="Area2D"]
-modulate = Color( 1, 0, 0, 1 )
+collision_layer = 8
+collision_mask = 6
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -14,3 +15,5 @@ position = Vector2( 5, 5 )
 shape = SubResource( 2 )
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

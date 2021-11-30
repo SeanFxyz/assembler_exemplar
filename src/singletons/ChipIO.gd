@@ -108,53 +108,60 @@ func find_chip(name: String) -> Dictionary:
 
 
 var chip_specs := {
+	"": ChipSpec.new(
+		["a", "b"],
+		{"a": 1, "b": 1},
+		["out"],
+		{"out": 1},
+		Nand
+	),
 	"Nand": ChipSpec.new(
 		["a", "b"],
-		[1, 1],
+		{"a": 1, "b": 1},
 		["out"],
-		[1],
+		{"out": 1},
 		Nand
 	),
 	"Not": ChipSpec.new(
 		["in"],
-		[1],
+		{"in": 1},
 		["out"],
-		[1],
+		{"out": 1},
 		Not
 	),
 	"And": ChipSpec.new(
 		["a", "b"],
-		[1, 1],
+		{"a": 1, "b": 1},
 		["out"],
-		[1],
+		{"out": 1},
 		And
 	),
 	"Or": ChipSpec.new(
 		["a", "b"],
-		[1, 1],
+		{"a": 1, "b": 1},
 		["out"],
-		[1],
+		{"out": 1},
 		Or
 	),
 	"Xor": ChipSpec.new(
 		["a", "b"],
-		[1, 1],
+		{"a": 1, "b": 1},
 		["out"],
-		[1],
+		{"out": 1},
 		Xor
 	),
 	"Mux": ChipSpec.new(
 		["a", "b", "sel"],
-		[1, 1, 1],
+		{"a": 1, "b": 1, "sel": 1},
 		["out"],
-		[1],
+		{"out": 1},
 		Mux
 	),
 	"DMux": ChipSpec.new(
 		["in", "sel"],
-		[1, 1],
+		{"in": 1, "sel": 1},
 		["a", "b"],
-		[1, 1],
+		{"a": 1, "b": 1},
 		DMux
 	),
 }

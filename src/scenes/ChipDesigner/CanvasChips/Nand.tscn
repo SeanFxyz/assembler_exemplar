@@ -25,11 +25,14 @@ centered = false
 
 [node name="ChipInput" parent="Inputs" instance=ExtResource( 3 )]
 position = Vector2( 0, 39.685 )
+input_name = "a"
 
 [node name="ChipInput2" parent="Inputs" instance=ExtResource( 3 )]
 position = Vector2( 0.529739, 90.0543 )
+input_name = "b"
 
 [node name="Outputs" type="Node2D" parent="."]
 
 [node name="ChipOutput" parent="Outputs" instance=ExtResource( 5 )]
 position = Vector2( 120, 60 )
+output_name = "out"

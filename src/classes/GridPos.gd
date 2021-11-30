@@ -35,6 +35,18 @@ func from_pos(v: Vector2) -> GridPos:
 	return self
 
 
+# Creates a two-value array from the GridPos x and y value
+func to_array() -> Array:
+	return [x, y]
+
+
+# Initializes GridPos x and y from the first two values of the given array.
+func from_array(a: Array) -> GridPos:
+	x = a[0]
+	y = a[1]
+	return self
+
+
 # Creates a unique numerical value corresponding to the current
 # x and y values.
 # First, maps x and y to positive values according to the following:
