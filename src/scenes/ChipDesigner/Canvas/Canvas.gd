@@ -41,17 +41,19 @@ var CircuitOutput := preload("res://scenes/ChipDesigner/CanvasChips/CircuitOutpu
 var Wire := preload("res://scenes/ChipDesigner/Wire/Wire.tscn")
 
 
-func _ready():
+func _ready() -> void:
 	camera.position = viewport.get_visible_rect().size / 2
 	circuit_chip_spec = ChipIO.chip_specs[PlayerData.current_level]
 	_last_wire_id = -1
 	_last_chip_id = -1
 	
+	print_debug("Canvas: ", ChipIO.chip_specs[PlayerData.current_level].make_solution_template())
+	
 	populate(
 		ChipIO.chip_specs[PlayerData.current_level].make_solution_template())
 
 
-func _process(_delta):
+func _process(_delta) -> void:
 	mouse_pos = grid.get_local_mouse_position()
 	
 	if viewport.get_visible_rect().has_point(viewport.get_mouse_position()):
@@ -70,7 +72,8 @@ func _process(_delta):
 			elif is_new_wire_dir_set == false:
 				fix_new_wire_dir()
 		elif (Input.is_action_just_pressed("ui_select") and
-				CanvasInfo.entities_hovered <= 0):
+				(CanvasInfo.entities_hovered <= 0 or
+					CanvasInfo.chip_io_hovered > 0)):
 			start_new_wire()
 		elif is_extend_wire and Input.is_action_just_released("ui_select"):
 			extending_wire.end_extend()
@@ -100,7 +103,7 @@ func simulate_inputs(inputs: Dictionary) -> Dictionary:
 	return outputs
 
 
-func populate(data: Dictionary):
+func populate(data: Dictionary) -> void:
 	for input in data["inputs"].keys():
 		var input_grid_pos : Array = data["inputs"][input]
 		var new_circuit_input : Area2D = CircuitInput.instance()
@@ -121,7 +124,7 @@ func populate(data: Dictionary):
 	# TODO: populate chips and wires from save data
 
 
-func add_chip(chip_scene: PackedScene, pos: Vector2):
+func add_chip(chip_scene: PackedScene, pos: Vector2) -> void:
 	
 	var new_chip = chip_scene.instance()
 	new_chip.position = pos
@@ -133,7 +136,7 @@ func add_chip(chip_scene: PackedScene, pos: Vector2):
 	chip_container.add_child(new_chip)
 
 
-func add_chip_on_mouse(chip_scene: PackedScene):
+func add_chip_on_mouse(chip_scene: PackedScene) -> void:
 	var new_chip = chip_scene.instance()
 	new_chip.position = mouse_pos
 	
@@ -148,7 +151,7 @@ func add_chip_on_mouse(chip_scene: PackedScene):
 
 
 # Starts a new wire
-func start_new_wire():
+func start_new_wire() -> void:
 	print_debug("Canvas: Starting new wire")
 	
 	is_new_wire = true
@@ -161,7 +164,7 @@ func start_new_wire():
 	
 
 # Fixes the wire preview's drag direction
-func fix_new_wire_dir():
+func fix_new_wire_dir() -> void:
 	var snapped_mouse_pos := CanvasInfo.snap(mouse_pos)
 	
 	if snapped_mouse_pos.x != new_wire_start.x:
@@ -173,7 +176,7 @@ func fix_new_wire_dir():
 	
 
 # Creates a new wire node based on where the user dragged the mouse.
-func end_new_wire():
+func end_new_wire() -> void:
 	is_new_wire = false
 	
 	wire_preview.hide()
@@ -213,7 +216,7 @@ func _on_Wire_drag_dir(is_vert: bool):
 	wire_preview.is_vert = is_vert
 
 
-func remove():
+func remove() -> void:
 	queue_free()
 
 
@@ -244,17 +247,17 @@ func _on_ColorPicker_color_changed(color) -> void:
 	new_wire_color = color
 
 
-func _on_SaveButton_mouse_entered():
+func _on_SaveButton_mouse_entered() -> void:
 	CanvasInfo.entities_hovered += 1
 
 
-func _on_SaveButton_mouse_exited():
+func _on_SaveButton_mouse_exited() -> void:
 	CanvasInfo.entities_hovered -= 1
 
 
-func _on_ColorPickerButton_mouse_entered():
+func _on_ColorPickerButton_mouse_entered() -> void:
 	CanvasInfo.entities_hovered += 1
 
 
-func _on_ColorPickerButton_mouse_exited():
+func _on_ColorPickerButton_mouse_exited() -> void:
 	CanvasInfo.entities_hovered -= 1

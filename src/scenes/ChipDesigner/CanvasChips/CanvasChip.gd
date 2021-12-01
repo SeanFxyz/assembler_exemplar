@@ -13,11 +13,12 @@ var output_nodes  := {}
 
 var prev_mouse_position := Vector2()
 var is_dragged := false
+var hovered    := false
 
-onready var inputs      : Node2D = $Inputs
-onready var outputs     : Node2D = $Outputs
+onready var inputs      : Node2D   = $Inputs
+onready var outputs     : Node2D   = $Outputs
 onready var chip_spec   : ChipSpec = ChipIO.chip_specs[chip_type]
-onready var sprite_rect : Rect2  = $Sprite.get_rect()
+onready var sprite_rect : Rect2    = $Sprite.get_rect()
 
 
 # Called when the node enters the scene tree for the first time.
@@ -31,6 +32,7 @@ func _ready():
 		input.chip = self
 		input_nodes[input.input_name] = input
 		input_states[input.input_name] = 0
+		#if input.connect("")
 	for output in outputs.get_children():
 		output.chip = self
 		output_nodes[output.output_name] = output
@@ -43,14 +45,24 @@ func _on_input_event(_viewport, event, _shape_idx):
 		prev_mouse_position = event.position
 		is_dragged = true
 		CanvasInfo.chips_dragged += 1
+	elif event.is_action_pressed("ui_delete"):
+		remove()
+
+
+func remove() -> void:
+	if hovered:
+		CanvasInfo.entities_hovered -= 1
+		queue_free()
 		
 		
 func _on_mouse_entered():
 	CanvasInfo.entities_hovered += 1
+	hovered = true
 
 
 func _on_mouse_exited():
 	CanvasInfo.entities_hovered -= 1
+	hovered = false
 		
 		
 func _input(event):

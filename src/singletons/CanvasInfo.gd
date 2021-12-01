@@ -25,8 +25,14 @@ enum {
 # How many chips are being dragged
 var chips_dragged : int = 0
 
+# TODO: use signalling between entities and the specific Canvas, rather than
+# the entities_hovered and chip_io_hovered variables.
+
 # How many entities the mouse is touching
 var entities_hovered : int = 0
+
+# How many ChipInput or ChipOutput nodes is the mouse touching
+var chip_io_hovered  : int = 0
 
 # Current zoom level
 var zoom_cur : float = 1.0
