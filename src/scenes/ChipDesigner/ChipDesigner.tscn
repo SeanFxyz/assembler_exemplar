@@ -143,12 +143,6 @@ __meta__ = {
 }
 
 [node name="ChipInfo" parent="InfoPanels/LeftPanels" instance=ExtResource( 8 )]
-anchor_bottom = 0.5
-margin_bottom = -5.0
-
-[node name="AdditionalInfo" parent="InfoPanels/LeftPanels" instance=ExtResource( 8 )]
-anchor_top = 0.5
-margin_top = 5.0
 
 [node name="RightPanels" type="Control" parent="InfoPanels"]
 anchor_left = 0.85
