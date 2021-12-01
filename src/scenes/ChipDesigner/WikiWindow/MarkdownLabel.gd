@@ -153,4 +153,5 @@ func _ready():
 #	print_debug(code_block_handler("arst"))
 #	print_debug(code_block_handler("```"))
 #	print_debug(md_to_bb("arst arst arst\narst arst arst\n\n#Test\n\n##Test\n\n###Test\n\n```\ntest test test\ntest test test\n```\n\narst arst arst\narst arst arst\n\narst arst arst\n\n* test of unordered list"))
+	print(md_to_bb("this will be *italicized*, okay?"))
 	pass
