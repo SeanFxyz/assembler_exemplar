@@ -124,6 +124,29 @@ func populate(data: Dictionary) -> void:
 	# TODO: populate chips and wires from save data
 
 
+func get_input_values() -> Dictionary:
+	var result := {}
+	
+	for input in input_container.get_children():
+		result[input.input_name] = input.input_state
+	
+	return result
+
+
+func get_output_values() -> Dictionary:
+	var result := {}
+	
+	for output in output_container.get_children():
+		result[output.output_name] = output.input_state
+	
+	return result
+
+
+func set_input_values(input_set: Dictionary) -> void:
+	for input_name in input_set.keys():
+		input_nodes[input_name].set_input_state("", input_set[input_name])
+
+
 func add_chip(chip_scene: PackedScene, pos: Vector2) -> void:
 	
 	var new_chip = chip_scene.instance()

@@ -6,6 +6,7 @@ var input_widths  : Dictionary
 var output_names  : Array
 var output_widths : Dictionary
 var io            : Dictionary
+var input_sets    : Array
 var canvas_width  : int
 var components    : Array
 
@@ -16,6 +17,7 @@ func _init(
 	onames   : Array,
 	owidths  : Dictionary,
 	i        : Dictionary,
+	isets    : Array,
 	canvas_w : int = 50,
 	comp     : Array = ["Nand"]
 ):
@@ -24,6 +26,7 @@ func _init(
 	output_names = onames
 	output_widths = owidths
 	io = i
+	input_sets = isets
 	canvas_width = canvas_w
 	components = comp
 
@@ -32,7 +35,6 @@ func _init(
 # lookup key.
 func format_input(input_states: Dictionary):
 	var key : int = input_states[input_names[0]]
-	print_debug("ChipSpec: ", input_states)
 	for iname in input_names.slice(1, -1):
 		key = key << input_widths[iname] | input_states[iname]
 	

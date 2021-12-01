@@ -8,14 +8,20 @@ onready var fast_forward := $FastForwardButton
 
 
 func _on_ResetButton_pressed():
+	play.set_pressed_no_signal(false)
+	fast_forward.set_pressed_no_signal(false)
 	emit_signal("test_control_pressed", "reset")
 
 
 func _on_StepBackButton_pressed():
+	play.set_pressed_no_signal(false)
+	fast_forward.set_pressed_no_signal(false)
 	emit_signal("test_control_pressed", "step_back")
 
 
 func _on_StepForwardButton_pressed():
+	play.set_pressed_no_signal(false)
+	fast_forward.set_pressed_no_signal(false)
 	emit_signal("test_control_pressed", "step_forward")
 
 
