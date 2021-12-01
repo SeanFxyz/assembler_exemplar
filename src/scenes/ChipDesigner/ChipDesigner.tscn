@@ -31,6 +31,7 @@ border_color = Color( 0, 0, 0, 1 )
 border_blend = true
 
 [sub_resource type="DynamicFont" id=3]
+size = 20
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 18 )

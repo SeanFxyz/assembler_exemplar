@@ -1,7 +1,7 @@
 extends Control
 
 const header_fg_color := Color.gold
-const active_bg_color := Color.lightyellow
+const active_bg_color := Color.white
 const inactive_bg_color := Color.transparent
 const head_items := 1
 
@@ -18,9 +18,9 @@ var state_icons := {
 }
 
 var state_colors := {
-	-1 : Color.red,
-	 0 : Color.gray,
-	 1 : Color.green,
+	-1 : Color.crimson,
+	 0 : Color.darkgray,
+	 1 : Color.forestgreen,
 }
 
 onready var item_list := find_node("ItemList")
