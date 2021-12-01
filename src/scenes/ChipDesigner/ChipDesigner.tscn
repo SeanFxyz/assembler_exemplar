@@ -1,9 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcher.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ChipDesigner/ChipDesigner.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ChipDesigner/Canvas/Canvas.tscn" type="PackedScene" id=3]
-[ext_resource path="res://images/chips/DummyChip.png" type="Texture" id=4]
+[ext_resource path="res://images/chips/OR.png" type="Texture" id=4]
 [ext_resource path="res://images/chips/NAND.png" type="Texture" id=5]
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcherTabs.gd" type="Script" id=6]
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcherTabContainer.gd" type="Script" id=7]
@@ -11,6 +11,9 @@
 [ext_resource path="res://scenes/ChipDesigner/InfoPanels.gd" type="Script" id=9]
 [ext_resource path="res://scenes/ChipDesigner/TestControl.gd" type="Script" id=10]
 [ext_resource path="res://Fonts/ButtonFont.tres" type="DynamicFont" id=11]
+[ext_resource path="res://images/chips/AND.png" type="Texture" id=12]
+[ext_resource path="res://images/chips/XOR.png" type="Texture" id=13]
+[ext_resource path="res://images/chips/MUX.png" type="Texture" id=14]
 
 [node name="ChipDesigner" type="Control"]
 anchor_right = 1.0
@@ -80,10 +83,10 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
-items = [ "Dummy Chip", ExtResource( 4 ), false, "Nand", ExtResource( 5 ), false ]
+items = [ "Nand", ExtResource( 5 ), false, "And", ExtResource( 12 ), false, "Or", ExtResource( 4 ), false, "Xor", ExtResource( 13 ), false, "Mux", ExtResource( 14 ), false ]
 allow_reselect = true
 max_columns = 0
-icon_scale = 0.1
+fixed_icon_size = Vector2( 50, 50 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
