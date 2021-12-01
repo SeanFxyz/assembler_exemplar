@@ -79,7 +79,7 @@ __meta__ = {
 
 [node name="TestControl" type="HBoxContainer" parent="."]
 anchor_left = 0.85
-anchor_top = 0.85
+anchor_top = 0.9
 anchor_right = 1.0
 anchor_bottom = 1.0
 alignment = 1
@@ -91,7 +91,7 @@ __meta__ = {
 [node name="ResetButton" type="Button" parent="TestControl"]
 margin_left = 13.0
 margin_right = 40.0
-margin_bottom = 90.0
+margin_bottom = 60.0
 custom_fonts/font = ExtResource( 11 )
 text = "|<<"
 align = 0
@@ -99,21 +99,21 @@ align = 0
 [node name="StepBackButton" type="Button" parent="TestControl"]
 margin_left = 44.0
 margin_right = 65.0
-margin_bottom = 90.0
+margin_bottom = 60.0
 custom_fonts/font = ExtResource( 11 )
 text = "|<"
 
 [node name="StepForwardButton" type="Button" parent="TestControl"]
 margin_left = 69.0
 margin_right = 90.0
-margin_bottom = 90.0
+margin_bottom = 60.0
 custom_fonts/font = ExtResource( 11 )
 text = ">|"
 
 [node name="PlayButton" type="Button" parent="TestControl"]
 margin_left = 94.0
 margin_right = 112.0
-margin_bottom = 90.0
+margin_bottom = 60.0
 custom_fonts/font = ExtResource( 11 )
 toggle_mode = true
 text = ">"
@@ -121,7 +121,7 @@ text = ">"
 [node name="FastForwardButton" type="Button" parent="TestControl"]
 margin_left = 116.0
 margin_right = 140.0
-margin_bottom = 90.0
+margin_bottom = 60.0
 custom_fonts/font = ExtResource( 11 )
 toggle_mode = true
 text = ">>"
@@ -147,7 +147,7 @@ __meta__ = {
 [node name="RightPanels" type="Control" parent="InfoPanels"]
 anchor_left = 0.85
 anchor_right = 1.0
-anchor_bottom = 0.85
+anchor_bottom = 0.9
 
 [node name="InfoPanel" parent="InfoPanels/RightPanels" instance=ExtResource( 8 )]
 
