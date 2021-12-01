@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcher.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ChipDesigner/ChipDesigner.gd" type="Script" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://images/chips/AND.png" type="Texture" id=12]
 [ext_resource path="res://images/chips/XOR.png" type="Texture" id=13]
 [ext_resource path="res://images/chips/MUX.png" type="Texture" id=14]
+[ext_resource path="res://scenes/ChipDesigner/ItemListScript.gd" type="Script" id=15]
+[ext_resource path="res://images/chips/NOT.png" type="Texture" id=16]
 
 [node name="ChipDesigner" type="Control"]
 anchor_right = 1.0
@@ -83,10 +85,11 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
-items = [ "Nand", ExtResource( 5 ), false, "And", ExtResource( 12 ), false, "Or", ExtResource( 4 ), false, "Xor", ExtResource( 13 ), false, "Mux", ExtResource( 14 ), false ]
+items = [ "Nand", ExtResource( 5 ), false, "Not", ExtResource( 16 ), false, "And", ExtResource( 12 ), false, "Or", ExtResource( 4 ), false, "Xor", ExtResource( 13 ), false, "Mux", ExtResource( 14 ), false ]
 allow_reselect = true
 max_columns = 0
 fixed_icon_size = Vector2( 50, 50 )
+script = ExtResource( 15 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
