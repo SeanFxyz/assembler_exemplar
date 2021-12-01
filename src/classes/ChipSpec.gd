@@ -31,9 +31,9 @@ func _init(
 # Takes an array of integer input values and combines them into a dictionary
 # lookup key.
 func format_input(input_states: Dictionary):
-	var inames := input_states.keys()
-	var key : int = input_states[inames[0]]
-	for iname in inames.slice(1, -1):
+	var key : int = input_states[input_names[0]]
+	print_debug("ChipSpec: ", input_states)
+	for iname in input_names.slice(1, -1):
 		key = key << input_widths[iname] | input_states[iname]
 	
 	return key

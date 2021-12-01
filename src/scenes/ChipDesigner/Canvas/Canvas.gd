@@ -14,7 +14,7 @@ onready var chip_container   := $ViewportContainer/Viewport/Chips
 onready var wire_container   := $ViewportContainer/Viewport/Wires
 onready var wire_preview     := $ViewportContainer/Viewport/WirePreview
 onready var color_picker     := $ColorPicker
-onready var new_wire_color   : Color = color_picker.presets[0]
+onready var new_wire_color   : Color = color_picker.default
 
 var enabled             : bool    = true setget set_enabled
 
@@ -105,6 +105,7 @@ func populate(data: Dictionary):
 		var input_grid_pos : Array = data["inputs"][input]
 		var new_circuit_input : Area2D = CircuitInput.instance()
 		new_circuit_input.input_name = input
+		new_circuit_input.input_width = circuit_chip_spec.input_widths[input]
 		new_circuit_input.position = CanvasInfo.arr_to_pos(input_grid_pos)
 		input_container.add_child(new_circuit_input)
 		input_nodes[input] = new_circuit_input
@@ -117,7 +118,7 @@ func populate(data: Dictionary):
 		output_container.add_child(new_circuit_output)
 		output_nodes[output] = new_circuit_output
 	
-	# TODO: populate chips and wires
+	# TODO: populate chips and wires from save data
 
 
 func add_chip(chip_scene: PackedScene, pos: Vector2):

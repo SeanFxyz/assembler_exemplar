@@ -15,6 +15,13 @@ const center_offset : Vector2 = grid_snap / 2
 # Highlight color
 const highlight_color : Color = Color.whitesmoke
 
+enum {
+	CLAYER_CANVASCHIP = 0,
+	CLAYER_CHIPINPUT  = 1,
+	CLAYER_CHIPOUTPUT = 2,
+	CLAYER_WIRE       = 3,
+}
+
 # How many chips are being dragged
 var chips_dragged : int = 0
 
