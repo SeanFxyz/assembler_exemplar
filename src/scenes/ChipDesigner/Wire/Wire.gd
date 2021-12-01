@@ -88,6 +88,7 @@ func add_segment_path(start: Vector2, end: Vector2, is_vert: bool) -> void:
 # Adds a segment to this wire from the given start point to the given end point.
 # The start and end are in world-space coordinates within the Canvas, but
 # will be snapped to the grid.
+# TODO: figure out how to merge segments that are parallel and end-to-end
 func add_segment(start: Vector2, end: Vector2) -> void:
 	var new_seg = Segment.instance()
 	new_seg.start = GridPos.new().from_pos(start)
@@ -123,6 +124,7 @@ func _on_seg_input(seg: CollisionObject2D, event: InputEvent) -> void:
 		start_extend()
 	elif event.is_action_pressed("ui_delete"):
 		remove_segment(seg)
+		queue_free()
 	elif event is InputEventMouseMotion and is_drag_moved():
 		fix_drag_dir()
 
