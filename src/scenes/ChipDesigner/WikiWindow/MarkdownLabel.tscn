@@ -1,32 +1,38 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/WikiWindow/MarkdownLabel.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/CodeBlock.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Fonts/Italics.tres" type="DynamicFont" id=3]
 
 [node name="MarkdownLabel" type="RichTextLabel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/mono_font = ExtResource( 2 )
+custom_fonts/italics_font = ExtResource( 3 )
 bbcode_enabled = true
-bbcode_text = "[font=res://Fonts/Level1Header.tres]Level 1 Header[/font]
-[font=res://Fonts/Level2Header.tres]Level 2 Header[/font]
-[font=res://Fonts/Level3Header.tres]Level 3 Header[/font]
-[indent][b]-[/b] unordered list[/indent]
-```
+bbcode_text = "[font=res://Fonts/Level1Header.tres]Level 1 Header[/font]
+[font=res://Fonts/Level2Header.tres]Level 2 Header[/font]
+[font=res://Fonts/Level3Header.tres]Level 3 Header[/font]
+[b]-[/b]  unordered list
+[code][color=silver]
 code block
-```
+[/color][/code]
 Normal paragraph
  
+This is a [i]test[/i] of [i]italics[/i]
+[b]-[/b]  This is a [i]test[/i] of [i]italics[/i] on an unordered list
 "
 text = "Level 1 Header
 Level 2 Header
 Level 3 Header
-	- unordered list
-```
+-  unordered list
+
 code block
-```
+
 Normal paragraph
  
+This is a test of italics
+-  This is a test of italics on an unordered list
 "
 script = ExtResource( 1 )
 __meta__ = {
@@ -40,4 +46,6 @@ md_text = "# Level 1 Header
 code block
 ```
 Normal paragraph
- "
+ 
+This is a *test* of *italics*
+* This is a *test* of *italics* on an unordered list"

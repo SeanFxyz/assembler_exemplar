@@ -78,11 +78,12 @@ func code_block_handler(value : String) -> String:
 
 func uo_list_handler(value : String) -> String:
 	# Make the unordered list identifier (* or -) bold
-	value = value.replace("* ", "- ")
+	value.erase(0, 1)
+	value = value.insert(0, "- ")
 	value = value.insert(0, "[b]")
 	value = value.insert(4, "[/b]")
 	# Indent the list
-	value = "[indent]" + value + "[/indent]"
+	#value = "[indent]" + value + "[/indent]"
 
 	return value
 
@@ -94,7 +95,7 @@ func md_to_bb(value : String) -> String:
 	# Make sure in_code_block starts as "false"
 	in_code_block = false
 
-	var md_lines = value.split('\n')
+	var md_lines = value.split("\n")
 	for line in md_lines:
 		# Check if code block
 		if (in_code_block || line == "```"):
@@ -136,8 +137,35 @@ func md_to_bb(value : String) -> String:
 				bb_string += "\n"
 	# Remove any trailing whitespace
 	bb_string = bb_string.replace(" \n", "\n")
-
-	# TODO: Check bb_string for italics in md, then add them in bb_code
+	
+	# Italicize text where necessary
+	# Update md_lines with values altered above
+	md_lines = bb_string.split("\n")
+	
+	for line in md_lines:
+		if line.count("*") > 1:
+			# "Asterisk lines," or the line split on "*"
+			var ast_lines = line.rsplit("*")
+			
+			var ast_line_size = ast_lines.size()
+			# Count through to the value of ast_line_size, then check if odd or
+			# even line
+			for index in ast_line_size:
+				if index % 2 != 0:
+					ast_lines[index] = ast_lines[index].insert(0, "[i]")
+				else:
+					ast_lines[index] = ast_lines[index].insert(0, "[/i]")
+			
+			# Turn ast_lines into a string
+			var ast_lines_string = ""
+			
+			for section in ast_lines:
+				ast_lines_string += section
+			# Delete "[/i]" that is placed at the beginning because of how "[i]"
+			# and "[/i]" are placed at the beginning of lines
+			ast_lines_string.erase(0, 4)
+			# Replace "*italics*" with "[i]italics[/i]" in bb_string
+			bb_string = bb_string.replace(line, ast_lines_string)
 
 	return bb_string
 
@@ -153,5 +181,4 @@ func _ready():
 #	print_debug(code_block_handler("arst"))
 #	print_debug(code_block_handler("```"))
 #	print_debug(md_to_bb("arst arst arst\narst arst arst\n\n#Test\n\n##Test\n\n###Test\n\n```\ntest test test\ntest test test\n```\n\narst arst arst\narst arst arst\n\narst arst arst\n\n* test of unordered list"))
-	print(md_to_bb("this will be *italicized*, okay?"))
 	pass
