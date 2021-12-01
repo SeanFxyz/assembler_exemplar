@@ -27,6 +27,16 @@ var chip_scenes := {
 	"DMux" : DMux,
 }
 
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		exit_chip_designer()
+
+
+func exit_chip_designer():
+	get_tree().change_scene("res://scenes/LevelMenu/LevelMenu.tscn")
+
+
 func _on_ItemList_item_selected(index):
 	print_debug("ChipDesigner: item clicked")
 	item_selected = true
