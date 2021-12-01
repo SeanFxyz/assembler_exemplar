@@ -30,6 +30,7 @@ func _ready():
 	
 	
 	for input in inputs.get_children():
+		input.chip = self
 		input_nodes[input.input_name] = input
 	
 	label.text = input_state_to_string(input_state)
