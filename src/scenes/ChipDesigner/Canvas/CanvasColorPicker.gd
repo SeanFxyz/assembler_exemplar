@@ -1,5 +1,6 @@
 extends ColorPicker
 
+var default : Color = Color.green
 
 export(Array, Color) var presets := [
 	Color.red,
@@ -7,7 +8,6 @@ export(Array, Color) var presets := [
 	Color.orange,
 	Color.yellow,
 	Color.yellowgreen,
-	Color.greenyellow,
 	Color.green,
 	Color.cyan,
 	Color.blue,

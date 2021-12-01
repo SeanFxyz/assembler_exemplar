@@ -11,7 +11,7 @@ const Segment: PackedScene=preload("res://scenes/ChipDesigner/Wire/WireSegment.t
 # Wire ID, unique within the Canvas
 var wire_id      : int
 var wire_state   : int     = 0 setget set_wire_state
-var color        : Color   = Color.red
+var color        : Color   = Color.green
 
 # Indicates whether the user is dragging the mouse to *extend* the wire.
 var is_extend    : bool    = false
@@ -34,17 +34,40 @@ func set_wire_state(new_value: int) -> void:
 	wire_state = new_value
 	emit_signal("wire_state_changed", wire_state)
 	update_connected_inputs()
+	print_debug("Wire: wire state changed to ", wire_state)
 
 
 func update_connected_inputs():
-	var seg_list := segments.get_children()
-	
-	for seg in seg_list:
-		var seg_overlaps : Array = seg.get_overlapping_areas()
-		for node in seg_overlaps:
-			if node.get_parent().chip_type == "in":
-				node.set_input_state(node.input_name)
+	for input in get_connected_chip_inputs():
+		input.chip.set_input_state(input.input_name, wire_state)
 
+
+func get_connected_chip_io() -> Array:
+	var result := []
+	
+	for seg in segments.get_children():
+		result.append_array(seg.get_overlapping_areas())
+	
+	return result
+
+
+func get_connected_chip_inputs() -> Array:
+	var result := []
+	
+	for seg in segments.get_children():
+		result.append_array(seg.get_overlapping_chip_inputs())
+	
+	return result
+
+
+func get_connected_chip_outputs() -> Array:
+	var result := []
+	
+	for seg in segments.get_children():
+		result.append_array(seg.get_overlapping_chip_outputs())
+	
+	return result
+	
 
 # Add one or two segments to the wire as needed to get from `start` to `end`.
 # `is_vert` determines whether the *first* segment will be vertical (true) or
@@ -77,6 +100,8 @@ func add_segment(start: Vector2, end: Vector2) -> void:
 	new_seg.color = color
 	
 	new_seg.wire_id = wire_id
+	new_seg.wire = self
+	new_seg.wire_state = wire_state
 	
 	segments.add_child(new_seg)
 	print_debug("Wire: added segment: ", new_seg.start, ", ", new_seg.end)

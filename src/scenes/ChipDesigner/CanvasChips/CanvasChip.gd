@@ -22,19 +22,21 @@ onready var sprite_rect : Rect2  = $Sprite.get_rect()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if (connect("input_event", self, "_on_Drag") != OK or
+	if (connect("input_event", self, "_on_input_event") != OK or
 			connect("mouse_entered", self, "_on_mouse_entered") != OK or
 			connect("mouse_exited", self, "_on_mouse_exited") != OK):
 		printerr("CanvasChip: failed to connect signal")
 	
 	for input in inputs.get_children():
+		input.chip = self
 		input_nodes[input.input_name] = input
-		input_states[input.input_name] = false
+		input_states[input.input_name] = 0
 	for output in outputs.get_children():
+		output.chip = self
 		output_nodes[output.output_name] = output
 
 
-func _on_Drag(_viewport, event, _shape_idx):
+func _on_input_event(_viewport, event, _shape_idx):
 	# Allow dragging if user clicks CollisionShape2D
 	if event.is_action_pressed("ui_select"):
 		get_tree().set_input_as_handled()
@@ -68,36 +70,10 @@ func _input(event):
 		prev_mouse_position = event.position
 
 
-#func get_input_value(input_name: String) -> int:
-#
-#	return 0
-#
-#
-#func get_output_value(output_name: String) -> int:
-#	var input_values := []
-#
-#	for input_name in chip_spec.input_names:
-#		input_values.append(get_input_value(input_name))
-#
-#	var output_values : Dictionary
-#	output_values = chip_spec.io[chip_spec.format_input(input_values)]
-#
-#	return output_values[output_name]
-
-
 func set_input_state(input_name: String, state: int) -> void:
+	print_debug("CanvasChip: setting input state ", input_name, " to ", state)
 	input_states[input_name] = state
 	update_outputs()
-
-
-func update_outputs() -> void:
-	var output_states : Dictionary = (
-		chip_spec.io[chip_spec.format_input(input_states)])
-	
-	for oname in output_states.keys():
-		var owire := get_output_wire(oname)
-		if owire:
-			owire.wire_state = output_states[oname]
 
 
 func get_input_wire(input_name: String) -> Node2D:
@@ -118,3 +94,13 @@ func get_output_wire(output_name: String) -> Node2D:
 
 func input_state_to_string(state: int) -> String:
 	return str(state)
+
+
+func update_outputs() -> void:
+	var output_states : Dictionary = (
+		chip_spec.io[chip_spec.format_input(input_states)])
+	
+	for oname in output_states.keys():
+		var owire := get_output_wire(oname)
+		if owire:
+			owire.wire_state = output_states[oname]

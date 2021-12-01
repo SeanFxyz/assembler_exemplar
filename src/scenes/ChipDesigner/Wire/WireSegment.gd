@@ -1,4 +1,4 @@
-extends Node2D
+extends Area2D
 
 signal seg_input(seg, event)
 
@@ -93,10 +93,32 @@ func remove():
 	queue_free()
 
 
+func get_overlapping_chip_inputs() -> Array:
+	# TODO: re-write to use collision mask instead
+	var result := []
+	
+	for a in get_overlapping_areas():
+		if a.is_in_group("chip_input"):
+			result.append(a)
+
+	return result
+
+
+func get_overlapping_chip_outputs() -> Array:
+	# TODO: re-write to use collision mask instead
+	var result := []
+	
+	for a in get_overlapping_areas():
+		if a.is_in_group("chip_output"):
+			result.append(a)
+	
+	return result
+
+
 func _draw():
 	draw_rect(rect, color)
 	
-	if wire_state:
+	if wire_state > 0:
 		var state_rect := rect.abs().grow(-3)
 		draw_rect(state_rect, color.inverted())
 
