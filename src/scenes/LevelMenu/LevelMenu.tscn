@@ -48,18 +48,21 @@ __meta__ = {
 [node name="LevelButton" parent="VBoxContainer2" instance=ExtResource( 3 )]
 margin_right = 36.0
 margin_bottom = 36.0
+level = "Not"
 
 [node name="LevelButton2" parent="VBoxContainer2" instance=ExtResource( 3 )]
 margin_top = 40.0
 margin_right = 36.0
 margin_bottom = 76.0
 text = "And"
+level = "And"
 
 [node name="LevelButton3" parent="VBoxContainer2" instance=ExtResource( 3 )]
 margin_top = 80.0
 margin_right = 36.0
 margin_bottom = 116.0
 text = "Or"
+level = "Or"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="."]
 anchor_left = 0.6
@@ -76,18 +79,21 @@ __meta__ = {
 margin_right = 52.0
 margin_bottom = 36.0
 text = "Xor"
+level = "Xor"
 
 [node name="LevelButton2" parent="VBoxContainer3" instance=ExtResource( 3 )]
 margin_top = 40.0
 margin_right = 52.0
 margin_bottom = 76.0
 text = "Mux"
+level = "Mux"
 
 [node name="LevelButton3" parent="VBoxContainer3" instance=ExtResource( 3 )]
 margin_top = 80.0
 margin_right = 52.0
 margin_bottom = 116.0
 text = "DMux"
+level = "DMux"
 
 [node name="BackButton" type="Button" parent="."]
 margin_left = 26.5017
