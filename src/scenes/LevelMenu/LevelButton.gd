@@ -1,4 +1,3 @@
-tool
 extends Button
 
 # Simple wrapper around Button that allows the button to signal what level it
@@ -6,10 +5,7 @@ extends Button
 
 signal level_button_pressed(level)
 
-export var level : String = "Nand" setget set_level
-
-func set_level(new_value):
-	text = new_value
+export var level : String
 
 func _on_pressed():
 	emit_signal("level_button_pressed", level)
