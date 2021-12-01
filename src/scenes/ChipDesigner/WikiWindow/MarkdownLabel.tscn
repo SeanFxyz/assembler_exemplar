@@ -8,13 +8,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/mono_font = ExtResource( 2 )
 bbcode_enabled = true
-bbcode_text = "[font=res://Fonts/Level1Header.tres]Level 1 Header[/font]
-[font=res://Fonts/Level2Header.tres]Level 2 Header[/font]
-[font=res://Fonts/Level3Header.tres]Level 3 Header[/font]
-[indent][b]-[/b] unordered list[/indent]
-[code][color=silver]
+bbcode_text = "[font=res://Fonts/Level1Header.tres]Level 1 Header[/font]
+[font=res://Fonts/Level2Header.tres]Level 2 Header[/font]
+[font=res://Fonts/Level3Header.tres]Level 3 Header[/font]
+[indent][b]-[/b] unordered list[/indent]
+```
 code block
-[/color][/code]
+```
 Normal paragraph
  
 "
@@ -22,9 +22,9 @@ text = "Level 1 Header
 Level 2 Header
 Level 3 Header
 	- unordered list
-
+```
 code block
-
+```
 Normal paragraph
  
 "
