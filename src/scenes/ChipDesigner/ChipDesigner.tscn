@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcher.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ChipDesigner/ChipDesigner.gd" type="Script" id=2]
@@ -16,6 +16,15 @@
 [ext_resource path="res://images/chips/MUX.png" type="Texture" id=14]
 [ext_resource path="res://scenes/ChipDesigner/ItemListScript.gd" type="Script" id=15]
 [ext_resource path="res://images/chips/NOT.png" type="Texture" id=16]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.160784, 0.164706, 0.207843, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+border_blend = true
 
 [node name="ChipDesigner" type="Control"]
 anchor_right = 1.0
@@ -84,7 +93,10 @@ __meta__ = {
 [node name="ItemList" type="ItemList" parent="ItemListControl"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+focus_mode = 0
 mouse_filter = 1
+custom_constants/hseparation = 10
+custom_styles/bg = SubResource( 2 )
 items = [ "Nand", ExtResource( 5 ), false, "Not", ExtResource( 16 ), false, "And", ExtResource( 12 ), false, "Or", ExtResource( 4 ), false, "Xor", ExtResource( 13 ), false, "Mux", ExtResource( 14 ), false ]
 allow_reselect = true
 max_columns = 0
@@ -99,6 +111,7 @@ anchor_left = 0.85
 anchor_top = 0.9
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/separation = 2
 alignment = 1
 script = ExtResource( 10 )
 __meta__ = {
@@ -106,17 +119,19 @@ __meta__ = {
 }
 
 [node name="ResetButton" type="Button" parent="TestControl"]
-margin_left = 13.0
-margin_right = 40.0
+margin_left = 17.0
+margin_right = 44.0
 margin_bottom = 60.0
+hint_tooltip = "Reset the circuit"
 custom_fonts/font = ExtResource( 11 )
 text = "|<<"
 align = 0
 
 [node name="StepBackButton" type="Button" parent="TestControl"]
-margin_left = 44.0
-margin_right = 65.0
+margin_left = 46.0
+margin_right = 67.0
 margin_bottom = 60.0
+hint_tooltip = "Go one step backward in the circuit"
 custom_fonts/font = ExtResource( 11 )
 text = "|<"
 
@@ -124,21 +139,24 @@ text = "|<"
 margin_left = 69.0
 margin_right = 90.0
 margin_bottom = 60.0
+hint_tooltip = "Go one step forward in the circuit"
 custom_fonts/font = ExtResource( 11 )
 text = ">|"
 
 [node name="PlayButton" type="Button" parent="TestControl"]
-margin_left = 94.0
-margin_right = 112.0
+margin_left = 92.0
+margin_right = 110.0
 margin_bottom = 60.0
+hint_tooltip = "\"Play\" through the circuit slowly"
 custom_fonts/font = ExtResource( 11 )
 toggle_mode = true
 text = ">"
 
 [node name="FastForwardButton" type="Button" parent="TestControl"]
-margin_left = 116.0
-margin_right = 140.0
+margin_left = 112.0
+margin_right = 136.0
 margin_bottom = 60.0
+hint_tooltip = "\"Play\" through the circuit quickly"
 custom_fonts/font = ExtResource( 11 )
 toggle_mode = true
 text = ">>"
