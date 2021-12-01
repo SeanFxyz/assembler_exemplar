@@ -30,3 +30,20 @@ Computing Systems*. The reference will be provided in the format:
 4. An optional second-level header titled "Additional Information" providing
 comments or other useful information, potentially including objects such as
 "truth tables"
+
+## Quirks
+
+* For the "wiki" items, it is best to place two carriage returns before each
+header.
+```
+Example:
+
+## Header
+
+Here is some text
+
+
+## Header 2
+```
+* Code blocks have whitespace where "\`\`\`" indicators were in the markdown.
+Adjust accordingly

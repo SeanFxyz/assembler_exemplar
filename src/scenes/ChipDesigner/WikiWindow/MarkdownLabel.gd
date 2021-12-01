@@ -134,7 +134,6 @@ func md_to_bb(value : String) -> String:
 			# We are in normal paragraph if we reach this point
 			else:
 				bb_string += line + " "
-				bb_string += "\n"
 	# Remove any trailing whitespace
 	bb_string = bb_string.replace(" \n", "\n")
 	
