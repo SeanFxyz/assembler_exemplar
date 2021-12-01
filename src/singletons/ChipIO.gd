@@ -159,7 +159,7 @@ var chip_specs := {
 			{"a": 1, "b": 0},
 			{"a": 1, "b": 1},
 		],
-		50,
+		70,
 		["Nand", "Not"]
 	),
 	"Or": ChipSpec.new(
@@ -174,7 +174,7 @@ var chip_specs := {
 			{"a": 1, "b": 0},
 			{"a": 1, "b": 1},
 		],
-		50,
+		70,
 		["Nand", "Not"]
 	),
 	"Xor": ChipSpec.new(
@@ -189,7 +189,7 @@ var chip_specs := {
 			{"a": 1, "b": 0},
 			{"a": 1, "b": 1},
 		],
-		50,
+		130,
 		["Nand", "And", "Or"]
 	),
 	"Mux": ChipSpec.new(
@@ -208,7 +208,7 @@ var chip_specs := {
 			{"a": 1, "b": 1, "sel": 0},
 			{"a": 1, "b": 1, "sel": 1},
 		],
-		50,
+		130,
 		["Not", "And", "Or"]
 	),
 	"DMux": ChipSpec.new(
@@ -223,7 +223,7 @@ var chip_specs := {
 			{"in": 1, "sel": 0},
 			{"in": 1, "sel": 1},
 		],
-		50,
+		130,
 		["And", "Not"]
 	),
 }

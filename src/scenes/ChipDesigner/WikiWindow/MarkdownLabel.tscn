@@ -19,14 +19,14 @@ code block
 [/color][/code]
 Normal paragraph   This is a [i]test[/i] of [i]italics[/i] [b]-[/b]  This is a [i]test[/i] of [i]italics[/i] on an unordered list
 "
-text = "[font=res://Fonts/Level1Header.tres]Level 1 Header[/font]
-[font=res://Fonts/Level2Header.tres]Level 2 Header[/font]
-[font=res://Fonts/Level3Header.tres]Level 3 Header[/font]
-[b]-[/b]  unordered list
-[code][color=silver]
+text = "Level 1 Header
+Level 2 Header
+Level 3 Header
+-  unordered list
+
 code block
-[/color][/code]
-Normal paragraph   This is a [i]test[/i] of [i]italics[/i] [b]-[/b]  This is a [i]test[/i] of [i]italics[/i] on an unordered list
+
+Normal paragraph   This is a test of italics -  This is a test of italics on an unordered list
 "
 script = ExtResource( 1 )
 __meta__ = {
