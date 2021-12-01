@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/oneup1.wav-a770b6229bd63217b898ec0a29074759.sample"
+
+[deps]
+
+source_file="res://sounds/oneup1.wav"
+dest_files=[ "res://.import/oneup1.wav-a770b6229bd63217b898ec0a29074759.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

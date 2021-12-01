@@ -20,10 +20,10 @@ func _check_err(err: int, err_msg: String) -> void:
 
 
 # The path to the player's scorefile.
-var _scorefile_name := "user://score.json"
+const _scorefile_name := "user://score.json"
 
 # The location where .sav and .rec files are stored.
-var _save_location  := "user://save/"
+const _save_location  := "user://save/"
 
 
 # If we have opened a .rec file for appending, this holds a reference to it.
@@ -62,7 +62,21 @@ func level_to_savfile(level_name: String) -> String:
 # Get recovery file name for the given level name
 func level_to_recfile(level_name: String) -> String:
 	return _save_location + level_name + ".rec"
-	
+
+
+func load_player_scores() -> Dictionary:
+	var file := File.new()
+	if not file.file_exists(_scorefile_name):
+		return {}
+	file.open(_scorefile_name, File.READ)
+	return Marshalls.base64_to_variant(file.get_as_text())
+
+
+func save_player_scores(scores: Dictionary) -> void:
+	var file := File.new()
+	file.open(_scorefile_name, File.WRITE)
+	file.store_string(Marshalls.variant_to_base64(scores))
+
 
 # Load the saved data for a given level name.
 func load_leveldata(level_name: String) -> Dictionary:

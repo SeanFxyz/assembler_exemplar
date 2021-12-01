@@ -5,7 +5,7 @@ const TEST_SPEED := 1
 const TEST_SPEED_FAST := 2
 
 var test_index       : int = -1
-var test_successes   : Dictionary 
+var test_successes   : Dictionary = {}
 var test_chip_spec   : ChipSpec
 var test_initialized := false
 var test_paused      := true
@@ -17,6 +17,8 @@ var selected_item : String
 onready var canvas_switcher := $CanvasSwitcher
 onready var current_canvas  := $Canvas
 onready var test_tracker    := find_node("TestTracker")
+onready var success_popup   := find_node("SuccessPopup")
+onready var sound_player    := find_node("SoundEffectPlayer")
 
 var Dummy : PackedScene = preload("res://scenes/ChipDesigner/CanvasChips/Dummy.tscn")
 var Nand  : PackedScene = preload("res://scenes/ChipDesigner/CanvasChips/Nand.tscn")
@@ -41,26 +43,19 @@ var chip_scenes := {
 
 func _ready() -> void:
 	test_timer = Timer.new()
-	test_timer.paused = true
 	test_timer.connect("timeout", self, "_on_test_timer_timeout")
+	add_child(test_timer)
 	test_chip_spec = ChipIO.chip_specs[PlayerData.current_level]
 	test_tracker.populate(test_chip_spec)
 
 
 func play_test(speed: int) -> void:
 	
-	if test_initialized:
-		test_timer.wait_time = 1 / speed
-		test_timer.paused = false
-		test_paused = false
-	else:
-		initialize_test()
-		test_forward()
-		
-		test_timer.wait_time = 1 / speed
-		test_timer.paused = false
-		test_timer.start()
-		test_paused = false
+	test_forward()
+	test_timer.paused = false
+	test_timer.wait_time = 1 / speed
+	test_timer.start()
+	test_paused = false
 
 
 func pause_test() -> void:
@@ -70,20 +65,25 @@ func pause_test() -> void:
 
 func initialize_test() -> void:
 	pause_test()
+	test_successes = {}
 	test_index = -1
 	test_initialized = true
 	test_tracker.set_case_state_all(0)
 
 
 func test_forward() -> void:
+	sound_player.play_effect("blip")
 	if not test_initialized:
 		initialize_test()
 	test_index = min(test_index + 1, test_chip_spec.input_sets.size() - 1)
 	current_canvas.set_input_values(test_chip_spec.input_sets[test_index])
 	check_test_values()
+	if test_index >= test_chip_spec.input_sets.size() - 1:
+		pause_test()
 
 
 func test_back() -> void:
+	sound_player.play_effect("bloop")
 	if not test_initialized:
 		initialize_test()
 	test_index = max(test_index - 1, 0)
@@ -106,14 +106,27 @@ func check_test_values() -> void:
 
 func test_part_success() -> void:
 	print("test_part_success")
-	test_successes[test_index] = true
+	if not test_successes.has(test_index):
+		test_successes[test_index] = true
+	if test_successes.size() >= test_chip_spec.input_sets.size():
+		test_success()
 	test_tracker.set_case_state(test_index, 1)
 
 
 func test_part_fail() -> void:
+	test_successes.clear()
 	print("test_part_fail")
-	test_successes[test_index] = true
 	test_tracker.set_case_state(test_index, -1)
+
+
+func test_success() -> void:
+	test_successes.clear()
+	sound_player.play_effect("oneup")
+	PlayerData.set_player_score(
+		PlayerData.current_level,
+		current_canvas.get_nands()
+	)
+	success_popup.popup()
 
 
 func compare_io(d1: Dictionary, d2: Dictionary) -> bool:
@@ -172,6 +185,14 @@ func _on_test_control_toggled(control, pressed) -> void:
 		pause_test()
 
 
-func _on_Canvas_save_requested(solution_data):
+func _on_Canvas_save_requested(solution_data) -> void:
 	PlayerData.solutions[PlayerData.current_solution] = solution_data
 	PlayerData.save()
+
+
+func _on_ContinueButton_pressed() -> void:
+	success_popup.hide()
+
+
+func _on_QuitButton_pressed() -> void:
+	exit_chip_designer()

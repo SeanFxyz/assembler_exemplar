@@ -1,8 +1,11 @@
 extends Area2D
 
 signal seg_input(seg, event)
+signal seg_update(seg_id, rect)
 
 const state_rect_margin : int = -1 * (CanvasInfo.grid_inc / 2)
+
+var seg_id       : int = 0
 
 # The wire the segment belongs to, unique within the Canvas
 var wire         : Node2D
@@ -54,7 +57,7 @@ func update_seg() -> void:
 	new_collider_shape.extents = rect.size.abs() / 2
 	_collider.set_deferred("shape", new_collider_shape)
 	
-	update()
+	emit_signal("seg_update", seg_id, rect)
 
 
 func set_start(new_value: GridPos) -> void:
@@ -116,12 +119,12 @@ func get_overlapping_chip_outputs() -> Array:
 	return result
 
 
-func _draw():
-	draw_rect(rect, color)
-	
-	if wire_state > 0:
-		var state_rect := rect.abs().grow(-3)
-		draw_rect(state_rect, color.inverted())
+#func _draw():
+#	draw_rect(rect, color)
+#
+#	if wire_state > 0:
+#		var state_rect := rect.abs().grow(-3)
+#		draw_rect(state_rect, color.lightened(30))
 
 
 func _on_input_event(_viewport, event, _shape_idx):

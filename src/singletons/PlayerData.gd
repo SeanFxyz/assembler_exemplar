@@ -7,6 +7,8 @@ extends Node
 #    * Abstract saving and loading player solution data.
 
 
+var _player_scores : Dictionary
+
 # The name to give a new solution created by the player.
 # Must contain a %d placeholder, which will be replaced by a number
 # when a new solution name is requested.
@@ -52,8 +54,32 @@ var chips: Array
 var wires: Array
 
 
-#func _ready():
-#	pass
+func _ready() -> void:
+	_player_scores = FileIO.load_player_scores()
+
+
+func get_player_score(level: String) -> int:
+	if _player_scores.has(level):
+		return _player_scores[level]
+	return 0
+
+
+func set_player_score(level: String, new_value: int) -> void:
+	_player_scores[level] = new_value
+	FileIO.save_player_scores(_player_scores)
+
+
+func get_player_grade(level: String) -> String:
+	var score := get_player_score(level)
+	var percent : float
+	if score == 0:
+		percent = 0
+	else:
+		percent = float(ChipIO.chip_specs[level].nands) / score * 100.0
+		if percent > 100:
+			percent = 0
+	
+	return str(percent) + "%"
 
 
 # Set current level and load its data.

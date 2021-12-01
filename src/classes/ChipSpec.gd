@@ -9,6 +9,7 @@ var io            : Dictionary
 var input_sets    : Array
 var canvas_width  : int
 var components    : Array
+var nands         : int
 
 
 func _init(
@@ -18,6 +19,7 @@ func _init(
 	owidths  : Dictionary,
 	i        : Dictionary,
 	isets    : Array,
+	ns       : int,
 	canvas_w : int = 50,
 	comp     : Array = ["Nand"]
 ):
@@ -29,6 +31,7 @@ func _init(
 	input_sets = isets
 	canvas_width = canvas_w
 	components = comp
+	nands = ns
 
 
 func get_outputs(input_states: Dictionary) -> Dictionary:

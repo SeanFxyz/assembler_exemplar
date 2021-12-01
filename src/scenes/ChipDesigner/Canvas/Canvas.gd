@@ -40,10 +40,18 @@ var CircuitInput := preload("res://scenes/ChipDesigner/CanvasChips/CircuitInput.
 var CircuitOutput := preload("res://scenes/ChipDesigner/CanvasChips/CircuitOutput.tscn")
 var Wire := preload("res://scenes/ChipDesigner/Wire/Wire.tscn")
 
+var chip_scenes := {
+	"Nand" : preload("res://scenes/ChipDesigner/CanvasChips/Nand.tscn"),
+	"Not"  : preload("res://scenes/ChipDesigner/CanvasChips/Not.tscn"),
+	"And"  : preload("res://scenes/ChipDesigner/CanvasChips/And.tscn"),
+	"Or"  : preload("res://scenes/ChipDesigner/CanvasChips/Or.tscn"),
+	"Xor"  : preload("res://scenes/ChipDesigner/CanvasChips/Xor.tscn"),
+	"Mux"  : preload("res://scenes/ChipDesigner/CanvasChips/Mux.tscn"),
+	"DMux"  : preload("res://scenes/ChipDesigner/CanvasChips/DMux.tscn"),
+}
+
 
 func _ready() -> void:
-	
-	
 	camera.position = viewport.get_visible_rect().size / 2
 	circuit_chip_spec = ChipIO.chip_specs[PlayerData.current_level]
 	_last_wire_id = -1
@@ -116,8 +124,19 @@ func populate(data: Dictionary) -> void:
 		output_container.add_child(new_circuit_output)
 		output_nodes[output] = new_circuit_output
 	
-	# TODO: populate chips and wires from save data
-
+	for chip in data["chips"]:
+		var new_chip : Node2D = chip_scenes[chip["type"]].instance()
+		new_chip.position = CanvasInfo.arr_to_pos(chip["pos"])
+		chip_container.add_child(new_chip)
+	
+	for wire in data["wires"]:
+		var new_wire = Wire.instance()
+		wire_container.add_child(new_wire)
+		for seg in wire:
+			new_wire.add_segment(
+				CanvasInfo.arr_to_pos(seg[0]),
+				CanvasInfo.arr_to_pos(seg[1])
+			)
 
 func get_input_values() -> Dictionary:
 	var result := {}
@@ -238,6 +257,13 @@ func create_savdata() -> Dictionary:
 	print(result)
 	
 	return result
+
+
+func get_nands() -> int:
+	var nands := 0
+	for chip in chip_container.get_children():
+		nands += chip.chip_spec.nands
+	return nands
 
 
 func _on_Wire_start_extend(wire):

@@ -25,6 +25,10 @@ var drag_start   : Vector2
 
 onready var segments : Node2D  = $Segments
 
+var _last_seg_id = -1
+
+var seg_rects := {}
+
 
 #func _ready() -> void:
 	#add_segment(Vector2(50, 50), Vector2(50, 100))
@@ -95,12 +99,14 @@ func add_segment(start: Vector2, end: Vector2) -> void:
 	
 	if(connect("wire_state_changed", new_seg, "_on_wire_state_changed") != OK or
 			new_seg.connect("seg_input", self, "_on_seg_input")         != OK or
+			new_seg.connect("seg_update", self, "_on_seg_update")       != OK or
 			new_seg.connect("area_entered",self,"_on_seg_area_entered") != OK or
 			new_seg.connect("area_exited", self, "_on_seg_area_exited") != OK):
 		printerr("Wire: failed to connect signal")
 	
 	new_seg.color = color
 	
+	new_seg.seg_id = _next_seg_id()
 	new_seg.wire_id = wire_id
 	new_seg.wire = self
 	new_seg.wire_state = wire_state
@@ -181,3 +187,21 @@ func _on_seg_area_entered(area: Area2D) -> void:
 
 func _on_seg_area_exited(area: Area2D) -> void:
 	update_connected_inputs()
+
+
+func _next_seg_id() -> int:
+	_last_seg_id += 1
+	return _last_seg_id
+
+
+func _on_seg_update(seg_id, rect) -> void:
+	seg_rects[seg_id] = rect
+	update()
+
+
+func _draw() -> void:
+	for rect in seg_rects.values():
+		draw_rect(rect, color)
+	if wire_state != 0:
+		for rect in seg_rects.values():
+			draw_rect(rect.abs().grow(-3), color.lightened(30))
