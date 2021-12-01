@@ -59,16 +59,10 @@ margin_right = 267.0
 margin_bottom = 36.0
 text = "Start"
 
-[node name="OptionButton" type="Button" parent="VBoxContainer"]
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
 margin_top = 40.0
 margin_right = 267.0
 margin_bottom = 76.0
-text = "Options"
-
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
-margin_top = 80.0
-margin_right = 267.0
-margin_bottom = 116.0
 text = "Quit"
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
