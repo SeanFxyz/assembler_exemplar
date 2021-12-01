@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/CanvasSwitcher.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ChipDesigner/ChipDesigner.gd" type="Script" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://images/chips/MUX.png" type="Texture" id=14]
 [ext_resource path="res://scenes/ChipDesigner/ItemListScript.gd" type="Script" id=15]
 [ext_resource path="res://images/chips/NOT.png" type="Texture" id=16]
+[ext_resource path="res://scenes/ChipDesigner/TestTracker.gd" type="Script" id=17]
+[ext_resource path="res://Fonts/liberation/LiberationMono-Regular.ttf" type="DynamicFontData" id=18]
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.160784, 0.164706, 0.207843, 1 )
@@ -25,6 +27,11 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 border_blend = true
+
+[sub_resource type="DynamicFont" id=3]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 18 )
 
 [node name="ChipDesigner" type="Control"]
 anchor_right = 1.0
@@ -182,13 +189,31 @@ __meta__ = {
 anchor_left = 0.85
 anchor_right = 1.0
 anchor_bottom = 0.9
-margin_left = 10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="InfoPanel" parent="InfoPanels/RightPanels" instance=ExtResource( 8 )]
+[node name="TestTracker" type="Control" parent="InfoPanels/RightPanels"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="InfoPanels/RightPanels/TestTracker"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 3 )
+fixed_icon_size = Vector2( 10, 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="add_tab_selected" from="CanvasSwitcher/Tabs" to="CanvasSwitcher" method="_on_add_tab_selected"]
 [connection signal="canvas_tab_selected" from="CanvasSwitcher/Tabs" to="CanvasSwitcher" method="_on_canvas_tab_selected"]
 [connection signal="mouse_on" from="Canvas" to="." method="_on_Canvas_mouse_on"]
+[connection signal="save_requested" from="Canvas" to="." method="_on_Canvas_save_requested"]
 [connection signal="item_selected" from="ItemListControl/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="nothing_selected" from="ItemListControl/ItemList" to="." method="_on_ItemList_nothing_selected"]
 [connection signal="test_control_pressed" from="TestControl" to="." method="_on_test_control_pressed"]

@@ -17,9 +17,9 @@ var _new_solution_base_name := "Solution %d"
 var _solution_template := {
 	"inputs": {},
 	"outputs": {},
-	"chips": {},
-	"wires": {},
-	"score": {},
+	"chips": [],
+	"wires": [],
+	"score": 0,
 }
 
 
@@ -36,6 +36,9 @@ var solutions : Dictionary = {}
 # switches solutions.
 var current_solution : String setget set_current_solution
 
+# Current solution dictionary
+var cur_solution_data : Dictionary
+
 # Inputs for the current selected solution
 var inputs : Dictionary
 
@@ -43,13 +46,10 @@ var inputs : Dictionary
 var outputs: Dictionary
 
 # Chips in the curernt solution
-var chips: Dictionary
+var chips: Array
 
 # Wires in the current solution
-var wires: Dictionary
-
-# Current score = Total of Nand chips implemented in solution
-var score : float
+var wires: Array
 
 
 #func _ready():
@@ -61,13 +61,13 @@ var score : float
 # name.
 # Select the first solution.
 func set_current_level(new_value: String) -> void:
+	current_level = new_value
+	
 	_solution_template = ChipIO.chip_specs[new_value].make_solution_template()
 	
 	solutions = FileIO.load_leveldata(new_value)
 	if solutions.empty():
-		solutions = _solution_template.duplicate(true)
-		
-	current_level = new_value
+		create_solution()
 	
 	set_current_solution(solutions.keys()[0])
 
@@ -78,6 +78,7 @@ func set_current_solution(new_value: String) -> void:
 		current_solution = new_value
 	else:
 		current_solution = create_solution(new_value)
+	update_refs()
 
 
 # Update the values of the following references:
@@ -87,11 +88,11 @@ func set_current_solution(new_value: String) -> void:
 #   - wires
 #   - score
 func update_refs():
-	inputs  = solutions[current_solution]["inputs"]
-	outputs = solutions[current_solution]["outputs"]
-	chips   = solutions[current_solution]["chips"]
-	wires   = solutions[current_solution]["wires"]
-	score   = solutions[current_solution]["score"]
+	cur_solution_data = solutions[current_solution]
+	inputs  = cur_solution_data["inputs"]
+	outputs = cur_solution_data["outputs"]
+	chips   = cur_solution_data["chips"]
+	wires   = cur_solution_data["wires"]
 
 
 func next_solution_name() -> String:
@@ -133,15 +134,15 @@ func save() -> void:
 # Create a new solution for the current level, returning the final name of the
 # created solution.
 func create_solution(new_name:= "") -> String:
-	var name : String
+	var solution_name : String
 	
 	if new_name != "":
-		name = fix_solution_name(new_name)
+		solution_name = fix_solution_name(new_name)
 	else:
-		name = next_solution_name()
+		solution_name = next_solution_name()
 		
-	solutions[name] = _solution_template.duplicate(true)
-	return name
+	solutions[solution_name] = ChipIO.chip_specs[current_level].make_solution_template()
+	return solution_name
 
 
 # Rename a solution for the current level.

@@ -4,17 +4,19 @@ extends Control
 const TEST_SPEED := 1
 const TEST_SPEED_FAST := 2
 
-var test_index           : int
-var test_chip_spec       : ChipSpec
-var test_initialized     := false
-var test_paused          := true
-var test_timer           : Timer
+var test_index       : int = -1
+var test_successes   : Dictionary 
+var test_chip_spec   : ChipSpec
+var test_initialized := false
+var test_paused      := true
+var test_timer       : Timer
 
 var item_selected := false
 var selected_item : String
 
 onready var canvas_switcher := $CanvasSwitcher
 onready var current_canvas  := $Canvas
+onready var test_tracker    := find_node("TestTracker")
 
 var Dummy : PackedScene = preload("res://scenes/ChipDesigner/CanvasChips/Dummy.tscn")
 var Nand  : PackedScene = preload("res://scenes/ChipDesigner/CanvasChips/Nand.tscn")
@@ -41,6 +43,8 @@ func _ready() -> void:
 	test_timer = Timer.new()
 	test_timer.paused = true
 	test_timer.connect("timeout", self, "_on_test_timer_timeout")
+	test_chip_spec = ChipIO.chip_specs[PlayerData.current_level]
+	test_tracker.populate(test_chip_spec)
 
 
 func play_test(speed: int) -> void:
@@ -67,30 +71,22 @@ func pause_test() -> void:
 func initialize_test() -> void:
 	pause_test()
 	test_index = -1
-	
-	# Chip spec for current level
-	test_chip_spec = ChipIO.chip_specs[PlayerData.current_level]
-	
 	test_initialized = true
+	test_tracker.set_case_state_all(0)
 
 
 func test_forward() -> void:
 	if not test_initialized:
 		initialize_test()
-	pause_test()
-	print_debug(test_index)
-	test_index = (test_index + 1) % test_chip_spec.input_sets.size()
+	test_index = min(test_index + 1, test_chip_spec.input_sets.size() - 1)
 	current_canvas.set_input_values(test_chip_spec.input_sets[test_index])
-	print_debug(test_index)
 	check_test_values()
 
 
 func test_back() -> void:
 	if not test_initialized:
 		initialize_test()
-	pause_test()
-	if test_index > 0:
-		test_index = (test_index - 1) % test_chip_spec.input_sets.size()
+	test_index = max(test_index - 1, 0)
 	current_canvas.set_input_values(test_chip_spec.input_sets[test_index])
 	check_test_values()
 
@@ -98,6 +94,8 @@ func test_back() -> void:
 func check_test_values() -> void:
 	var test_inputs  : Dictionary = current_canvas.get_input_values()
 	var test_outputs : Dictionary = current_canvas.get_output_values()
+	
+	test_tracker.set_active_case(test_index)
 	
 	var test_key = test_chip_spec.format_input(test_inputs)
 	if compare_io(test_chip_spec.io[test_key], test_outputs):
@@ -108,10 +106,14 @@ func check_test_values() -> void:
 
 func test_part_success() -> void:
 	print("test_part_success")
+	test_successes[test_index] = true
+	test_tracker.set_case_state(test_index, 1)
 
 
 func test_part_fail() -> void:
 	print("test_part_fail")
+	test_successes[test_index] = true
+	test_tracker.set_case_state(test_index, -1)
 
 
 func compare_io(d1: Dictionary, d2: Dictionary) -> bool:
@@ -156,8 +158,10 @@ func _on_test_control_pressed(control) -> void:
 	if control == "reset":
 		initialize_test()
 	elif control == "step_back":
+		pause_test()
 		test_back()
 	elif control == "step_forward":
+		pause_test()
 		test_forward()
 
 
@@ -166,3 +170,8 @@ func _on_test_control_toggled(control, pressed) -> void:
 		play_test(TEST_SPEED if control == "play" else TEST_SPEED_FAST)
 	else:
 		pause_test()
+
+
+func _on_Canvas_save_requested(solution_data):
+	PlayerData.solutions[PlayerData.current_solution] = solution_data
+	PlayerData.save()

@@ -3,7 +3,7 @@ extends Control
 
 signal mouse_on
 signal mouse_off
-signal save_requested
+signal save_requested(sav_data)
 
 onready var viewport         := $ViewportContainer/Viewport
 onready var camera           := $ViewportContainer/Viewport/Camera2D
@@ -18,7 +18,7 @@ onready var new_wire_color   : Color = color_picker.default
 
 var enabled             : bool    = true setget set_enabled
 
-var solution            : String setget set_solution
+var solution            : String     = "default"
 var input_nodes         : Dictionary = {}
 var output_nodes        : Dictionary = {}
 
@@ -42,15 +42,15 @@ var Wire := preload("res://scenes/ChipDesigner/Wire/Wire.tscn")
 
 
 func _ready() -> void:
+	
+	
 	camera.position = viewport.get_visible_rect().size / 2
 	circuit_chip_spec = ChipIO.chip_specs[PlayerData.current_level]
 	_last_wire_id = -1
 	_last_chip_id = -1
 	
-	print_debug("Canvas: ", ChipIO.chip_specs[PlayerData.current_level].make_solution_template())
-	
-	populate(
-		ChipIO.chip_specs[PlayerData.current_level].make_solution_template())
+	solution = PlayerData.current_solution
+	populate(PlayerData.cur_solution_data)
 
 
 func _process(_delta) -> void:
@@ -86,11 +86,6 @@ func set_enabled(new_value: bool) -> void:
 	set_process_unhandled_input(new_value)
 	set_process_unhandled_key_input(new_value)
 	has_mouse = new_value
-
-
-func set_solution(new_value: String) -> void:
-	solution = new_value
-	populate(PlayerData.get_solution_data())
 
 
 func simulate_inputs(inputs: Dictionary) -> Dictionary:
@@ -220,6 +215,31 @@ func end_new_wire() -> void:
 	print_debug("Canvas: Ended new wire")
 
 
+func create_savdata() -> Dictionary:
+	var result = circuit_chip_spec.make_solution_template()
+	
+	for input in input_container.get_children():
+		result["inputs"][input.input_name] = (
+			CanvasInfo.pos_to_arr(input.position))
+			
+	for output in output_container.get_children():
+		result["outputs"][output.output_name] = (
+			CanvasInfo.pos_to_arr(output.position))
+	
+	for chip in chip_container.get_children():
+		result["chips"].append({
+			"type" : chip.chip_type,
+			"pos"  : CanvasInfo.pos_to_arr(chip.position)
+		})
+	
+	for wire in wire_container.get_children():
+		result["wires"].append(wire.get_segments())
+	
+	print(result)
+	
+	return result
+
+
 func _on_Wire_start_extend(wire):
 	print_debug("Canvas: Start wire extension")
 	is_extend_wire = true
@@ -254,7 +274,7 @@ func _next_wire_id() -> int:
 
 
 func _on_SaveButton_pressed() -> void:
-	emit_signal("save_requested")
+	emit_signal("save_requested", create_savdata())
 
 
 func _on_ColorPickerButton_toggled(button_pressed) -> void:

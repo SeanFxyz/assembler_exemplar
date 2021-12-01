@@ -1,7 +1,7 @@
 extends Node
 
 # Circuit input/output size (radius) in grid squares
-const io_size : int = 3
+const io_size : int = 10
 
 # Grid square size
 const grid_inc : int = 10

@@ -1,7 +1,6 @@
 extends Control
 
 onready var chip_info_panel = $LeftPanels/ChipInfo
-onready var additional_info_panel = $LeftPanels/AdditionalInfo
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

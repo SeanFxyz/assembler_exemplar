@@ -91,12 +91,6 @@ func set_input_state(_input_name: String, new_value: int) -> void:
 func increment_input_state() -> void:
 	var old := input_state
 	set_input_state("", (input_state + 1) % int(pow(2, input_width)))
-	print_debug(
-		"CircuitInput: Changed input state from ",
-		old,
-		" to ",
-		input_state
-	)
 
 
 func update_outputs() -> void:

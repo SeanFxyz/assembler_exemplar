@@ -31,6 +31,10 @@ func _init(
 	components = comp
 
 
+func get_outputs(input_states: Dictionary) -> Dictionary:
+	return io[format_input(input_states)]
+
+
 # Takes an array of integer input values and combines them into a dictionary
 # lookup key.
 func format_input(input_states: Dictionary):
@@ -45,9 +49,9 @@ func make_solution_template() -> Dictionary:
 	var template := {
 		"inputs": {},
 		"outputs": {},
-		"chips": {},
-		"wires": {},
-		"score": {},
+		"chips": [],
+		"wires": [],
+		"score": 0,
 	}
 	
 	var io_y    := 1
@@ -55,7 +59,7 @@ func make_solution_template() -> Dictionary:
 	
 	for name in input_names:
 		template["inputs"][name] = [1, io_y]
-		io_size += io_size + 1
+		io_y += io_size + 1
 	
 	io_y = 1
 	

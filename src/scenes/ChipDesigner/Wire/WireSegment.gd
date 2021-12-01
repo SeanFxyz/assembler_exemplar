@@ -50,8 +50,9 @@ func update_seg() -> void:
 	# didn't seem to work here.
 	var _collider : CollisionShape2D = $CollisionShape2D
 	_collider.position = rect_start + rect.size / 2
-	_collider.shape = RectangleShape2D.new()
-	_collider.shape.extents = rect.size.abs() / 2
+	var new_collider_shape = RectangleShape2D.new()
+	new_collider_shape.extents = rect.size.abs() / 2
+	_collider.set_deferred("shape", new_collider_shape)
 	
 	update()
 

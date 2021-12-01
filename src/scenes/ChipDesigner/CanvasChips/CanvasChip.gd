@@ -32,11 +32,13 @@ func _ready():
 		input.chip = self
 		input_nodes[input.input_name] = input
 		input_states[input.input_name] = 0
-		#if input.connect("")
+		input.connect("area_entered", self, "_on_ChipInput_area_entered")
+		input.connect("area_exited", self, "_on_ChipInput_area_exited")
 	for output in outputs.get_children():
 		output.chip = self
 		output_nodes[output.output_name] = output
-
+		output.connect("area_entered", self, "_on_ChipOutput_area_entered")
+		output.connect("area_exited", self, "_on_ChipOutput_area_exited")
 
 func _on_input_event(_viewport, event, _shape_idx):
 	# Allow dragging if user clicks CollisionShape2D
@@ -83,7 +85,6 @@ func _input(event):
 
 
 func set_input_state(input_name: String, state: int) -> void:
-	print_debug("CanvasChip: setting input state ", input_name, " to ", state)
 	input_states[input_name] = state
 	update_outputs()
 
@@ -116,3 +117,19 @@ func update_outputs() -> void:
 		var owire := get_output_wire(oname)
 		if owire:
 			owire.wire_state = output_states[oname]
+
+
+func _on_ChipInput_area_entered(area: Area2D):
+	pass
+
+
+func _on_ChipInput_area_exited(area: Area2D):
+	pass
+
+
+func _on_ChipOutput_area_entered(area: Area2D):
+	update_outputs()
+
+
+func _on_ChipOutput_area_exited(area: Area2D):
+	update_outputs()

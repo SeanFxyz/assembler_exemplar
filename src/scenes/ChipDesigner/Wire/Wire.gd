@@ -34,7 +34,6 @@ func set_wire_state(new_value: int) -> void:
 	wire_state = new_value
 	emit_signal("wire_state_changed", wire_state)
 	update_connected_inputs()
-	print_debug("Wire: wire state changed to ", wire_state)
 
 
 func update_connected_inputs():
@@ -95,7 +94,9 @@ func add_segment(start: Vector2, end: Vector2) -> void:
 	new_seg.end   = GridPos.new().from_pos(end)
 	
 	if(connect("wire_state_changed", new_seg, "_on_wire_state_changed") != OK or
-			new_seg.connect("seg_input", self, "_on_seg_input") != OK):
+			new_seg.connect("seg_input", self, "_on_seg_input")         != OK or
+			new_seg.connect("area_entered",self,"_on_seg_area_entered") != OK or
+			new_seg.connect("area_exited", self, "_on_seg_area_exited") != OK):
 		printerr("Wire: failed to connect signal")
 	
 	new_seg.color = color
@@ -105,7 +106,6 @@ func add_segment(start: Vector2, end: Vector2) -> void:
 	new_seg.wire_state = wire_state
 	
 	segments.add_child(new_seg)
-	print_debug("Wire: added segment: ", new_seg.start, ", ", new_seg.end)
 
 
 # Remove the specified segment from the wire
@@ -113,6 +113,16 @@ func remove_segment(seg: CollisionObject2D):
 	seg.remove()
 	if segments.get_children().size() <= 0:
 		queue_free()
+
+
+func get_segments() -> Array:
+	var result := []
+	for seg in segments.get_children():
+		result.append([
+			seg.start.to_array(),
+			seg.end.to_array(),
+		])
+	return result
 
 
 # Triggers when a connected WireSegment emits the "seg_input" signal,
@@ -139,8 +149,6 @@ func is_drag_moved() -> bool:
 
 # Start extending this wire.
 func start_extend() -> void:
-	print_debug("Wire: Starting extension")
-	
 	emit_signal("start_extend", self)
 	is_extend = true
 	drag_start = CanvasInfo.snap(get_local_mouse_position())
@@ -165,5 +173,11 @@ func end_extend() -> void:
 	add_segment_path(drag_start, get_local_mouse_position(), drag_is_vert)
 	emit_signal("end_extend")
 	is_extend = false
-	
-	print_debug("Wire: Ended extension")
+
+
+func _on_seg_area_entered(area: Area2D) -> void:
+	update_connected_inputs()
+
+
+func _on_seg_area_exited(area: Area2D) -> void:
+	update_connected_inputs()
