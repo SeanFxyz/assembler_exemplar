@@ -57,8 +57,10 @@ func _ready() -> void:
 	_last_wire_id = -1
 	_last_chip_id = -1
 	
+	
 	solution = PlayerData.current_solution
-	populate(PlayerData.cur_solution_data)
+	if PlayerData.cur_solution_data:
+		populate(PlayerData.cur_solution_data)
 
 
 func _process(_delta) -> void:
@@ -161,6 +163,13 @@ func set_input_values(input_set: Dictionary) -> void:
 		input_nodes[input_name].set_input_state("", input_set[input_name])
 
 
+func reset_io() -> void:
+	for input in input_nodes.values():
+		input.set_input_state("", 0)
+	for output in output_nodes.values():
+		output.set_input_state("", 0)
+
+
 func add_chip(chip_scene: PackedScene, pos: Vector2) -> void:
 	
 	var new_chip = chip_scene.instance()
@@ -252,7 +261,7 @@ func create_savdata() -> Dictionary:
 		})
 	
 	for wire in wire_container.get_children():
-		result["wires"].append(wire.get_segments())
+		result["wires"].append(wire.get_segment_positions())
 	
 	print(result)
 	

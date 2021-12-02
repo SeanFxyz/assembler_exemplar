@@ -3,7 +3,7 @@
 [ext_resource path="res://scenes/ChipDesigner/Canvas/Canvas.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ChipDesigner/Wire/WirePreview.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ChipDesigner/CameraController.gd" type="Script" id=3]
-[ext_resource path="res://scenes/ChipDesigner/Canvas/Grid.gd" type="Script" id=4]
+[ext_resource path="res://scenes/ChipDesigner/Canvas/Grid.tscn" type="PackedScene" id=4]
 [ext_resource path="res://images/color_picker_50x50.png" type="Texture" id=5]
 [ext_resource path="res://images/save.png" type="Texture" id=6]
 [ext_resource path="res://scenes/ChipDesigner/Canvas/CanvasColorPicker.gd" type="Script" id=7]
@@ -38,8 +38,7 @@ position = Vector2( 512, 300 )
 current = true
 script = ExtResource( 3 )
 
-[node name="Grid" type="Node2D" parent="ViewportContainer/Viewport"]
-script = ExtResource( 4 )
+[node name="Grid" parent="ViewportContainer/Viewport" instance=ExtResource( 4 )]
 
 [node name="WirePreview" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
 visible = false
@@ -82,10 +81,10 @@ __meta__ = {
 visible = false
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -334.317
-margin_top = 59.9188
-margin_right = -26.3174
-margin_bottom = 521.919
+margin_left = -326.317
+margin_top = 67.9188
+margin_right = -18.3174
+margin_bottom = 529.919
 edit_alpha = false
 presets_enabled = false
 script = ExtResource( 7 )
