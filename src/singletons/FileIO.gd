@@ -8,15 +8,7 @@ extends Node
 func _ready() -> void:
 	var dir := Directory.new()
 	if not dir.dir_exists("user://save"):
-		dir.make_dir("user://save")
-
-
-# If err == OK == 0, does nothing. Otherwise, prints err_msg and quits
-# the application.
-func _check_err(err: int, err_msg: String) -> void:
-	if err != OK:
-		print(err_msg)
-		get_tree().quit()
+		assert(dir.make_dir("user://save") == OK)
 
 
 # The path to the player's scorefile.
@@ -46,8 +38,7 @@ func open_recfile(level_name: String) -> File:
 
 	var file_name := _save_location + level_name + ".rec"
 
-	var err := file.open(file_name, File.READ_WRITE)
-	_check_err(err, "Could not open rec file for appending.")
+	assert(file.open(file_name, File.READ_WRITE) == OK)
 
 	file.seek_end()
 
@@ -68,13 +59,13 @@ func load_player_scores() -> Dictionary:
 	var file := File.new()
 	if not file.file_exists(_scorefile_name):
 		return {}
-	file.open(_scorefile_name, File.READ)
+	assert(file.open(_scorefile_name, File.READ) == OK)
 	return Marshalls.base64_to_variant(file.get_as_text())
 
 
 func save_player_scores(scores: Dictionary) -> void:
 	var file := File.new()
-	file.open(_scorefile_name, File.WRITE)
+	assert(file.open(_scorefile_name, File.WRITE) == OK)
 	file.store_string(Marshalls.variant_to_base64(scores))
 
 
@@ -106,9 +97,9 @@ func save_leveldata(level_name: String, solutions: Dictionary) -> void:
 # loads the data in a save file
 func load_savfile(file_name: String) -> Dictionary:
 	var file := File.new()
-	var err := file.open_compressed(file_name, File.READ, File.COMPRESSION_ZSTD)
-
-	_check_err(err, "Could not load save file.")
+	assert(
+		file.open_compressed(file_name, File.READ, File.COMPRESSION_ZSTD) == OK
+	)
 
 	var solutions: Dictionary = Marshalls.base64_to_variant(file.get_as_text())
 	file.close()
@@ -120,17 +111,12 @@ func load_savfile(file_name: String) -> Dictionary:
 func write_savfile(file_name: String, data: Dictionary) -> void:
 
 	var file := File.new()
-	var err := file.open_compressed(
-		file_name,
-		File.WRITE,
-		File.COMPRESSION_ZSTD
+	assert(
+		file.open_compressed(file_name, File.WRITE, File.COMPRESSION_ZSTD) == OK
 	)
 
-	if err == OK:
-		file.store_string(Marshalls.variant_to_base64(data))
-		file.close()
-	else:
-		printerr("FileIO: Failed to open sav file for writing: ", err)
+	file.store_string(Marshalls.variant_to_base64(data))
+	file.close()
 
 
 # loads the data in a recovery file into an Array of the file's lines
@@ -138,13 +124,11 @@ func load_recfile(file_name: String) -> Array:
 	var rec_data := []
 
 	var file := File.new()
-	var err := file.open(file_name, File.READ)
-
-	_check_err(err, "Could not read recfile.")
-	if err == ERR_FILE_NOT_FOUND:
+	
+	if not file.file_exists(file_name):
 		return rec_data
-	else:
-		_check_err(err, "Could not read recfile.")
+	
+	assert(file.open(file_name, File.READ) == OK)
 
 	while (true):
 		var line := file.get_line()
