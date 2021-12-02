@@ -74,6 +74,8 @@ func set_case_state_all(state: int):
 
 
 func set_active_case(index: int):
-	item_list.set_item_custom_bg_color(active_case, inactive_bg_color)
+	if active_case >= 0:
+		item_list.set_item_custom_bg_color(active_case, inactive_bg_color)
 	active_case = index + head_items
-	item_list.set_item_custom_bg_color(active_case, active_bg_color)
+	if index >= 0:
+		item_list.set_item_custom_bg_color(active_case, active_bg_color)

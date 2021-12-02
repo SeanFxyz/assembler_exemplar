@@ -16,6 +16,7 @@ var selected_item : String
 
 onready var canvas_switcher := $CanvasSwitcher
 onready var current_canvas  := $Canvas
+onready var test_control    := find_node("TestControl")
 onready var test_tracker    := find_node("TestTracker")
 onready var success_popup   := find_node("SuccessPopup")
 onready var sound_player    := find_node("SoundEffectPlayer")
@@ -65,10 +66,12 @@ func pause_test() -> void:
 
 func initialize_test() -> void:
 	pause_test()
+	current_canvas.reset_io()
 	test_successes = {}
 	test_index = -1
 	test_initialized = true
 	test_tracker.set_case_state_all(0)
+	test_tracker.set_active_case(-1)
 
 
 func test_forward() -> void:
@@ -80,6 +83,8 @@ func test_forward() -> void:
 	check_test_values()
 	if test_index >= test_chip_spec.input_sets.size() - 1:
 		pause_test()
+		test_initialized = false
+		test_control.reset()
 
 
 func test_back() -> void:
@@ -114,8 +119,9 @@ func test_part_success() -> void:
 
 
 func test_part_fail() -> void:
-	test_successes.clear()
-	print("test_part_fail")
+	if test_successes.has(test_index):
+		test_successes.erase(test_index)
+	sound_player.play_effect("bloop")
 	test_tracker.set_case_state(test_index, -1)
 
 
@@ -126,6 +132,7 @@ func test_success() -> void:
 		PlayerData.current_level,
 		current_canvas.get_nands()
 	)
+	current_canvas.enabled = false
 	success_popup.popup()
 
 
@@ -191,6 +198,7 @@ func _on_Canvas_save_requested(solution_data) -> void:
 
 
 func _on_ContinueButton_pressed() -> void:
+	current_canvas.enabled = true
 	success_popup.hide()
 
 

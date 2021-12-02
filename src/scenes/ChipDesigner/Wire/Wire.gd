@@ -25,8 +25,11 @@ var drag_start   : Vector2
 
 onready var segments : Node2D  = $Segments
 
+# Tracks the last segment ID issued.
 var _last_seg_id = -1
 
+# Maps segment IDs to segment rectangles.
+# The rectangles (Rect2D) are used to draw the wire.
 var seg_rects := {}
 
 
@@ -34,17 +37,21 @@ var seg_rects := {}
 	#add_segment(Vector2(50, 50), Vector2(50, 100))
 
 
+# Update the state of this wire.
 func set_wire_state(new_value: int) -> void:
 	wire_state = new_value
 	emit_signal("wire_state_changed", wire_state)
 	update_connected_inputs()
 
 
+# Find all overlapping chip inputs and update their input state according the
+# wire state.
 func update_connected_inputs():
 	for input in get_connected_chip_inputs():
 		input.chip.set_input_state(input.input_name, wire_state)
 
 
+# Get an array of chip inputs and outputs overlapping this wire.
 func get_connected_chip_io() -> Array:
 	var result := []
 	
@@ -54,6 +61,7 @@ func get_connected_chip_io() -> Array:
 	return result
 
 
+# Get an array of chip inputs overlapping this wire.
 func get_connected_chip_inputs() -> Array:
 	var result := []
 	
@@ -63,6 +71,7 @@ func get_connected_chip_inputs() -> Array:
 	return result
 
 
+# Get an array of chip outputs overlapping this wire.
 func get_connected_chip_outputs() -> Array:
 	var result := []
 	
@@ -115,13 +124,17 @@ func add_segment(start: Vector2, end: Vector2) -> void:
 
 
 # Remove the specified segment from the wire
-func remove_segment(seg: CollisionObject2D):
+func remove_segment(seg: CollisionObject2D) -> void:
 	seg.remove()
 	if segments.get_children().size() <= 0:
 		queue_free()
 
 
-func get_segments() -> Array:
+# Get an array of all segment positions.
+# Each segment is represented by a sub-array containing the start and end
+# positions, each of which is an array of two integers.
+# This can be used to represent this Wire in a savfile.
+func get_segment_positions() -> Array:
 	var result := []
 	for seg in segments.get_children():
 		result.append([
@@ -181,19 +194,23 @@ func end_extend() -> void:
 	is_extend = false
 
 
-func _on_seg_area_entered(area: Area2D) -> void:
+# Triggered when a segment detects another entity entering its collision area.
+func _on_seg_area_entered(_area: Area2D) -> void:
 	update_connected_inputs()
 
 
-func _on_seg_area_exited(area: Area2D) -> void:
+# Triggered when a segment detects another entity exiting its collision area.
+func _on_seg_area_exited(_area: Area2D) -> void:
 	update_connected_inputs()
 
 
+# Generates the next segment ID.
 func _next_seg_id() -> int:
 	_last_seg_id += 1
 	return _last_seg_id
 
 
+# Triggered when a segment updates itself.
 func _on_seg_update(seg_id, rect) -> void:
 	seg_rects[seg_id] = rect
 	update()

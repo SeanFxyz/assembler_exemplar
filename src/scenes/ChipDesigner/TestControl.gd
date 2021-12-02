@@ -7,6 +7,11 @@ onready var play := $PlayButton
 onready var fast_forward := $FastForwardButton
 
 
+func reset() -> void:
+	play.set_pressed_no_signal(false)
+	fast_forward.set_pressed_no_signal(false)
+
+
 func _on_ResetButton_pressed():
 	play.set_pressed_no_signal(false)
 	fast_forward.set_pressed_no_signal(false)
