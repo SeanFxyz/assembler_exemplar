@@ -6,15 +6,11 @@
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 64, 48 )
+extents = Vector2( 47.5938, 48 )
 
 [node name="And" type="Area2D"]
 script = ExtResource( 2 )
 chip_type = "And"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 64, 48 )
-shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 1.15315, 1.31507 )
@@ -36,3 +32,10 @@ input_name = "b"
 [node name="ChipOutput" parent="Outputs" instance=ExtResource( 3 )]
 position = Vector2( 120, 39.961 )
 output_name = "out"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 47.5938, 48 )
+shape = SubResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 95.6331, 1.49453, 108.551, 6.83992, 120.133, 18.4216, 125.924, 30.8942, 128.151, 39.3577, 121.024, 40.2486, 119.7, 43.9918, 121.554, 49.2892, 124.997, 50.6135, 127.807, 50.513, 126.138, 67.1985, 116.569, 80.7845, 106.324, 89.6935, 95.5972, 96.1704 )

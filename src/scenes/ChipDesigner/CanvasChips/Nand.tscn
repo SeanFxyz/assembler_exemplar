@@ -1,25 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://images/chips/NAND.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/CanvasChip.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipOutput.tscn" type="PackedScene" id=5]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 64, 60.9454 )
-
 [node name="Nand" type="Area2D"]
 script = ExtResource( 2 )
 chip_type = "Nand"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 64, 66.3784 )
-shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.278261, 0.299065 )
 texture = ExtResource( 1 )
 centered = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 0.701653, 6.1539, 55.3645, 6.43943, 67.0444, 9.10911, 75.0534, 12.7799, 82.7287, 18.9536, 88.0681, 24.7935, 94.2417, 34.9716, 97.0783, 42.3133, 99.0805, 48.32, 99.4142, 53.1588, 102.918, 49.1543, 108.258, 47.1521, 112.095, 47.1521, 116.195, 47.3953, 121.095, 49.6225, 124.213, 52.9634, 126.217, 56.527, 127.554, 60.4246, 125.215, 59.7565, 122.208, 60.3133, 120.188, 62.3125, 119.75, 65.25, 120.938, 68.5, 122.688, 69.625, 124.875, 70.25, 126.812, 69.8125, 126, 71.9375, 124.938, 74.4375, 122.125, 77.4375, 118.5, 79.9375, 114.438, 81.1875, 110.312, 81.3125, 106.5, 80.5, 103.938, 79.5, 100.312, 76.25, 98.4058, 84.5694, 96.638, 90.845, 93.7212, 97.209, 90.716, 102.512, 85.2359, 109.672, 79.6675, 114.798, 74.099, 118.334, 68.7957, 121.516, 63.2272, 123.46, 57.3052, 125.051, 51.0297, 125.582, 1.24438, 125.66, 0.718819, 123.242, 0.6451, 96.6508, 1.76595, 98.4206, 3.18176, 99.6004, 5.1875, 100.131, 8.07811, 99.6004, 9.61191, 98.2436, 10.3788, 96.6508, 10.7328, 93.8782, 10.1428, 92.1674, 8.43206, 90.5746, 6.19036, 89.7487, 4.06665, 90.1027, 2.06091, 91.2825, 0.527119, 93.4652, 0.468117, 46.7435, 1.41199, 48.2183, 3.12276, 49.1621, 4.77454, 49.6931, 7.19322, 49.3391, 8.845, 47.9233, 9.96585, 46.0945, 10.3788, 43.7349, 9.08097, 41.4342, 7.19322, 39.9594, 4.90512, 39.6368, 3.04604, 40.0928, 0.555576, 42.2325 )
 
 [node name="Inputs" type="Node2D" parent="."]
 

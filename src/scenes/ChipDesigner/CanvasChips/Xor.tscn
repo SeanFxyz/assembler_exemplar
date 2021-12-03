@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://images/chips/XOR.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipOutput.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/CanvasChip.gd" type="Script" id=4]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 64, 48 )
 
 [node name="Xor" type="Area2D"]
 script = ExtResource( 4 )
@@ -17,9 +14,8 @@ scale = Vector2( 0.752941, 0.755905 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 64, 48 )
-shape = SubResource( 1 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 2.02614, 0.24699, 0.18668, 2.7197, 3.02321, 5.63966, 5.52604, 8.72648, 6.69402, 12.2304, 7.94543, 15.9847, 9.02999, 19.2383, 10.0311, 22.9926, 11.3956, 21.429, 13.2959, 20.2357, 15.1963, 19.9706, 16.6989, 20.1915, 17.9363, 20.6777, 19.1738, 22.0035, 19.8367, 23.3735, 20.1902, 24.7435, 19.9693, 26.1136, 19.3064, 27.6604, 18.1573, 28.9862, 16.7873, 29.8259, 15.1963, 30.1352, 11.4512, 28.8665, 12.2855, 36.9589, 12.6192, 54.5621, 11.4512, 63.906, 10.3666, 72.1653, 14.1959, 69.892, 16.5319, 69.9754, 17.9502, 70.8931, 19.6187, 72.3114, 20.2861, 74.8976, 19.7021, 77.1502, 18.2839, 79.069, 16.1982, 79.9867, 14.0291, 79.9867, 12.0268, 79.1524, 9.67491, 75.9282, 7.4652, 82.9993, 5.25549, 87.1535, 2.51546, 91.0426, 0.482525, 93.2523, 1.80835, 95.462, 60.7485, 95.9214, 74.2637, 93.3351, 88.8635, 87.4952, 99.7091, 81.405, 109.554, 73.3125, 119.071, 62.7875, 125.411, 52.943, 127.747, 49.5225, 125.238, 50.37, 123.319, 50.1197, 121.817, 49.1185, 120.483, 47.45, 119.982, 44.8637, 120.232, 42.9449, 120.983, 41.4432, 123.91, 40.1786, 114.065, 26.9137, 103.38, 18.0835, 93.542, 11.1459, 84.1982, 6.30708, 73.7697, 2.88655, 63.9253, 0.467152, 49.2355, 0.0631828 )
 
 [node name="Inputs" type="Node2D" parent="."]
 
@@ -28,7 +24,7 @@ position = Vector2( 10, 70 )
 input_name = "a"
 
 [node name="ChipInput2" parent="Inputs" instance=ExtResource( 2 )]
-position = Vector2( 10, 10 )
+position = Vector2( 9.82322, 19.8995 )
 input_name = "b"
 
 [node name="Outputs" type="Node2D" parent="."]

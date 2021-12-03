@@ -1,19 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/CircuitOutput.gd" type="Script" id=2]
 [ext_resource path="res://images/chips/output.png" type="Texture" id=3]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 15.0
-
 [node name="CircuitOutput" type="Area2D"]
 script = ExtResource( 2 )
 chip_type = "out"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 15, 15 )
-shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.3, 0.3 )
@@ -37,3 +30,9 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 9.99013, 15.0849, -0.0303421, 15.2833, 0.316902, 12.0589, 1.16021, 9.18175, 3.19407, 5.75891, 6.36887, 2.73293, 9.29564, 1.04632, 11.8256, 0.302224, 14.2563, -0.0450196, 17.3319, -0.0450196, 19.8122, 0.847893, 21.9452, 1.79041, 23.9791, 2.98096, 25.5665, 4.41955, 27.1043, 6.20537, 28.3444, 8.23923, 29.7334, 11.8605, 29.9319, 13.1999, 29.9319, 15.3825, 20.0106, 15.1841, 19.8618, 13.7455, 19.3161, 12.5054, 18.4232, 11.2156, 16.7366, 10.1739, 14.9508, 9.82663, 13.3137, 10.1243, 11.5775, 11.2652, 10.635, 12.3566, 10.0397, 13.8447 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 20.0106, 15.0849, 29.9319, 15.1841, 29.8326, 17.1684, 29.3862, 19.4999, 28.6917, 21.3353, 27.6996, 23.3195, 25.9633, 25.3038, 24.2271, 27.04, 22.3421, 28.2306, 19.8618, 29.1731, 17.1334, 29.7684, 12.7185, 30.0164, 9.44446, 28.925, 7.01375, 27.8337, 5.27753, 26.6928, 3.98777, 25.3038, 2.54918, 23.3195, 1.20982, 20.988, 0.316902, 18.0117, 0.0688705, 15.8786, 0.0192642, 14.5888, 9.99013, 14.5888, 9.99013, 15.7298, 10.387, 17.1684, 10.9823, 18.1109, 11.8752, 18.9542, 13.3634, 19.7975, 14.9011, 20.0455, 16.8358, 19.7479, 18.1752, 18.9542, 19.3657, 17.6148, 19.9114, 16.2754 )

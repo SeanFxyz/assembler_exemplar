@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://images/chips/OR.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipOutput.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/CanvasChip.gd" type="Script" id=4]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 63.0561, 48 )
 
 [node name="Or" type="Area2D"]
 script = ExtResource( 4 )
@@ -17,9 +14,8 @@ scale = Vector2( 0.731429, 0.755905 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 64, 48 )
-shape = SubResource( 1 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 2.02614, 0.24699, 4.10355, 3.66291, 5.78293, 7.11006, 7.41812, 9.89429, 9.0975, 13.9602, 10.6001, 18.468, 11.3956, 21.429, 13.2959, 20.2357, 15.1963, 19.9706, 16.6989, 20.1915, 17.9363, 20.6777, 19.1738, 22.0035, 19.8367, 23.3735, 20.1902, 24.7435, 19.9693, 26.1136, 19.3064, 27.6604, 18.1573, 28.9862, 16.7873, 29.8259, 15.1963, 30.1352, 13.4285, 29.8259, 14.8633, 37.1884, 14.7799, 54.6247, 13.9456, 63.8852, 12.444, 70.6428, 14.1959, 69.892, 16.5319, 69.9754, 17.9502, 70.8931, 19.6187, 72.3114, 20.2861, 74.8976, 19.7021, 77.1502, 18.2839, 79.069, 16.1982, 79.9867, 14.0291, 79.9867, 12.0268, 79.1524, 10.692, 77.8176, 8.77314, 83.0735, 6.68746, 87.8289, 4.35149, 92.0837, 2.09894, 95.8379, 60.7485, 95.9214, 74.2637, 93.3351, 88.8635, 87.4952, 99.7091, 81.405, 109.554, 73.3125, 118.647, 62.3001, 124.988, 52.4556, 127.157, 49.786, 125.238, 50.37, 123.319, 50.1197, 121.817, 49.1185, 120.483, 47.45, 119.982, 44.8637, 120.232, 42.9449, 120.983, 41.4432, 123.091, 40.2129, 113.391, 27.1771, 103.38, 18.0835, 92.3675, 11.0756, 84.3585, 8.15565, 71.8443, 4.15113, 61.6662, 1.89859, 49.2355, 0.0631828 )
 
 [node name="Inputs" type="Node2D" parent="."]
 

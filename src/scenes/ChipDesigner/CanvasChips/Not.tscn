@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://images/chips/NOT.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipInput.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/ChipOutput.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/ChipDesigner/CanvasChips/CanvasChip.gd" type="Script" id=4]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 39.9554, 23.4555 )
 
 [node name="Not" type="Area2D"]
 script = ExtResource( 4 )
@@ -17,9 +14,8 @@ scale = Vector2( 0.634921, 0.64 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 40.0446, 23.7055 )
-shape = SubResource( 1 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 0.114027, 0.0296612, 55.645, 21.5678, 56.4878, 17.6348, 59.3908, 13.9826, 64.1667, 11.3606, 71.0027, 10.8924, 75.2167, 13.1398, 78.4942, 16.792, 79.9925, 21.6615, 77.8387, 19.414, 74.8421, 18.8521, 71.9391, 19.7886, 70.6281, 21.5678, 70.0662, 24.0962, 71.19, 26.9992, 73.1565, 28.6848, 76.0595, 29.153, 78.4942, 28.3102, 79.8989, 26.3437, 78.8688, 29.9022, 76.9023, 32.3369, 74.5612, 34.678, 71.0027, 35.989, 67.7251, 36.27, 64.073, 35.5208, 60.6082, 34.1161, 58.3607, 31.4941, 56.3942, 28.0293, 55.7387, 25.7818, 0.0203724, 47.6946, 0.0203724, 25.7818, 0.769526, 27.6547, 2.26783, 29.3403, 4.51529, 30.0894, 7.41826, 29.9022, 9.57208, 28.4039, 10.2276, 26.1564, 10.1339, 22.8788, 7.98013, 20.5377, 5.54538, 19.6949, 2.64241, 20.1632, 1.1441, 21.6615, 0.207661, 23.7216 )
 
 [node name="Inputs" type="Node2D" parent="."]
 

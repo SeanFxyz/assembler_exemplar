@@ -44,7 +44,7 @@ var chip_scenes := {
 
 func _ready() -> void:
 	test_timer = Timer.new()
-	test_timer.connect("timeout", self, "_on_test_timer_timeout")
+	assert(test_timer.connect("timeout", self, "_on_test_timer_timeout") == OK)
 	add_child(test_timer)
 	test_chip_spec = ChipIO.chip_specs[PlayerData.current_level]
 	test_tracker.populate(test_chip_spec)
@@ -54,6 +54,7 @@ func play_test(speed: int) -> void:
 	
 	test_forward()
 	test_timer.paused = false
+	# warning-ignore:integer_division
 	test_timer.wait_time = 1 / speed
 	test_timer.start()
 	test_paused = false
@@ -78,6 +79,7 @@ func test_forward() -> void:
 	sound_player.play_effect("blip")
 	if not test_initialized:
 		initialize_test()
+	# warning-ignore:narrowing_conversion
 	test_index = min(test_index + 1, test_chip_spec.input_sets.size() - 1)
 	current_canvas.set_input_values(test_chip_spec.input_sets[test_index])
 	check_test_values()
@@ -88,9 +90,10 @@ func test_forward() -> void:
 
 
 func test_back() -> void:
-	sound_player.play_effect("bloop")
+	sound_player.play_effect("blip")
 	if not test_initialized:
 		initialize_test()
+	# warning-ignore:narrowing_conversion
 	test_index = max(test_index - 1, 0)
 	current_canvas.set_input_values(test_chip_spec.input_sets[test_index])
 	check_test_values()
@@ -119,8 +122,8 @@ func test_part_success() -> void:
 
 
 func test_part_fail() -> void:
-	if test_successes.has(test_index):
-		test_successes.erase(test_index)
+	# warning-ignore:return_value_discarded
+	test_successes.erase(test_index)
 	sound_player.play_effect("bloop")
 	test_tracker.set_case_state(test_index, -1)
 
@@ -149,7 +152,7 @@ func _input(event: InputEvent) -> void:
 
 
 func exit_chip_designer() -> void:
-	get_tree().change_scene("res://scenes/LevelMenu/LevelMenu.tscn")
+	assert(get_tree().change_scene("res://scenes/LevelMenu/LevelMenu.tscn")==OK)
 
 
 func _on_test_timer_timeout() -> void:
