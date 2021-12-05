@@ -1,26 +1,6 @@
 ###### *Assembler Exemplar* Programmer's Documentation
 # File Formats
 
-## Score File
-
-A score file `score.json` will be maintained for the player.
-This score file tracks
-level completion, the names of known valid solutions the player has created,
-and the scoring information for those solutions. It is an ordinary
-plaintext JSON file containing a JSON object with the following keys:
-
-* `"completed"` - An array containing the names of completed levels.
-* `"levels"` - An object mapping level names to objects containing
-               level-specific score data. These objects will each have the
-               following keys:
-
-             - `"top"` - a "score object" that records the top score achieved
-                         for the level, even if the solution that
-                         produced this score no longer exists or has been
-                         modified
-             - `"solutions"` - object mapping solution names to
-                               "score objects"
-
 ## Solution Save Files
 
 Solution files describe the contents of the player's solutions to a
@@ -46,10 +26,10 @@ following:
             "some-output-name": [x, y],
             ...
         },
-        "chips": {
-            1: { "type": "chip-type", "pos": [5, 0] },
+        "chips": [
+            { "type": "chip-type", "pos": [5, 0] },
             ...
-        },
+        ],
         "wires": {
             1: {
                 1: { "some_segment_id", "pos": [x, y] },
@@ -73,8 +53,7 @@ Each key's purpose is described in more detail below.
               outputs. Each entry will have a string key mapped to an array
               of two numbers representing the x and y values in the output's
               position.
-* `"chips"` - An object mapping chip ID strings to objects representing chip
-            components placed by the player.
+* `"chips"` - An array containing chip objects.
 
             Each of these chip objects will have the following keys:
 
@@ -82,15 +61,13 @@ Each key's purpose is described in more detail below.
                 - `"pos"` - A an array of two numbers representing the x and y
                           coordinates of the chip.
 
-* `"wires"` - Maps wire ID strings wire objects
-            Each wire object in turn maps segment IDs to segment objects,
-            which have the following keys:
-
-                - `"id"` - The id of the segment.
-                - `"pos"` - The position of the segment
+* `"wires"` - An array of arrays representing wires.
+            Each wire array in turn contains arrays representing segments.
+            Each segment array contains a start position and end position,
+            where a position is an array containing an x and y value.
 
 
-## Recovery Data
+## Recovery Data (NOT YET USED)
 
 The recovery data format will consist of lines of text, each
 containing a Base64 encoding of a GDScript Dictionary which describes
