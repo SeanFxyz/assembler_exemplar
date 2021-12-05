@@ -10,7 +10,7 @@ var canvas_tabs := {}
 
 func _ready():
 	add_tab("+")
-	connect("tab_changed", self, "_on_tab_changed")	
+	assert(connect("tab_changed", self, "_on_tab_changed") == OK)
 
 
 func _on_tab_changed(tab: int):
@@ -24,7 +24,6 @@ func _on_tab_changed(tab: int):
 func add_canvas_tab(name: String) -> void:
 	add_tab(name)
 	var tab_c := get_tab_count()
-	var new_tab_pos := tab_c - 2
 	
 	move_tab(add_pos, add_pos - 1)
 	canvas_tabs[name] = add_pos - 1

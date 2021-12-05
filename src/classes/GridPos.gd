@@ -8,7 +8,7 @@ var x : int
 var y : int
 
 
-func _init(_x:int= 0, _y:int= 0, from=null) -> void:
+func _init(_x:int= 0, _y:int= 0) -> void:
 	x = _x
 	y = _y
 

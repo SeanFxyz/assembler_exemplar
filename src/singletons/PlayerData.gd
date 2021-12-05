@@ -76,8 +76,6 @@ func get_player_grade(level: String) -> String:
 		percent = 0
 	else:
 		percent = float(ChipIO.chip_specs[level].nands) / score * 100.0
-		if percent > 100:
-			percent = 0
 	
 	return str(percent) + "%"
 
@@ -93,6 +91,7 @@ func set_current_level(new_value: String) -> void:
 	
 	solutions = FileIO.load_leveldata(new_value)
 	if solutions.empty():
+		# warning-ignore:return_value_discarded
 		create_solution()
 	
 	set_current_solution(solutions.keys()[0])

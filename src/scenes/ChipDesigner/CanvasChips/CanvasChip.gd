@@ -119,17 +119,17 @@ func update_outputs() -> void:
 			owire.wire_state = output_states[oname]
 
 
-func _on_ChipInput_area_entered(area: Area2D):
+func _on_ChipInput_area_entered(_area: Area2D):
 	pass
 
 
-func _on_ChipInput_area_exited(area: Area2D):
+func _on_ChipInput_area_exited(_area: Area2D):
 	pass
 
 
-func _on_ChipOutput_area_entered(area: Area2D):
+func _on_ChipOutput_area_entered(_area: Area2D):
 	update_outputs()
 
 
-func _on_ChipOutput_area_exited(area: Area2D):
+func _on_ChipOutput_area_exited(_area: Area2D):
 	update_outputs()

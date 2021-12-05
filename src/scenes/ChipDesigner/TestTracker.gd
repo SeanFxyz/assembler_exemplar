@@ -40,7 +40,7 @@ func populate(spec: ChipSpec) -> void:
 		for input_name in spec.input_names:
 			set_str += "|"
 			var pad : int = input_name.length() - str(iset[input_name]).length()
-			for i in range(pad):
+			for _i in range(pad):
 				set_str += " "
 			set_str += str(iset[input_name])
 		
@@ -48,7 +48,7 @@ func populate(spec: ChipSpec) -> void:
 		for output_name in spec.output_names:
 			set_str += "|"
 			var pad :int= output_name.length() - str(oset[output_name]).length()
-			for i in range(pad):
+			for _i in range(pad):
 				set_str += " "
 			set_str += str(oset[output_name])
 		
