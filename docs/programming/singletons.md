@@ -6,39 +6,6 @@ globally accessible from all scripts. They are good for holding data
 or code that needs to persist between scenes or simply needs to be
 accessible to various parts of the program.
 
-## `LevelData`
-
-`LevelData` is responsible for providing the "metadata" of game levels,
-meaning the data that is required to initially populate the info panels,
-chip selection menu(s), and other parts of the UI.
-
-`LevelData` should provide the following methods for accessing this data:
-
-* `get_levels() -> Array` - Returns a list of all level names.
-* `get_level_data(level: String) -> Dictionary` - Returns a dictionary
-    containing data for the level specified by parameter `level`.
-
-The dictionary returned by a call to `get_level_data` contains the
-following keys:
-
-* `"name"` - The name of the level (must be unique)
-* `"io_name"` - The name of the chip's dictionary in the `ChipIO` singleton.
-* `"depends"` - An array containing the names of levels which the player
-              needs to complete before attempting this one.
-* `"inputs"` - An array of objects representing inputs to the chip.
-             Each of these objects will have the following fields:
-
-     - `"name"` - The name of the input (string).
-     - `"nbits"` - The number of bits provided by the input (number).
-     - `"pos"` - The default position of the input (two-number array).
-
-* `"outputs"` - An array of objects representing outputs to the chip.
-             Each of these objects will have the following fields:
-
-     - `"name"` - The name of the output (string).
-     - `"nbits"` - The number of bits provided by the output (number).
-     - `"pos"` - The default position of the output (two-number array).
-
 ## `PlayerData`
 
 `PlayerData` provides access to player-specific data, including the content
