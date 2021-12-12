@@ -63,17 +63,17 @@ func populate(spec: ChipSpec) -> void:
 	item_list.select(0, true)
 
 
-func set_case_state(index: int, state: int):
+func set_case_state(index: int, state: int) -> void:
 	# item_list.set_item_icon(index + 1, state_icons[state])
 	item_list.set_item_custom_fg_color(index + head_items, state_colors[state])
 
 
-func set_case_state_all(state: int):
+func set_case_state_all(state: int) -> void:
 	for i in range(item_list.get_item_count() - head_items):
 		set_case_state(i, state)
 
 
-func set_active_case(index: int):
+func set_active_case(index: int) -> void:
 	if active_case >= 0:
 		item_list.set_item_custom_bg_color(active_case, inactive_bg_color)
 	active_case = index + head_items

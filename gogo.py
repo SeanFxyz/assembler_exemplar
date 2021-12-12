@@ -24,12 +24,14 @@ def parse(script_file):
             class_attrs[kind].append({
                 "name": name,
                 "description": "".join(
-                    map( (lambda a : a[2:]), lines[start:end] ))
+                    map( (lambda a : a[1:]), lines[start:end] )
+                ).strip(),
             })
         else:
             class_attrs[kind].append({
                 "description": "".join(
-                    map( (lambda a : a[2:]), lines[start:end] ))
+                    map( (lambda a : a[1:]), lines[start:end] )
+                ).strip(),
             })
 
 
@@ -39,25 +41,28 @@ def parse(script_file):
         if lines[i].startswith("#"):
 
             comment_end = i
-            while comment_end < len(lines):
+            while comment_end < len(lines) - 1:
                 comment_end += 1
                 if not lines[comment_end].startswith("#"):
                     break
 
             if lines[comment_end].startswith("var"):
-
                 attr_name = (lines[comment_end]
                              .split("var ")[1]
                              .split("=")[0]
                              .split(":")[0]
                              .strip())
                 add_attr("properties", attr_name, i, comment_end)
-
+            elif lines[comment_end].startswith("const"):
+                attr_name = (lines[comment_end]
+                             .split("const ")[1]
+                             .split("=")[0]
+                             .split(":")[0]
+                             .strip())
+                add_attr("properties", attr_name, i, comment_end)
             elif lines[comment_end].startswith("func"):
-
                 attr_name = lines[comment_end].split("func ")[1].strip()[:-1]
                 add_attr("methods", attr_name, i, comment_end)
-
             else:
                 add_attr("info", "", i, comment_end)
 
@@ -156,7 +161,10 @@ def make_docs(project_name, target_dir, source_dir):
 
     scripts = []
 
+    print("Processing files...")
+
     for f in gd_files:
+        print("\t", f)
         with open(f) as script_file:
             attrs = parse(script_file)
             stem = Path(f).stem

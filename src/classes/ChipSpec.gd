@@ -22,7 +22,7 @@ func _init(
 	ns       : int,
 	canvas_w : int = 50,
 	comp     : Array = ["Nand"]
-):
+) -> void:
 	input_names = inames
 	input_widths = iwidths
 	output_names = onames
@@ -40,7 +40,7 @@ func get_outputs(input_states: Dictionary) -> Dictionary:
 
 # Takes an array of integer input values and combines them into a dictionary
 # lookup key.
-func format_input(input_states: Dictionary):
+func format_input(input_states: Dictionary) -> int:
 	var key : int = input_states[input_names[0]]
 	for iname in input_names.slice(1, -1):
 		key = key << input_widths[iname] | input_states[iname]
