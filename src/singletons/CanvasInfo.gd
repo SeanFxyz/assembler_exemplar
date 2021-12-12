@@ -67,14 +67,3 @@ func arr_to_pos(a: Array) -> Vector2:
 func pos_to_arr(v: Vector2) -> Array:
 	var snapped = CanvasInfo.snap(v) / grid_inc
 	return [snapped.x, snapped.y]
-
-
-var wire_colors := []
-var wire_color_index := 0
-
-func init_wire_colors():
-	pass
-
-
-func next_wire_color():
-	pass

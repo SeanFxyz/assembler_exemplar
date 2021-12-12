@@ -75,7 +75,7 @@ func get_player_grade(level: String) -> String:
 	if score == 0:
 		percent = 0
 	else:
-		percent = float(ChipIO.chip_specs[level].nands) / score * 100.0
+		percent = round( float(ChipIO.chip_specs[level].nands) / score * 100.0 )
 	
 	return str(percent) + "%"
 

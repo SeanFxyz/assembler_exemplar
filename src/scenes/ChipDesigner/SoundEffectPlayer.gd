@@ -6,6 +6,6 @@ var effects := {
 	"oneup": preload("res://sounds/oneup1.wav"),
 }
 
-func play_effect(eff: String):
+func play_effect(eff: String) -> void:
 	stream = effects[eff]
 	play()
