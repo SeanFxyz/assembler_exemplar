@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Fonts/BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Themes/Menu.tres" type="Theme" id=2]
+[ext_resource path="res://scenes/menus/LevelMenu/LevelMenu.gd" type="Script" id=3]
+[ext_resource path="res://scenes/menus/LevelMenu/LevelButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/menus/MenuBackdrop.tscn" type="PackedScene" id=5]
+
+[sub_resource type="DynamicFont" id=3]
+size = 25
+font_data = ExtResource( 1 )
+
+[node name="OptionsMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuBackdrop" parent="." instance=ExtResource( 5 )]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.25
+grow_horizontal = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+text = "Options"
+align = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+anchor_left = 0.42
+anchor_top = 0.4
+anchor_right = 0.6
+anchor_bottom = 0.8
+grow_horizontal = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelButton" parent="VBoxContainer2" instance=ExtResource( 4 )]
+margin_top = 2.0
+margin_right = 184.0
+margin_bottom = 38.0
+text = "Level 1: Not"
+align = 0
+level = "Not"
+
+[node name="LevelButton2" parent="VBoxContainer2" instance=ExtResource( 4 )]
+margin_top = 42.0
+margin_right = 184.0
+margin_bottom = 78.0
+text = "Level 2: And"
+align = 0
+level = "And"
+
+[node name="LevelButton3" parent="VBoxContainer2" instance=ExtResource( 4 )]
+margin_top = 82.0
+margin_right = 184.0
+margin_bottom = 118.0
+text = "Level 3: Or"
+align = 0
+level = "Or"
+
+[node name="LevelButton4" parent="VBoxContainer2" instance=ExtResource( 4 )]
+margin_top = 122.0
+margin_right = 184.0
+margin_bottom = 158.0
+text = "Level 4: Xor"
+align = 0
+level = "Xor"
+
+[node name="LevelButton5" parent="VBoxContainer2" instance=ExtResource( 4 )]
+margin_top = 162.0
+margin_right = 184.0
+margin_bottom = 198.0
+text = "Level 5: Mux"
+align = 0
+level = "Mux"
+
+[node name="LevelButton6" parent="VBoxContainer2" instance=ExtResource( 4 )]
+margin_top = 202.0
+margin_right = 184.0
+margin_bottom = 238.0
+text = "Level 6: DMux"
+align = 0
+level = "DMux"
+
+[node name="BackButton" type="Button" parent="."]
+margin_left = 26.5017
+margin_top = 543.515
+margin_right = 124.502
+margin_bottom = 580.515
+custom_fonts/font = SubResource( 3 )
+text = "< back"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]

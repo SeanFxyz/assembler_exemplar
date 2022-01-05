@@ -163,7 +163,7 @@ func _on_ItemList_item_selected(index) -> void:
 	print_debug("ChipDesigner: item clicked")
 	item_selected = true
 	selected_item = $ItemListControl/ItemList.get_item_text(index)
-	print(selected_item)
+	print_debug(selected_item)
 
 
 func _on_ItemList_nothing_selected() -> void:

@@ -14,4 +14,4 @@ func _on_level_button_pressed(level: String):
 
 
 func _on_BackButton_pressed():
-	assert(get_tree().change_scene("res://scenes/MainMenu/MainMenu.tscn") == OK)
+	assert(get_tree().change_scene("res://scenes/menus/MainMenu/MainMenu.tscn") == OK)

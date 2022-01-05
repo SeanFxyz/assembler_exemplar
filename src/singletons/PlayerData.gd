@@ -17,11 +17,11 @@ var _new_solution_base_name := "Solution %d"
 
 # template structure for player solutions
 var _solution_template := {
-	"inputs": {},
-	"outputs": {},
-	"chips": [],
-	"wires": [],
-	"score": 0,
+	"inputs"  : {},
+	"outputs" : {},
+	"chips"   : [],
+	"wires"   : [],
+	"score"   : 0,
 }
 
 
@@ -112,7 +112,7 @@ func set_current_solution(new_value: String) -> void:
 #   - chips
 #   - wires
 #   - score
-func update_refs():
+func update_refs() -> void:
 	cur_solution_data = solutions[current_solution]
 	inputs  = cur_solution_data["inputs"]
 	outputs = cur_solution_data["outputs"]

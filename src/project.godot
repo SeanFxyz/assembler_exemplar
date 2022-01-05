@@ -51,7 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Assembler Exemplar"
-run/main_scene="res://scenes/MainMenu/MainMenu.tscn"
+run/main_scene="res://scenes/menus/MainMenu/MainMenu.tscn"
 config/icon="res://images/icon.png"
 
 [autoload]
@@ -62,6 +62,11 @@ PlayerData="*res://singletons/PlayerData.gd"
 Global="*res://singletons/Global.gd"
 LevelData="*res://singletons/LevelData.gd"
 CanvasInfo="*res://singletons/CanvasInfo.gd"
+
+[display]
+
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
 
 [input]
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scenes/MainMenu/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/menus/MainMenu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/liberation/LiberationMono-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Themes/Menu.tres" type="Theme" id=3]
+[ext_resource path="res://scenes/menus/MenuBackdrop.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 2 )
@@ -16,14 +17,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-color = Color( 0.160784, 0.168627, 0.25098, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="MenuBackdrop" parent="." instance=ExtResource( 4 )]
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 anchor_left = 0.5
@@ -53,14 +47,20 @@ __meta__ = {
 }
 
 [node name="StartButton" type="Button" parent="VBoxContainer"]
-margin_right = 56.0
+margin_right = 77.0
 margin_bottom = 36.0
 text = "Start"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
+[node name="OptionButton" type="Button" parent="VBoxContainer"]
 margin_top = 40.0
-margin_right = 56.0
+margin_right = 77.0
 margin_bottom = 76.0
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+margin_top = 80.0
+margin_right = 77.0
+margin_bottom = 116.0
 text = "Quit"
 
 [node name="VersionLabel" type="Label" parent="."]

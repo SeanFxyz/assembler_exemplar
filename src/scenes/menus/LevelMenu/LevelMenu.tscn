@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Fonts/BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://scenes/LevelMenu/LevelMenu.gd" type="Script" id=2]
-[ext_resource path="res://scenes/LevelMenu/LevelButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/menus/LevelMenu/LevelMenu.gd" type="Script" id=2]
+[ext_resource path="res://scenes/menus/LevelMenu/LevelButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Themes/Menu.tres" type="Theme" id=4]
+[ext_resource path="res://scenes/menus/MenuBackdrop.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFont" id=3]
 size = 25
@@ -18,16 +19,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 40.0
-margin_bottom = 40.0
-mouse_filter = 2
-color = Color( 0.160784, 0.168627, 0.25098, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="MenuBackdrop" parent="." instance=ExtResource( 5 )]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.5

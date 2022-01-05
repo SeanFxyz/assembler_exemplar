@@ -18,7 +18,7 @@ func _ready():
 
 
 func _on_StartButton_pressed():
-	if get_tree().change_scene("res://scenes/LevelMenu/LevelMenu.tscn") != OK:
+	if get_tree().change_scene("res://scenes/menus/LevelMenu/LevelMenu.tscn") != OK:
 		printerr("MainMenu: Scene change failed.")
 
 

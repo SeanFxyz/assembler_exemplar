@@ -65,8 +65,8 @@ func _ready() -> void:
 
 func _process(_delta) -> void:
 	mouse_pos = grid.get_local_mouse_position()
-	
-	if viewport.get_visible_rect().has_point(viewport.get_mouse_position()):
+	 
+	if viewport.get_visible_rect().has_point(get_local_mouse_position()):
 		if has_mouse == false:
 			emit_signal("mouse_on")
 		has_mouse = true
